@@ -39,7 +39,7 @@ public class UserService
 	@Transactional
 	public User getUser(String login)
 	{
-		return getUser(login);
+		return userDao.getUser(login);
 	}
 	@Transactional
 	public boolean isUserExsist(String login)

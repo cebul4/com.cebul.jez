@@ -28,6 +28,7 @@ public class KoszykController
 	@Autowired
 	private ShoppingCart shoppingCart;
 	
+	/*
 	@RequestMapping(value = "/koszyk")
 	public String regForm(Model model,  HttpSession session) 
 	{
@@ -50,6 +51,7 @@ public class KoszykController
 		
 		return "koszyk";
 	}
+	*/
 	@RequestMapping(value = "/koszyk/usun/{produktId}/", method = RequestMethod.GET)
 	public String usunZKoszyka(@PathVariable Integer produktId, Model model,  HttpSession session) 
 	{
@@ -67,4 +69,5 @@ public class KoszykController
 		
 		return "koszyk";
 	}
+	
 }

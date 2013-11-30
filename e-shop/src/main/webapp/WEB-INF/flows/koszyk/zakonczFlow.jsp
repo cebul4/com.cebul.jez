@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" %> 
 <%@ page session="true"%>
 <html>
@@ -86,7 +85,7 @@
 						</td>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
+								<a href="<c:url value='/koszyk/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
 							</div>
 						</td>
 						
@@ -95,74 +94,14 @@
 			
 		</div>
 		<div id='main'>
-			<div id='main-left'>
-				<form>
-					<c:choose>
-						<c:when test="${hasPodkategory}">
-								<span style="font-weight: bold;">Podkategoria:</span>
-								</br>
-								<c:forEach items="${podkategorie}" var="element"> 
-									<input type="checkbox" name="kat${element.id}" value="${element.id}"  />${element.nazwa}
-									</br>
-								</c:forEach>
-								</br>
-						</c:when>
-					</c:choose>
-					<span style="font-weight: bold;">Cena:</span>
-					</br>
-					od:<Input type="text" name="cenaOd" id="cenaOd" style="width: 40px; height: 20px;" />
-					do:<Input type="text" name="cenaDo" id="cenaDo" style="width: 40px; height: 20px;"/>
-					</br>
-					</br>
-					<span style="font-weight: bold;">Licytuj / KupTeraz</span>
-					</br>
-					<input style="width: 15px;" type="checkbox" name="kupTeraz" value="tak"  />Kup Teraz
-					</br>
-					<input style="width: 15px;" type="checkbox" name="licytuj" value="tak"  />Licytuj
-					</br>
-					<input class="sub" style="margin-left: 0px;" type="submit" value="Szukaj" />
-				</form>
-								
+			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
+				
+				<span style="margin-top: 30px; font-size: 16pt; font-weight: bold;">Dziękujemy za dokonanie zakupu. </span>
+				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Zapraszamy ponownie.</span>
+				</br>
+				<a id="zatw" href="${flowExecutionUrl}&_eventId=zakoncz" style="color: white; fony-weight: bold; background-color: #8AC74A; text-decoration: none; width: 200px; text-align: center; padding: 5px;" >Zakończ </a>
 			</div>
-			<div id='main-right' style='padding-left: 10px; overflow-y: scroll;overflow-x:hidden;'>
-				<c:forEach items="${szukaneProdukty}" var="element" varStatus="status"> 
-					<a style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
-						<div style="float: left; width: 800px; border-bottom: 1px solid #DDDDDD">
-							
-							<div style="float: left;">
-								<c:choose>
-									<c:when test="${!empty element.zdjecie}">
-										<img style="width: 100px; " src="${pageContext.request.contextPath}/images/${element.id}" />
-									</c:when>
-									<c:otherwise>
-										<img style="width: 100px; " src="<c:url value='/resources/images/unknownItem.png' />" />
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div style="width: 780px;">
-								<div style="padding: 10px; float:left;  width: 440px; height: 80px;">
-									<img style="width: 20px; " src="<c:url value='/resources/images/ok.gif' />" />
-									<span style=" font-size: 16pt; font-weight: bold;">${element.nazwa}</span>
-									<c:set var="dat" value="${element.dataDodania}" />
-									<span style="display:block; margin-top: 40px; font-size: 12pt;"><fmt:formatDate value="${dat}" /></span>
-								</div>
-								<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 80px;">
-									<span style="font-size: 16pt; font-weight: bold;">${element.cena} zł</span>
-									
-									<c:choose>
-										<c:when test="${czyKupTeraz[status.count-1]}">
-											<span style="display:block; margin-top: 40px; font-size: 12pt;">Kup Teraz</span>
-										</c:when>
-										<c:otherwise>
-											<span style="display:block; margin-top: 40px; font-size: 12pt;">Licytacja</span>
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</div>
-						</div>
-					</a>
-				</c:forEach>
-			</div>
+		</div>
 		</div>
 		<div id='bottom'>
 			<span align="center" style="color: #578921; display: block;"><b>Copyright Ⓒ Cebul & Jeżyk</b></span>

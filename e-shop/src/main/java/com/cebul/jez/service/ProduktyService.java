@@ -75,4 +75,9 @@ public class ProduktyService
 	{
 		return produktyDao.getFullProduktyLike(like);
 	}
+	@Transactional
+	public void setKupione(List<Produkty> produkty)
+	{
+		produktyDao.setKupione(produkty);
+	}
 }

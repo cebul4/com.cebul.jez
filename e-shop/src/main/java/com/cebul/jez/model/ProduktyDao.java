@@ -183,5 +183,16 @@ public class ProduktyDao extends Dao
 		//System.out.println(result.get(0).getNazwa());
 		return result;
 	}
+	public void setKupione(List<Produkty> produkty)
+	{
+		Session session = getSessionFactory();
+		ProduktyKupTeraz prod;
+		for(Produkty p : produkty)
+		{
+			prod = (ProduktyKupTeraz) p;
+			prod.setKupiony(true);
+			session.saveOrUpdate(prod);
+		}
+	}
 	
 }

@@ -85,7 +85,7 @@
 						</td>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/koszyk/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
+								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
 							</div>
 						</td>
 						
@@ -151,7 +151,7 @@
 						</a>
 					</c:forEach>
 					<c:choose>
-						<c:when test="${empty shoppingCart.items}">
+						<c:when test="${!empty shoppingCart.items}">
 							<div id="suma" style="margin-left:580px;">
 								<span style="margin: 10px; margin-bottom: 50px; font-size: 18pt; font-weight: bold;">Suma:</span>
 								<span style="margin: 10px; margin-bottom: 50px; font-size: 18pt; font-weight: bold;">${shoppingCart.suma} zł</span>

@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" %> 
 <%@ page session="true"%>
 <html>
@@ -86,7 +85,7 @@
 						</td>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
+								<a href="<c:url value='/koszyk/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
 							</div>
 						</td>
 						
@@ -95,74 +94,79 @@
 			
 		</div>
 		<div id='main'>
-			<div id='main-left'>
-				<form>
-					<c:choose>
-						<c:when test="${hasPodkategory}">
-								<span style="font-weight: bold;">Podkategoria:</span>
-								</br>
-								<c:forEach items="${podkategorie}" var="element"> 
-									<input type="checkbox" name="kat${element.id}" value="${element.id}"  />${element.nazwa}
-									</br>
-								</c:forEach>
-								</br>
-						</c:when>
-					</c:choose>
-					<span style="font-weight: bold;">Cena:</span>
-					</br>
-					od:<Input type="text" name="cenaOd" id="cenaOd" style="width: 40px; height: 20px;" />
-					do:<Input type="text" name="cenaDo" id="cenaDo" style="width: 40px; height: 20px;"/>
-					</br>
-					</br>
-					<span style="font-weight: bold;">Licytuj / KupTeraz</span>
-					</br>
-					<input style="width: 15px;" type="checkbox" name="kupTeraz" value="tak"  />Kup Teraz
-					</br>
-					<input style="width: 15px;" type="checkbox" name="licytuj" value="tak"  />Licytuj
-					</br>
-					<input class="sub" style="margin-left: 0px;" type="submit" value="Szukaj" />
-				</form>
-								
-			</div>
-			<div id='main-right' style='padding-left: 10px; overflow-y: scroll;overflow-x:hidden;'>
-				<c:forEach items="${szukaneProdukty}" var="element" varStatus="status"> 
-					<a style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
-						<div style="float: left; width: 800px; border-bottom: 1px solid #DDDDDD">
-							
-							<div style="float: left;">
-								<c:choose>
+			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
+				
+				<div  style='border: 1px solid #F2FFE1 ;background-color:#F2FFE1; -moz-border-radius: 30px; border-radius: 30px; min-height:300px; width: 920px; padding: 30px;'>
+				<div>
+					<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+						<span style="margin-left: 5px; font-size: 16pt; font-weight: bold;">Dane użytkownika</span>
+					</div>
+					<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+						<span>Login:</span>
+						<span style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.nabywca.login}</span>
+					</div>
+					<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+						<span>Imię:</span>
+						<span  style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.nabywca.imie}</span>
+						
+					</div>
+					<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+						<span>Nazwisko:</span>
+						<span  style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.nabywca.nazwisko}</span>
+					</div>
+					<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+						<span>Adres:</span>
+						<span  style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.nabywca.adres.miejscowosc}, ${zamowienie.nabywca.adres.kod_pocztowy}</span>
+					</div>
+				</div>	
+				<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+					<span>Do zapłaty:</span>
+					<span  style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.koszt} zł</span>
+				</div>
+				<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+					<span>Sposób zapłaty:</span>
+					<span  style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.platnosc.rodzajPlatnosci}</span>
+				</div>
+				<div style="margin-left: 10px; text-align: left; margin-bottom: 10px;">
+					<span>Dokument kupna:</span>
+					<span  style="margin-left: 5px; font-size: 14pt; font-weight: bold;">${zamowienie.dokumentZamowienia.nazwa }</span>
+				</div>
+				<div style="margin-top: 30px; margin-left: 10px; text-align: left; margin-bottom: 20px;">
+					<span style="margin-left: 5px; font-size: 16pt; font-weight: bold;">Wybrane produkty:</span>
+				</div>
+					<c:forEach items="${zamowienie.produkty}" var="element" varStatus="status"> 
+						<div  class="divProd" style=" width: 900px; height: 35px;">
+							<div style="float:left;">
+							<c:choose>
 									<c:when test="${!empty element.zdjecie}">
-										<img style="width: 100px; " src="${pageContext.request.contextPath}/images/${element.id}" />
+											<img style="width: 30px; " src="${pageContext.request.contextPath}/images/${element.id}" />
 									</c:when>
 									<c:otherwise>
-										<img style="width: 100px; " src="<c:url value='/resources/images/unknownItem.png' />" />
+											<img style="width: 30px; " src="<c:url value='/resources/images/unknownItem.png' />" />
 									</c:otherwise>
-								</c:choose>
+							</c:choose>
 							</div>
-							<div style="width: 780px;">
-								<div style="padding: 10px; float:left;  width: 440px; height: 80px;">
-									<img style="width: 20px; " src="<c:url value='/resources/images/ok.gif' />" />
-									<span style=" font-size: 16pt; font-weight: bold;">${element.nazwa}</span>
-									<c:set var="dat" value="${element.dataDodania}" />
-									<span style="display:block; margin-top: 40px; font-size: 12pt;"><fmt:formatDate value="${dat}" /></span>
-								</div>
-								<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 80px;">
-									<span style="font-size: 16pt; font-weight: bold;">${element.cena} zł</span>
+								<div style="width: 830px;">
+									<div style="padding: 10px; float:left;  width: 460px; height: 25px;">
+										<span style=" font-size: 12pt; font-weight: bold;">${element.nazwa}</span>
+									</div>
+									<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 25px;">
+										<span style="font-size: 12pt; font-weight: bold;">${element.cena} zł</span>
+									</div>
 									
-									<c:choose>
-										<c:when test="${czyKupTeraz[status.count-1]}">
-											<span style="display:block; margin-top: 40px; font-size: 12pt;">Kup Teraz</span>
-										</c:when>
-										<c:otherwise>
-											<span style="display:block; margin-top: 40px; font-size: 12pt;">Licytacja</span>
-										</c:otherwise>
-									</c:choose>
 								</div>
-							</div>
 						</div>
-					</a>
-				</c:forEach>
+						
+					</c:forEach>
 			</div>
+			<div>
+				<div style="margin-left:580px;">
+					
+					<a id="zatw" href="${flowExecutionUrl}&_eventId=zatwierdzZamowienie" style="color: white; fony-weight: bold; background-color: #8AC74A; text-decoration: none; width: 200px; text-align: center; padding: 5px;" >Zatwierdź zamówienie</a>
+					<a id="zatw" href="${flowExecutionUrl}&_eventId=cancel" style="color: white; fony-weight: bold; background-color: #8AC74A; text-decoration: none; width: 200px; text-align: center; padding: 5px;" >Anuluj</a>
+				</div>
+			</div>
+		</div>
 		</div>
 		<div id='bottom'>
 			<span align="center" style="color: #578921; display: block;"><b>Copyright Ⓒ Cebul & Jeżyk</b></span>

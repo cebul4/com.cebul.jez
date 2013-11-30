@@ -10,23 +10,23 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="DokumentZamowienia")
-public class DokumentZamowienia implements Serializable
+@Table(name="Platnosci")
+public class Platnosc implements Serializable
 {
+
 	@Id
 	@GeneratedValue
 	@Column(name="Id")
 	private Integer id;
 	
-	@Column(name="Nazwa")
+	@Column(name="RodzajPlatnosci")
 	@NotNull
-	private String nazwa;
-	
-	public DokumentZamowienia()
+	private String rodzajPlatnosci;
+
+	public Platnosc()
 	{
 		
 	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -35,12 +35,12 @@ public class DokumentZamowienia implements Serializable
 		this.id = id;
 	}
 
-	public String getNazwa() {
-		return nazwa;
+	public String getRodzajPlatnosci() {
+		return rodzajPlatnosci;
 	}
 
-	public void setNazwa(String nazwa) {
-		this.nazwa = nazwa;
+	public void setRodzajPlatnosci(String rodzajPlatnosci) {
+		this.rodzajPlatnosci = rodzajPlatnosci;
 	}
 	
 	

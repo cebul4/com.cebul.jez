@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="zamowienie" class="com.cebul.jez.entity.Zamowienie" />
+	<var name="tmp" class="com.cebul.jez.flows.Tmp" />
+	
+	<view-state id="start" view="koszyk.jsp">
+		<on-render>
+   			 <evaluate expression="koszykBeanFlow.getShoppingCart()" result="viewScope.shoppingCart" />
+			<evaluate expression="koszykBeanFlow.getCzyKupTerazList()" result="viewScope.czyKupTeraz" />
+		</on-render>
+		<transition to="czyKoszykPusty"></transition>
+	</view-state>
+	
+	<decision-state id="czyKoszykPusty">
+		<if test="koszykBeanFlow.isNotShooppingCartEmpty()" then="isUserLogged" else="unlogin" />
+	</decision-state>
+	
+	<decision-state id="isUserLogged">
+		<if test="koszykBeanFlow.isUserLoged(currentUser)" then="wybierzPlatnosc" else="zalogujSie" />
+	</decision-state>
+	
+	<view-state id="wybierzPlatnosc" view="platnosc.jsp" model="tmp">
+		<on-render>
+   			 <evaluate expression="koszykBeanFlow.getPlatnosci()" result="viewScope.platnosci" />
+			<evaluate expression="koszykBeanFlow.getDokumenty()" result="viewScope.dokumenty" />
+		</on-render>
+		<transition on="dodatkoweDaneZamowienia" to="zapiszPlatnosc"></transition>
+	</view-state>
+	
+	<action-state id="zapiszPlatnosc">
+		<evaluate expression="koszykBeanFlow.getObjPlatnosc(tmp)" result="zamowienie.platnosc" />
+		<transition   to="zapiszDokument"></transition>
+	</action-state>
+	
+	<action-state id="zapiszDokument">
+		<evaluate expression="koszykBeanFlow.getObjDokument(tmp)" result="zamowienie.dokumentZamowienia" />
+		<transition to="zapiszUsera"></transition>
+	</action-state>
+	
+	<action-state id="zapiszUsera">
+		<evaluate expression="koszykBeanFlow.getUser(currentUser.name)" result="zamowienie.nabywca" />
+		<transition  to="zapiszItems"></transition>
+	</action-state>
+	
+	<action-state id="zapiszItems">
+		<evaluate expression="koszykBeanFlow.getItems()" result="zamowienie.produkty" />
+		<transition  to="zapiszKoszt"></transition>
+	</action-state>
+	
+	<action-state id="zapiszKoszt">
+		<evaluate expression="koszykBeanFlow.getKoszt()" result="zamowienie.koszt" />
+		<transition  to="podsumujZamowienie"></transition>
+	</action-state>
+	
+	<view-state id="podsumujZamowienie"  model="zamowienie">
+		<transition  on="zatwierdzZamowienie" to="zapiszZamowienie"></transition>
+	</view-state>
+	
+	<action-state id="zapiszZamowienie">
+		<evaluate expression="koszykBeanFlow.zapiszZamowienie(zamowienie)" />
+		<transition  to="zakonczFlow"></transition>
+	</action-state>
+	
+	
+	<view-state id="zakonczFlow">
+		<transition  to="endState"></transition>
+	</view-state>
+	
+	<view-state id="zalogujSie" view="logowanie.jsp"></view-state>
+	
+	<view-state id="unlogin" ></view-state>
+	
+	<end-state id="endState"></end-state>
+	
+    <global-transitions>
+    	<transition on='cancel' to="endState"></transition>
+    </global-transitions>                   
+</flow>
