@@ -16,6 +16,63 @@
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
 
+$( document ).ready(function() 
+{
+	var test = $("#stanAukcji").val();
+	//alert(test);
+	if(test != null)
+	{
+		//alert("to jest ukcja");	
+		// uruchamiamy co 30s sprawdzanie czy ktos nas nie przebil
+		var myVar = setInterval(function(){myTimer()},30000);
+	}
+	
+});
+function myTimer()
+{
+	//alert("hahaha");
+	
+	$('#loadingGif').css("display", "inline");
+	var idProd = $('#id').val();
+	
+	$.getJSON( "/jez/produkty/sprawdzDostepnosc.json", {"idProd": idProd})
+		.done(function( json ) {
+		   // alert(json.cena);
+				var cenka = json.cena;
+				var cenaFloat = cenka.toFixed(1);
+				var cenkaSugerowana = (cenka + 1).toFixed(1);
+		    	if(json.user.id == $("#sessionUserId").html() )
+		    	{
+		    		$("#stanAukcji").html("Obecnie wygrywasz licytację.");
+		    		$("#cena").html(cenaFloat);
+		    		$("#cenaInput").val("");
+		    		$("#cenaInput").val(cenkaSugerowana);
+		    		//alert("no wygrywam");
+		    	}else{
+		    		$("#stanAukcji").html("Ktoś inny wygrywa w licytacji.");
+		    		$("#cena").html(cenaFloat);
+		    		$("#cenaInput").val("");
+		    		$("#cenaInput").val(cenkaSugerowana);
+		    	}		
+		  $('#loadingGif').delay(1000).css("display", "none");   
+	})
+	.fail(function( jqxhr, textStatus, error ) {
+		   //alert("error="+error);
+	}); 
+}
+function sprawdzCene()
+{
+	var cenaAktu = $("#cena").html();
+	var cena = $("#cenaInput").val();
+	if(cenaAktu < cena)
+	{
+		//alert("cenaAkt= "+cenaAktu+" cena= "+cena);
+		return true;
+	}
+	
+	return false;
+}
+
 </script>
 </head>
 <body>
@@ -120,9 +177,9 @@
 						</br>
 						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Nazwa: </span> <span>${produkt.nazwa}</span></div>
 						</br>
-						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Cena: </span> <span>${produkt.cena} zł</span></div>
+						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Cena: </span> <span id="cena">${produkt.cena}</span> zł </div>
 						</br>
-						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Sprzedający:</span> <span>${produkt.user.login} zł</span></div>
+						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Sprzedający:</span> <span>${produkt.user.login} </span></div>
 						</br>
 						<div style='padding: 3px;'>
 							
@@ -134,10 +191,39 @@
 										</sf:form>
 									</c:when>
 									<c:otherwise>
-										<sf:form  modelAttribute="produkt" action="" method="POST">
-											<sf:input type="hidden" path="id" value="${produkt.id}" />
-											<input style="margin-left: 5px;" class="sub" type="submit" value="Licytuj" />
-										</sf:form>
+										<c:choose>
+											<c:when test="${!empty sessionScope.sessionUser}">
+												<span style="display:none;" id="sessionUserId">${sessionScope.sessionUser.id}</span>
+												<sf:form  modelAttribute="produkt" action="/jez/produkty/licytuj/" method="POST" onsubmit="return sprawdzCene();">
+													<sf:input type="hidden" path="id" id="id" value="${produkt.id}" />
+													<sf:input id="cenaInput" type="text" path="cena" value="${produkt.cena +1}" style="width: 60px;" />
+													<input style="margin-left: 5px;" class="sub" type="submit" value="Licytuj" /> 
+													 <span>(Do końca: ${roznicaDat} dni)</span>
+												</sf:form>
+												
+												<c:choose>
+													<c:when test="${ktosLicytuje}">
+														<c:choose>
+															<c:when test="${czyJaWygrywam}">
+																<span id="stanAukcji" style="color: red; font-size: 14pt;">Obecnie wygrywasz licytację.</span>
+															</c:when>
+															<c:otherwise>
+																<span id="stanAukcji" style="color: red; font-size: 14pt;">Ktoś inny wygrywa w licytacji.</span>	
+															</c:otherwise>
+														</c:choose>
+														
+													</c:when>
+													<c:otherwise>
+														<span>Nikt jeszcze nie licytuje. Bądź pierwszy</span>
+													</c:otherwise>
+												</c:choose>
+												<img style="width: 25px; display: none;" id="loadingGif" src="<c:url value='/resources/images/loading.gif' />" />
+											</c:when>
+											<c:otherwise>
+												<span style="color: red; font-size: 14pt;">Aby móc licytować musisz się zalogować!</span>	
+											</c:otherwise>
+										</c:choose>
+										
 									</c:otherwise>
 								</c:choose>
 						</div>

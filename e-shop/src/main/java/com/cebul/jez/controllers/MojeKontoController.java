@@ -164,7 +164,7 @@ public class MojeKontoController
 	    Zdjecie requestedImage = produktyService.getProdukt(imageId).getZdjecie();
 	    
 	    InputStream in= new ByteArrayInputStream(requestedImage.getZdjecie()); 
-	    System.out.println("input: "+in);
+	    //System.out.println("input: "+in);
 	    if (in != null) {
 	        IOUtils.copy(in, response.getOutputStream());  
 	    }

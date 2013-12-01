@@ -80,4 +80,9 @@ public class ProduktyService
 	{
 		produktyDao.setKupione(produkty);
 	}
+	@Transactional
+	public void updateLicytacja(ProduktyLicytuj p)
+	{
+		produktyDao.updateLicytacja(p);
+	}
 }

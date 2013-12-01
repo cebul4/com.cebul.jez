@@ -189,10 +189,29 @@ public class ProduktyDao extends Dao
 		ProduktyKupTeraz prod;
 		for(Produkty p : produkty)
 		{
-			prod = (ProduktyKupTeraz) p;
-			prod.setKupiony(true);
-			session.saveOrUpdate(prod);
+			if(p instanceof ProduktyKupTeraz)
+			{
+				prod = (ProduktyKupTeraz) p;
+				prod.setKupiony(true);
+				session.saveOrUpdate(prod);
+			}
 		}
 	}
-	
+	public void updateLicytacja(ProduktyLicytuj p)
+	{
+		int id = p.getId();
+		double cena = p.getCena();
+		User u = p.getAktualnyWlasciciel();
+		
+		//p =null;
+		Session session = getSessionFactory();
+		//session.evict(p);
+		//session.evict(u);
+		ProduktyLicytuj prod = (ProduktyLicytuj) getProdukt(id);
+		if(u.getId().intValue() != prod.getAktualnyWlasciciel().getId().intValue())
+			prod.setAktualnyWlasciciel(u);
+		
+		prod.setCena(cena);
+		session.update(prod);
+	}
 }
