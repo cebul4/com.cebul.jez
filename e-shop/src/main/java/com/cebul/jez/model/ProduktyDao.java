@@ -9,6 +9,7 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.transform.RootEntityResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.webflow.engine.History;
@@ -213,5 +214,40 @@ public class ProduktyDao extends Dao
 		
 		prod.setCena(cena);
 		session.update(prod);
+	}
+	public List<Produkty> getSprzedaneProdukty(User u)
+	{
+		Session session = getSessionFactory();
+		
+		Query query = session.createQuery("from Produkty p inner join p.user as us WHERE us.id = :idW AND " +
+				"p.id in (select pk.id from ProduktyKupTeraz pk WHERE pk.kupiony = true) " +
+				"OR " +
+				"p.id in (select pl.id from ProduktyLicytuj pl left join pl.aktualnyWlasciciel as w " +
+				"WHERE pl.dataZakonczenia < CURRENT_DATE() " +
+				"AND w.id is not null) ").setParameter("idW", u.getId() );
+		
+		List<Object> result = new ArrayList<Object>();
+		result =  query.list();
+		
+		List<Produkty> resultFinal = new ArrayList<Produkty>();
+
+		Object[] ob;
+		int index = 0;
+		for(Object o : result)
+		{
+			ob = (Object[]) result.get(index);
+			for(int i=0;i<ob.length; i++)
+			{
+				if(ob[i] instanceof Produkty)
+				{
+					resultFinal.add((Produkty)ob[i]);
+				}
+			}
+			index++;
+		}
+				
+		return resultFinal;
+		//return result;
+		
 	}
 }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -259,4 +260,30 @@ public class MojeKontoController
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
+	@RequestMapping(value = "/mojekonto/sprzedaneProdukty/")
+	public String showSprzedaneProdukty(Model model, HttpSession session)
+	{
+		User me = (User) session.getAttribute("sessionUser");
+		List<Produkty> sprzedaneProdukty = (List<Produkty>)produktyService.getSprzedaneProdukty(me);
+		//System.out.println("size= "+sprzedaneProdukty.size());
+		//System.out.println("id Pierwszego = "+sprzedaneProdukty.get(0).getId());
+		
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		for(Produkty p : sprzedaneProdukty)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				//System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
+		
+		model.addAttribute("sprzedane", sprzedaneProdukty);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		
+		return "sprzedaneProdukty";
+	}
 }

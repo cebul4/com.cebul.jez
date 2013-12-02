@@ -58,7 +58,7 @@ public class Produkty implements Serializable{
 	@JoinColumn(name="IdZdjGlow")
 	private Zdjecie zdjecie;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.REFRESH, fetch=FetchType.LAZY)
 	@JoinColumn(name="IdWlas")
 	private User user;
 

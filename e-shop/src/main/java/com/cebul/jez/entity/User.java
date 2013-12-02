@@ -199,24 +199,7 @@ public class User implements Serializable
 		this.enabled = enabled;
 		
 	}
-	public boolean equals(Object obj)
-	{
-		if(this == obj)
-			return true;
-		if((obj == null) || (obj.getClass() != this.getClass()))
-			return false;
-		User u = (User) obj;
-		if(this.id.intValue() == u.id.intValue())
-			return true;
-		
-		return false;
-	}
-	public int hashCode()
-	{
-		int hash = 7;
-		hash = 31 * hash + id;
-		return hash;
-	}
+	
 	
 	
 }
