@@ -15,6 +15,15 @@ import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.useful.JsonKat;
 import com.cebul.jez.useful.JsonObject;
 
+/**
+ *  Klasa pelniaca zadanie kontrolera w modelu MVC
+ * Jej zadaniem jest obsługa rządań wysylanych z poziomu Javascriptu w formacie JSon
+ * Wykorzystuje mechanizm DI do wstrzykiwania zależnosći
+ * Wstrzyknięte zależnosci: KategorieService
+ * 
+ * @author Mateusz
+ *
+ */
 @Controller
 @RequestMapping("/dodajProdukt/podkategorie.json")
 public class DodajProduktyController 
@@ -22,10 +31,17 @@ public class DodajProduktyController
 	@Autowired
 	private KategorieService kategorieService;
 	
+	/**
+	 * metoda zwraca podkategorie danej kategori 
+	 * 
+	 * @param model referencja do modelu
+	 * @param kategory identyfikator kategorii dla której szukane są podkategorie
+	 * @return zwraca obiekt JSon zawierajacy podkategorie
+	 */
 	@RequestMapping(method = RequestMethod.GET, params="podkategory")
-	public @ResponseBody JsonKat znajdzWyszukiwarka(Model model, @RequestParam Integer podkategory) 
+	public @ResponseBody JsonKat znajdzWyszukiwarka(Model model, @RequestParam Integer kategory) 
 	{
-		List<Kategoria> r = kategorieService.getPodKategory(podkategory);
+		List<Kategoria> r = kategorieService.getPodKategory(kategory);
 		JsonKat jso = new JsonKat();
 		jso.generateKategorie(r);
 		

@@ -39,6 +39,7 @@ import com.cebul.jez.useful.Mail;
  * Klasa pelniaca zadanie kontrolera w modelu MVC
  * Jej zadaniem jest obsługa rządań z ścieżki "/" oraz "/home"
  * Wykorzystuje mechanizm DI do wstrzykiwania zależnosći
+ * Wstrzykiwane Beany: KategorieService, UserService, TestDataBaseService, ProduktyService
  */
 @Controller
 public class HomeController {
@@ -59,7 +60,7 @@ public class HomeController {
 	private TestDataBaseService serv;
 		
 	/**
-	 * 
+	 * obsługuje żądanie do strony gównej (tak zwany index) oraz home
 	 * @param model jest to odniesienie do obiektu modelu
 	 * @return zwraca logiczną nazwę widoku
 	 */
@@ -101,6 +102,18 @@ public class HomeController {
 		
 		return "home";
 	}
+	/**
+	 *  umożliwia wyświetlenie zdjeć produktów na stronie głównej
+	 * aby metoda obsługiwała wyswietlanie obrazka, atrybut src znacznika img 
+	 * musi mieć postać src="/imag/{imageId}"
+	 * 
+	 * @param imageId identyfikator zdjęcia
+	 * @param response referencja do obiektu response
+	 * @param request referencja do obiektu request
+	 * @param session referencja do obiektu sesji
+	 * @param model referencja do obiektu model
+	 * @throws IOException zgłaszany w przypadku nie możności wyswietlenia zdjecia 
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/imag/{imageId}", method = RequestMethod.GET, produces="imag/*")
 	public void getImage(@PathVariable Integer imageId, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) throws IOException {

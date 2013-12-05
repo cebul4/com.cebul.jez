@@ -35,6 +35,15 @@ import com.cebul.jez.useful.JsonLicytacja;
 import com.cebul.jez.useful.JsonObject;
 import com.cebul.jez.useful.ShoppingCart;
 
+/**
+ * 
+ * @author Mateusz
+  *	Klasa działa jako kontroler w modelu MVC
+ *	używa mechanizmu DI do wstrzykiwania zależnosći
+ *	obsługuje żądania z ścieżki "/produkty/*"
+ *	ponadto zawiera metody użożliwijace wyswietlenie multimediów (obrazów)
+ *	przechowywanych w bazie danych
+ */
 @Controller
 public class ProduktyController 
 {
@@ -47,6 +56,14 @@ public class ProduktyController
 	@Autowired
 	private ShoppingCart shoppingCart;
 	
+	/**
+	 * powoduje wyświetlenie szczegółowych informacji o produkcie 
+	 * 
+	 * @param produktId identyfiaktor jednoznaczenie identyfikujacy dany produkt
+	 * @param model referencja do modelu
+	 * @param session	 referencja do obiektu sesji
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = {"/produkty/{produktId}/"}, method = RequestMethod.GET)
 	public String infoProdukt(@PathVariable Integer produktId, Model model, HttpSession session){
 		
@@ -95,12 +112,23 @@ public class ProduktyController
 		
 		return "produkt";
 	}
+	/**
+	 * 
+	 * @param model refenencja do obiektu modelu
+	 * @return zwraca logiczna nazwe widoku
+	 */
 	@RequestMapping(value = {"/produkty"})
 	public String mainProdukty(Model model)
 	{
 		return "produkt";
 	}
 	
+	/**
+	 * dodaje obiekt do koszyka (koszyk to bean o zasiegu sessji)
+	 * @param produkt produkt który ma zostać dodany do koszyka
+	 * @param model refernecja do obiektu model
+	 * @return przekierowuje na stronę koszyka
+	 */
 	@RequestMapping(value = {"/produkty/addToCart/"}, method=RequestMethod.POST)
 	public String addToCart(Produkty produkt, Model model)
 	{
@@ -120,6 +148,14 @@ public class ProduktyController
 		
 		return "redirect:/koszyk";
 	}
+	/**
+	 * umożliwia podbicie ceny licytacji przez uzytkownika
+	 * 
+	 * @param produkt produkt który jest obiektem licytacji
+	 * @param model	referencja do modelu
+	 * @param session	referencja do obiektu sesji
+	 * @return przekierowuje na strone produktu
+	 */
 	@RequestMapping(value = {"/produkty/licytuj/"}, method=RequestMethod.POST)
 	public String podbijCeneLicytuj(Produkty produkt, Model model, HttpSession session)
 	{
@@ -133,12 +169,30 @@ public class ProduktyController
 		
 		return "redirect:/produkty/"+produkt.getId()+"/";
 	}
+	/**
+	 * sprawdza dostepnosc produktu w bazie dnaych
+	 * @param model refernecja do obiektu modelu
+	 * @param idProd	identyfikator produkt
+	 * @return zwraca obiekt produktu
+	 */
 	@RequestMapping(value="/produkty/sprawdzDostepnosc.json", method = RequestMethod.GET, params="idProd")
 	public @ResponseBody ProduktyLicytuj sprawdzAukcje(Model model, @RequestParam Integer idProd) 
 	{
 		ProduktyLicytuj r = (ProduktyLicytuj) produktyService.getProdukt(idProd);
 		return r;
 	}
+	/**
+	 * umożliwia wyświetlenie obrazka na stronie klienta
+	 * aby metoda obsługiwała wyswietlanie obrazka, atrybut src znacznika img 
+	 * musi mieć postać src="/prodimag/{prodimageId}"
+	 *  
+	 * @param prodimageId identyfikator obrazu
+	 * @param response	referencja do obiektu response
+	 * @param request referencja do obiektu requet
+	 * @param session	referencja do obiektu sessji
+	 * @param model	referencja do obiektu modelu
+	 * @throws IOException zgłasza wyjatek podczas nieudanej próby wyświetlenia obrazka
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/prodimag/{prodimageId}", method = RequestMethod.GET, produces="prodimag/*")
 	public void getProdImage(@PathVariable Integer prodimageId, HttpServletResponse response, HttpServletRequest request, 

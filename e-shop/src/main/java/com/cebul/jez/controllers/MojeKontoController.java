@@ -48,6 +48,14 @@ import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.service.UserService;
 import com.cebul.jez.service.ZdjecieService;
 
+/**
+ *	Klasa działa jako kontroler w modelu MVC
+ *	używa mechanizmu DI do wstrzykiwania zależnosći
+ * obsługuje logikę zwiazaną z zarzadzeniem kontem użytkonika (np. wyświetlanie panelu użytkownika)
+ * @author Mateusz
+ * wstrzukuje: ServletContext, KategorieService, ProduktyService, ZdjecieService
+ *
+ */
 @Controller("MojeKontoController")
 public class MojeKontoController 
 {
@@ -65,16 +73,34 @@ public class MojeKontoController
 	private ZdjecieService zdjecieService;
 	
 	
+	/**
+	 * wyswietla głowny widok panelu moje Konto
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/mojekonto/")
 	public String getGlownyWidok()
 	{
 		return "mojekonto";
 	}
+	/**
+	 * wywolanie tej metody powoduje wyświetlenie pierwszego etapu dodawanie nowego produktu
+	 * @return zwraca logiczną nazwe widoku
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt")
 	public String dodajProduktForm()
 	{
 		return "wybierzRodzajProduktu";
 	}
+	/**
+	 * przekierowuje na stronę zawierajacą formularz ktory jest drugim krokiem dodawania produktu 
+	 * a w przypadku błedu na stronę głowną panelu użytkownika
+	 * 
+	 * @param model referencja do modelu
+	 * @param wybor	informacja czy produkt ma być sprzedawany jako "Kup Teraz" czy jako "Licytacja"
+	 * @param session referencja do obiektu sessji
+	 * @return przekierouje na odpowiednią stronę 
+	 * 
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt/wybierzRodzajProd" , method=RequestMethod.POST)
 	public String wybranyRodzakProd(Model model, @RequestParam(value="wyborProd") String wybor, HttpSession session)
 	{
@@ -92,13 +118,33 @@ public class MojeKontoController
 		}
 		return "redirect:/mojekonto/";
 	}
-	
+	/**
+	 * przekierowuje na stronę formularza "Kup Teraz"
+	 * @param model zawiera referencję do obiektu modelu
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt/generateFormKup")
 	public String generateUserForm(Model model)
 	{
 		model.addAttribute("produkt", new ProduktyKupTeraz());
 		return "dodajProduktKupTeraz";
 	}
+	/**
+	 * przetwarza obiekt podpiety do formularza, wysłany metodą POST
+	 * sprawdza czy nie zawiera blędów co do zawartosći pól
+	 * w przypadku wystapienia błędu (np. wpsiania ceny produktu jako ciag znaków a nie jako cyfra)
+	 * nastepuje zablokowanie formularza
+	 * poprawne wykonanie (bez błędu) powoduje dodanie obiektu do bazy oraz przekierowanie na stronę
+	 * umozliwiajacą dodanie zdjęć produktu
+	 * 
+	 * @param pk produkt typu ProduktyKupTeraz który ma zostać utrwalony w bazie dancyh
+	 * @param bindingResult referencja do obiektu bindingResult
+	 * @param model referencja do modelu
+	 * @param session referencja do obiektu sesji
+	 * @param request	referencja do obiektu request
+	 * @return zwracja logiczną nazwę widoku 
+	 * @throws Exception wystepuje pdoczas bledu zapisu do bazy danych
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt/dodajKupTeraz", method=RequestMethod.POST)
 	public String addProduktForForm(@Valid ProduktyKupTeraz pk, BindingResult bindingResult, Model model,  HttpSession session, HttpServletRequest request) throws Exception
 	{
@@ -124,6 +170,22 @@ public class MojeKontoController
 		session.setAttribute("firstAdd", "yes");
 		return "dodajZdjecie";
 	}
+	/**
+	  * przetwarza obiekt podpiety do formularza, wysłany metodą POST
+	 * sprawdza czy nie zawiera blędów co do zawartosći pól
+	 * w przypadku wystapienia błędu (np. wpsiania ceny produktu jako ciag znaków a nie jako cyfra)
+	 * nastepuje zablokowanie formularza
+	 * poprawne wykonanie (bez błędu) powoduje dodanie obiektu do bazy oraz przekierowanie na stronę
+	 * umozliwiajacą dodanie zdjęć produktu
+	 * 
+	 * @param pl produkt typu ProduktLicytuj który ma zostać utrwalony w bazie dancyh
+	 * @param bindingResult referencja do obiektu bindingResult
+	 * @param model referencja do modelu
+	 * @param session referencja do obiektu sesji
+	 * @param request referencja do obiektu request
+	 * @return zwraca logiczną nazwe widoku
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt/dodajLicytuj", method=RequestMethod.POST)
 	public String addProduktForFormLicytuj(@Valid ProduktyLicytuj pl, BindingResult bindingResult, Model model,  HttpSession session, HttpServletRequest request) throws Exception
 	{
@@ -157,6 +219,15 @@ public class MojeKontoController
 		return "dodajZdjecie";
 	}
 	
+	/**
+	 *  umożliwia wyświetlenie obrazka na stronie klienta
+	 * aby metoda obsługiwała wyswietlanie obrazka, atrybut src znacznika img 
+	 * musi mieć postać src="/images/{imageId}"
+	 * 
+	 * @param imageId identyfikator zdjecia
+	 * @param response referencja do obiektu response
+	 * @throws IOException zgłaszany w przypadku nie możności wyswietlenia zdjecia 
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/images/{imageId}", method = RequestMethod.GET, produces="image/*")
 	public void getImage(@PathVariable Integer imageId, HttpServletResponse response) throws IOException {
@@ -170,6 +241,18 @@ public class MojeKontoController
 	        IOUtils.copy(in, response.getOutputStream());  
 	    }
 	}
+	/**
+	 * dodaje zdjecie do bazy i wiaże je z dodanym wcześniej produktem
+	 * 
+	 * 	 
+	 * @param image zdjecie jakie użytkownik chce dodać do bazy
+	 * @param mainImage	określa czy zdjecie ma być uznane jako Avatar produkty
+	 * @param model referencja do obiektu modelu
+	 * @param session	referencja do obiektu sesji
+	 * @param request referencja do obiektu request
+	 * @return zwraca logiczną anzwe widoku
+	 * @throws Exception zgłaszany podczas wystapienia błedu w utrwalaniu zdjecia w bazie
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt/dodajZdjecie", method=RequestMethod.POST)
 	public String dodajZdjecie(@RequestParam(value="image", required=false) MultipartFile image, 
 			@RequestParam(value="mainImage", required=false) String mainImage, Model model,  HttpSession session, HttpServletRequest request) throws Exception
@@ -204,6 +287,13 @@ public class MojeKontoController
 		}
 		return "redirect:/mojekonto/";
 	}
+	/**
+	 * umożliwia sprawdzenie czy uploadowany obraz ma wymagany format, 
+	 * w tym przypadku dopuszczalne są obrazu jpg oraz img
+	 * 
+	 * @param image analizowany obraz
+	 * @throws Exception 	zglaszany w przypadku gdy obraz nie jest w określonym formacie
+	 */
 	public void validateImage(MultipartFile image) throws Exception 
 	{
 		if(!image.getContentType().equals("image/jpeg") && !image.getContentType().equals("image/png") && !image.getContentType().equals("image/x-png"))
@@ -211,6 +301,11 @@ public class MojeKontoController
 			throw new Exception("Plik nie ejst plikiem JPG. mam nontent= "+image.getContentType());
 		}
 	}
+	/**
+	 * umożliwia zapis uploadowanego zdjecia na dysku twardym
+	 * @param image uploadowany obraz
+	 * @param path ścieżka w której ma zostać zapsiany obraz
+	 */
 	public void saveImageOnHardDrive(MultipartFile image, String path)
 	{
 		try
@@ -222,6 +317,10 @@ public class MojeKontoController
 			System.out.println("nie moge zapisac na dysku");
 		}
 	}
+	/**
+	 * umozliwia zapis obrazu do bazy dancyh
+	 * @param image uploadowany obraz
+	 */
 	public void saveImage(MultipartFile image)
 	{
 		try{
@@ -236,6 +335,13 @@ public class MojeKontoController
 			System.out.println("nie udalo sie, przykro mi");
 		}
 	}
+	/**
+	 * przetwarza uploadownay obraz (MultipartFile) do postaci akceptowalnej 
+	 * przez bazę danych (postać tablicy)
+	 * 
+	 * @param image
+	 * @return zwraca instancję obiektu Zdjecie
+	 */
 	public Zdjecie returnImage(MultipartFile image)
 	{
 		Zdjecie zdj = new Zdjecie();
@@ -249,17 +355,33 @@ public class MojeKontoController
 		}
 		return zdj;
 	}
+	/**
+	 * powoduje zakonczenie procedsu dodawania zdjęc i wiazania dodanych zdjęć z produktem
+	 * @param session referencja do obiektu session
+	 * @return przekierowuje na stronę głowną panelu użytkownika
+	 */
 	@RequestMapping(value = "/mojekonto/dodajProdukt/zakoncz/")
 	public String zakonczaDodawanieZdj(HttpSession session)
 	{
 		session.removeAttribute("prod");
 		return "redirect:/mojekonto/";
 	}
+	/**
+	 * umozliwia przetworzenie dany z formatu string do formatu Data("yyyy-MM-dd")
+	 * metoda wykonuje się zanim binding result sprawdzi porpawnosć dancyh podpietego produktu
+	 * @param binder
+	 */
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
+	/**
+	 * wyświetla listę sprzednaych produktów przez zalogowanego uzytkownika
+	 * @param model referencja do obiektu model
+	 * @param session referencja do obiektu session
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/mojekonto/sprzedaneProdukty/")
 	public String showSprzedaneProdukty(Model model, HttpSession session)
 	{

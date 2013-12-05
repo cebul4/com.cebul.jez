@@ -18,6 +18,14 @@ import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.useful.ShoppingCart;
 
+/**
+ * 	Klasa działa jako kontroler w modelu MVC
+ *	używa mechanizmu DI do wstrzykiwania zależnosći
+ *	korzysta z obiektu shoppingCart o zasiegu sesji
+ *	wstrzykuje ProduktyService  oraz  ShoppingCart
+ * @author Mateusz
+ *
+ */
 @Controller
 @SessionAttributes("shoppingCart")
 public class KoszykController 
@@ -52,6 +60,14 @@ public class KoszykController
 		return "koszyk";
 	}
 	*/
+	/**
+	 * usuówa produk to podanym id z koszyka
+	 * 
+	 * @param produktId identyfiaktor produktu
+	 * @param model refernecja do modelu
+	 * @param session refernecja do obiektu sesji
+	 * @return zwraca logiczna nazwę widoku
+	 */
 	@RequestMapping(value = "/koszyk/usun/{produktId}/", method = RequestMethod.GET)
 	public String usunZKoszyka(@PathVariable Integer produktId, Model model,  HttpSession session) 
 	{
