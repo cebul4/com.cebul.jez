@@ -84,4 +84,21 @@ public class UserDao extends Dao
 		}
 		return false;
 	}
+	public boolean updateUser(User user)
+	{
+		Session session = getSessionFactory();
+		//session.saveOrUpdate(user);
+		User updateU = (User) session.get(User.class, user.getId());
+		updateU.setImie(user.getImie());
+		updateU.setNazwisko(user.getNazwisko());
+		updateU.setAdres(user.getAdres());
+		updateU.setPlec(user.getPlec());
+		updateU.setRok(user.getRok());
+		updateU.setMiesiac(user.getMiesiac());
+		updateU.setDzien(user.getDzien());
+		
+		session.update(updateU);
+		
+		return true;
+	}
 }

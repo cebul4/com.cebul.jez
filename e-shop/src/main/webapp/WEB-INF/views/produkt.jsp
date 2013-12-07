@@ -166,7 +166,7 @@ function sprawdzCene()
 						<div style='margin-right: 20px; margin-right: 10px; float: left; padding: 5px; border: 1px solid gray; width: 200px;'>
 								<c:choose>
 								<c:when test="${!empty produkt.zdjecie}">
-										<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/imag/${produkt.id}" />
+										<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/prodimag/${produkt.zdjecie.id}" />
 								</c:when>
 									<c:otherwise>
 										<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
@@ -184,46 +184,55 @@ function sprawdzCene()
 						<div style='padding: 3px;'>
 							
 								<c:choose>
-									<c:when test="${czyKupTeraz}">
-										<sf:form modelAttribute="produkt" action="/jez/produkty/addToCart/" method="POST">
-											<sf:input type="hidden" path="id" value="${produkt.id}" />
-											<input style="margin-left: 5px;" class="sub" type="submit" value="Kup teraz" />
-										</sf:form>
-									</c:when>
-									<c:otherwise>
+									<c:when test="${czySprzedane}">
 										<c:choose>
-											<c:when test="${!empty sessionScope.sessionUser}">
-												<span style="display:none;" id="sessionUserId">${sessionScope.sessionUser.id}</span>
-												<sf:form  modelAttribute="produkt" action="/jez/produkty/licytuj/" method="POST" onsubmit="return sprawdzCene();">
-													<sf:input type="hidden" path="id" id="id" value="${produkt.id}" />
-													<sf:input id="cenaInput" type="text" path="cena" value="${produkt.cena +1}" style="width: 60px;" />
-													<input style="margin-left: 5px;" class="sub" type="submit" value="Licytuj" /> 
-													 <span>(Do końca: ${roznicaDat} dni)</span>
+											<c:when test="${czyKupTeraz}">
+												<sf:form modelAttribute="produkt" action="/jez/produkty/addToCart/" method="POST">
+													<sf:input type="hidden" path="id" value="${produkt.id}" />
+													<input style="margin-left: 5px;" class="sub" type="submit" value="Kup teraz" />
 												</sf:form>
-												
-												<c:choose>
-													<c:when test="${ktosLicytuje}">
-														<c:choose>
-															<c:when test="${czyJaWygrywam}">
-																<span id="stanAukcji" style="color: red; font-size: 14pt;">Obecnie wygrywasz licytację.</span>
-															</c:when>
-															<c:otherwise>
-																<span id="stanAukcji" style="color: red; font-size: 14pt;">Ktoś inny wygrywa w licytacji.</span>	
-															</c:otherwise>
-														</c:choose>
-														
-													</c:when>
-													<c:otherwise>
-														<span>Nikt jeszcze nie licytuje. Bądź pierwszy</span>
-													</c:otherwise>
-												</c:choose>
-												<img style="width: 25px; display: none;" id="loadingGif" src="<c:url value='/resources/images/loading.gif' />" />
 											</c:when>
 											<c:otherwise>
-												<span style="color: red; font-size: 14pt;">Aby móc licytować musisz się zalogować!</span>	
+												<c:choose>
+													<c:when test="${!empty sessionScope.sessionUser}">
+														<span style="display:none;" id="sessionUserId">${sessionScope.sessionUser.id}</span>
+														<sf:form  modelAttribute="produkt" action="/jez/produkty/licytuj/" method="POST" onsubmit="return sprawdzCene();">
+															<sf:input type="hidden" path="id" id="id" value="${produkt.id}" />
+															<sf:input id="cenaInput" type="text" path="cena" value="${produkt.cena +1}" style="width: 60px;" />
+															<input style="margin-left: 5px;" class="sub" type="submit" value="Licytuj" /> 
+															 <span>(Do końca: ${roznicaDat} dni)</span>
+														</sf:form>
+														
+														<c:choose>
+															<c:when test="${ktosLicytuje}">
+																<c:choose>
+																	<c:when test="${czyJaWygrywam}">
+																		<span id="stanAukcji" style="color: red; font-size: 14pt;">Obecnie wygrywasz licytację.</span>
+																	</c:when>
+																	<c:otherwise>
+																		<span id="stanAukcji" style="color: red; font-size: 14pt;">Ktoś inny wygrywa w licytacji.</span>	
+																	</c:otherwise>
+																</c:choose>
+																
+															</c:when>
+															<c:otherwise>
+																<span>Nikt jeszcze nie licytuje. Bądź pierwszy</span>
+															</c:otherwise>
+														</c:choose>
+														<img style="width: 25px; display: none;" id="loadingGif" src="<c:url value='/resources/images/loading.gif' />" />
+													</c:when>
+													<c:otherwise>
+														<span style="color: red; font-size: 14pt;">Aby móc licytować musisz się zalogować!</span>	
+													</c:otherwise>
+												</c:choose>
+												
 											</c:otherwise>
 										</c:choose>
-										
+									</c:when>
+									<c:otherwise>
+										<div>
+											<span style="color: red; font-weight: bold;">Produkt został sprzedany</span>
+										</div>
 									</c:otherwise>
 								</c:choose>
 						</div>

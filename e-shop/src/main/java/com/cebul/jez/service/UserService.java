@@ -51,4 +51,9 @@ public class UserService
 	{
 		return userDao.getUser(id);
 	}
+	@Transactional
+	public boolean updateUser(User user)
+	{
+		return userDao.updateUser(user);
+	}
 }

@@ -75,15 +75,20 @@ public class ProduktyController
 		String path = katGlow.getNazwa()+" >>> "+produkt.getKategorie().getNazwa();
 		List<Kategoria> podkategorie = kategorieService.getPodKategory(katGlow.getId());
 		
+		boolean czySprzedane = false;
+		
 		boolean czyKupTeraz = false;
 		if(produkt instanceof ProduktyKupTeraz)
+		{
 			czyKupTeraz = true;
+			czySprzedane = ((ProduktyKupTeraz) produkt).isKupiony();
+		}
 		
 		boolean ktosLicytuje = false;
 		boolean czyJaWygrywam = false;
 		int diffInDays = 0;
 		if(produkt instanceof ProduktyLicytuj)
-		{
+		{		
 			User u = ((ProduktyLicytuj) produkt ).getAktualnyWlasciciel();
 			if( u != null)
 			{
@@ -97,6 +102,8 @@ public class ProduktyController
 			Date now = new Date();
 			diffInDays = (int)( (((ProduktyLicytuj) produkt).getDataZakonczenia().getTime() - now.getTime()) / (1000 * 60 * 60 * 24) );
 			diffInDays++;
+			if(diffInDays >= 0)
+				czySprzedane = true;
 			//System.out.println("roznica = "+diffInDays+1);
 		}
 		
@@ -108,6 +115,7 @@ public class ProduktyController
 		model.addAttribute("ktosLicytuje", ktosLicytuje);
 		model.addAttribute("czyJaWygrywam", czyJaWygrywam);
 		model.addAttribute("roznicaDat", diffInDays);
+		model.addAttribute("czySprzedane", czySprzedane);
 		//model.addAttribute("prod",  new Produkty());
 		
 		return "produkt";

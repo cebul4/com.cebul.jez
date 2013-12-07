@@ -53,7 +53,7 @@ import com.cebul.jez.service.ZdjecieService;
  *	używa mechanizmu DI do wstrzykiwania zależnosći
  * obsługuje logikę zwiazaną z zarzadzeniem kontem użytkonika (np. wyświetlanie panelu użytkownika)
  * @author Mateusz
- * wstrzukuje: ServletContext, KategorieService, ProduktyService, ZdjecieService
+ * wstrzukuje: ServletContext, KategorieService, ProduktyService, ZdjecieService, UserService
  *
  */
 @Controller("MojeKontoController")
@@ -71,6 +71,9 @@ public class MojeKontoController
 	
 	@Autowired
 	private ZdjecieService zdjecieService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	/**
@@ -407,5 +410,31 @@ public class MojeKontoController
 		model.addAttribute("czyKupTeraz", czyKupTeraz);
 		
 		return "sprzedaneProdukty";
+	}
+	@RequestMapping(value = "/mojekonto/modyfikujKonto/")
+	public String modyfikujKontoForm(Model model, HttpSession session)
+	{
+		User me = (User) session.getAttribute("sessionUser");
+		//User meCopy = me.
+		System.out.println("pass="+me.getPass());
+		model.addAttribute("user", me);
+		return "modyfikujKontoUser";
+	}
+	@RequestMapping(value = "/mojekonto/modyfikujKonto/zapisz/",  method=RequestMethod.POST)
+	public String updateKontoUsera(@Valid User user, BindingResult bindingResult, Model model, HttpSession session)
+	{
+		if(bindingResult.hasErrors())
+		{
+			//System.out.println("hasło has error: "+user.getPass());
+			return "redirect:/mojekonto/modyfikujKonto/";
+		}
+		
+		boolean itsDone = userService.updateUser(user);
+		if(!itsDone)
+		{
+			return "redirect:/mojekonto/modyfikujKonto/";
+		}
+		//session.setAttribute("sessionUser", arg1);
+		return "modyfikujKontoUser";
 	}
 }
