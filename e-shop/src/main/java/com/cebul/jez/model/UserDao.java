@@ -101,4 +101,21 @@ public class UserDao extends Dao
 		
 		return true;
 	}
+	
+	public void setAdmin(String login)
+	{
+		Session session = getSessionFactory();
+		User u = getUser(login);
+		
+		u.getRanga();
+		
+		
+		 if (u.getRanga().equals("user"))
+		 {
+			 u.setRanga("admin");
+			 session.update(u);
+			 
+		 }
+		
+	}
 }

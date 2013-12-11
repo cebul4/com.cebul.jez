@@ -56,4 +56,10 @@ public class UserService
 	{
 		return userDao.updateUser(user);
 	}
+	
+	@Transactional
+	public void setAdmin(String login)
+	{
+		 userDao.setAdmin(login);
+	}
 }
