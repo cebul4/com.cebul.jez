@@ -20,7 +20,7 @@
 	{
 		var val = $('#kategoria').val();
 			
-		$.getJSON( "/jez/dodajProdukt/podkategorie.json", {"podkategory": parseInt(val)})
+		$.getJSON( "/jez/dodajProdukt/podkategorie.json", {"kategory": parseInt(val)})
 			.done(function( json ) {
 			    
 			    var resp = "<option value='0'>WYBIERZ PODKATEGORIE</option>";

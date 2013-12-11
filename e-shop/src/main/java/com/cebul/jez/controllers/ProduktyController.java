@@ -3,6 +3,7 @@ package com.cebul.jez.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +15,18 @@ import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
@@ -31,6 +36,7 @@ import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zdjecie;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
+import com.cebul.jez.useful.CheckboxZdj;
 import com.cebul.jez.useful.JsonLicytacja;
 import com.cebul.jez.useful.JsonObject;
 import com.cebul.jez.useful.ShoppingCart;
@@ -102,7 +108,7 @@ public class ProduktyController
 			Date now = new Date();
 			diffInDays = (int)( (((ProduktyLicytuj) produkt).getDataZakonczenia().getTime() - now.getTime()) / (1000 * 60 * 60 * 24) );
 			diffInDays++;
-			if(diffInDays >= 0)
+			if(diffInDays < 0)
 				czySprzedane = true;
 			//System.out.println("roznica = "+diffInDays+1);
 		}
@@ -216,4 +222,182 @@ public class ProduktyController
 		    }
 	   
 	}
+	@RequestMapping(value = {"/produkty/usun/{produktId}/"}, method = RequestMethod.GET)
+	public String usunProduktZBazy(@PathVariable Integer produktId, Model model, HttpSession session){
+		produktyService.deleteProdukt(produktId);
+		return "redirect:/mojekonto/wystawioneProdukty/";
+	}
+	@RequestMapping(value = {"/produkty/edytuj/{produktId}/"}, method = RequestMethod.GET)
+	public String edytujProduktWBazie(@PathVariable Integer produktId, Model model, HttpSession session){
+		
+		User me = (User) session.getAttribute("sessionUser");
+		Produkty produkt = produktyService.getProdukt(produktId);
+		if(me != null && produkt.getUser().getId().equals(me.getId()))
+		{
+			//Collection<Zdjecie> zdjecia = produkt.getZdjecia();
+			List<Integer> zdjecia = produktyService.getZdjeciaId(produkt); 
+			
+			Kategoria katGlow = kategorieService.getMainKategory(produkt.getKategorie().getParentKategory());
+			String path = katGlow.getNazwa()+" >>> "+produkt.getKategorie().getNazwa();
+			List<Kategoria> podkategorie = kategorieService.getPodKategory(katGlow.getId());
+			
+			boolean czySprzedane = false;
+			
+			boolean czyKupTeraz = false;
+			if(produkt instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz = true;
+				czySprzedane = ((ProduktyKupTeraz) produkt).isKupiony();
+			}
+			
+			boolean ktosLicytuje = false;
+			boolean czyJaWygrywam = false;
+			int diffInDays = 0;
+			if(produkt instanceof ProduktyLicytuj)
+			{		
+				User u = ((ProduktyLicytuj) produkt ).getAktualnyWlasciciel();
+				if( u != null)
+				{
+					ktosLicytuje = true;
+					//User me =  (User) session.getAttribute("sessionUser");
+					if(me != null && u.getId().equals(me.getId()) )
+					{
+						czyJaWygrywam = true;
+					}
+				}
+				Date now = new Date();
+				diffInDays = (int)( (((ProduktyLicytuj) produkt).getDataZakonczenia().getTime() - now.getTime()) / (1000 * 60 * 60 * 24) );
+				diffInDays++;
+				if(diffInDays < 0)
+					czySprzedane = true;
+				//System.out.println("roznica = "+diffInDays+1);
+			}
+			
+			model.addAttribute("podkategorie", podkategorie);
+			model.addAttribute("produkt", produkt);
+			model.addAttribute("path", path);
+			model.addAttribute("zdjecia", zdjecia);
+			model.addAttribute("czyKupTeraz", czyKupTeraz);
+			model.addAttribute("ktosLicytuje", ktosLicytuje);
+			model.addAttribute("czyJaWygrywam", czyJaWygrywam);
+			model.addAttribute("roznicaDat", diffInDays);
+			model.addAttribute("czySprzedane", czySprzedane);
+			model.addAttribute("katGlow", katGlow.getId());
+			model.addAttribute("podKat", produkt.getKategorie().getId());
+			model.addAttribute("check", new CheckboxZdj());
+			//model.addAttribute("prod",  new Produkty());
+			return "edytujProdukt";
+		}
+		return "nieJestesSprzedajacym";
+	}
+	@RequestMapping(value = "/produkty/updateProdukt/",  method=RequestMethod.POST)
+	public String updateKontoUsera(@Valid Produkty produkt, BindingResult bindingResult, Model model, HttpSession session)
+	{
+		
+		if(bindingResult.hasErrors())
+		{
+			System.out.println("nie przechodziiiii");
+			System.out.println(bindingResult.getErrorCount());
+			System.out.println(bindingResult.toString());
+			return "redirect:/produkty/edytuj/"+produkt.getId()+"/";
+		}
+		//System.out.println(produkt.getId());
+		//produkt.setNazwa("");
+		
+		
+		//boolean itsDone = userService.updateUser(user);
+		boolean itsDone = produktyService.updateProduktInfo(produkt);
+		if(!itsDone)
+		{
+			return "redirect:/produkty/edytuj/"+produkt.getId()+"/";
+		}
+		//session.setAttribute("sessionUser", arg1);
+		return "redirect:/mojekonto/wystawioneProdukty/";
+	}
+	@RequestMapping(value = "/produkty/updateProdukt/usunZdjecie/",  method=RequestMethod.POST)
+	public String usunZdjecieZProduktu(CheckboxZdj check, @RequestParam(value="idProd", required=false) Integer idProd, Model model, HttpSession session)
+	{
+		//System.out.println(idProd);
+		Integer ch[] = check.getCheckboxs();
+		if(ch.length > 0)
+		{
+			Produkty p = produktyService.getProdukt(idProd);
+			p.removeZdj(ch);
+			produktyService.updateProdukt(p);
+		}
+		return "redirect:/produkty/edytuj/"+idProd+"/";
+	}
+	@RequestMapping(value = "/produkty/edytuj/dodajZdjecie/", method=RequestMethod.POST)
+	public String dodajZdjecieDoProduktu(@RequestParam(value="produktId", required=false) Integer produktId, @RequestParam(value="image", required=false) MultipartFile image, 
+			 Model model,  HttpSession session, HttpServletRequest request) throws Exception
+	{
+		//System.out.println(produktId);
+		Produkty p = produktyService.getProdukt(produktId);
+		//p.addZdjecie(zdj);
+		try{
+			if(!image.isEmpty())
+			{
+				validateImage(image);
+				//saveImage(image);
+				//saveImageOnHardDrive(image, "H:\\");
+				Zdjecie z = returnImage(image);
+				p.addZdjecie(z);
+				p.setZdjecie(z);
+				
+				produktyService.updateProdukt(p);
+				
+			}
+		}catch(Exception e){
+				System.out.println("przed dodaniem sie wykladam");
+				//System.out.println(e.getMessage());
+				return "redirect:/produkty/edytuj/"+produktId+"/";
+		}
+			
+		return "redirect:/produkty/edytuj/"+produktId+"/";
+	}
+	/**
+	 * umożliwia sprawdzenie czy uploadowany obraz ma wymagany format, 
+	 * w tym przypadku dopuszczalne są obrazu jpg oraz img
+	 * 
+	 * @param image analizowany obraz
+	 * @throws Exception 	zglaszany w przypadku gdy obraz nie jest w określonym formacie
+	 */
+	public void validateImage(MultipartFile image) throws Exception 
+	{
+		if(!image.getContentType().equals("image/jpeg") && !image.getContentType().equals("image/png") && !image.getContentType().equals("image/x-png"))
+		{
+			throw new Exception("Plik nie ejst plikiem JPG. mam nontent= "+image.getContentType());
+		}
+	}
+	/**
+	 * przetwarza uploadownay obraz (MultipartFile) do postaci akceptowalnej 
+	 * przez bazę danych (postać tablicy)
+	 * 
+	 * @param image
+	 * @return zwraca instancję obiektu Zdjecie
+	 */
+	public Zdjecie returnImage(MultipartFile image)
+	{
+		Zdjecie zdj = new Zdjecie();
+		try{
+			byte[] bFile  = image.getBytes();
+			zdj.setZdjecie(bFile);
+			//zdjecieService.saveZdjecie(zdj);
+		}catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		return zdj;
+	}
+	/**
+	 * umozliwia przetworzenie dany z formatu string do formatu Data("yyyy-MM-dd")
+	 * metoda wykonuje się zanim binding result sprawdzi porpawnosć dancyh podpietego produktu
+	 * @param binder
+	 */
+	@InitBinder
+    public void initBinder(WebDataBinder binder) {
+        CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
+        binder.registerCustomEditor(Date.class, editor);
+    }
+	
 }

@@ -16,8 +16,13 @@
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
 
+$( window ).load(function() {
+	var h = $("#main-right").outerHeight(true);
+	 $("#main").css("height", h+30);
+});
 $( document ).ready(function() 
 {
+
 	var test = $("#stanAukcji").val();
 	//alert(test);
 	if(test != null)
@@ -163,13 +168,13 @@ function sprawdzCene()
 				<div  style='margin-left: 75px;'>
 					<span style="font-size: 12pt; display: block; color: gray; margin-bottom: 5px;">${path}</span>
 					
-						<div style='margin-right: 20px; margin-right: 10px; float: left; padding: 5px; border: 1px solid gray; width: 200px;'>
+						<div style='margin-right: 20px; margin-right: 10px; float: left; padding: 5px; border: 1px solid gray; height: 200px;'>
 								<c:choose>
 								<c:when test="${!empty produkt.zdjecie}">
 										<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/prodimag/${produkt.zdjecie.id}" />
 								</c:when>
 									<c:otherwise>
-										<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
+										<img style="height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
 									</c:otherwise>
 								</c:choose>
 						</div>
@@ -184,7 +189,7 @@ function sprawdzCene()
 						<div style='padding: 3px;'>
 							
 								<c:choose>
-									<c:when test="${czySprzedane}">
+									<c:when test="${!czySprzedane}">
 										<c:choose>
 											<c:when test="${czyKupTeraz}">
 												<sf:form modelAttribute="produkt" action="/jez/produkty/addToCart/" method="POST">
@@ -248,7 +253,7 @@ function sprawdzCene()
 					<c:choose>
 						<c:when test="${!empty zdjecia}">
 								<c:forEach items="${zdjecia}" var="zdj"> 
-									<img style="margin: 5px; width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" />
+									<img style="margin: 5px;  height: 200px;" src="${pageContext.request.contextPath}/prodimag/${zdj}" />
 								</c:forEach>
 						</c:when>
 						<c:otherwise>

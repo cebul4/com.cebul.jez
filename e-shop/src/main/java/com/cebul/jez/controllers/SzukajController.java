@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
+import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
+import com.cebul.jez.useful.CheckBoxLicKup;
 import com.cebul.jez.useful.JsonObject;
 
 
@@ -68,26 +70,28 @@ public class SzukajController
 	 * @param szukanaFraza zawiera informację o szukanej frazie
 	 * @return
 	 */
-	@RequestMapping(value="/szukajProd/", method = RequestMethod.GET, params={"szukanaKat","szukanaFraza"})
-	public String znajdzWyszukiwarka(Model model, @RequestParam Integer szukanaKat, @RequestParam String szukanaFraza) 
+	@RequestMapping(value="/szukajProd/", method = RequestMethod.GET)
+	public String znajdzWyszukiwarka(Model model, @RequestParam(value="szukanaKat", required=true) Integer szukanaKat, @RequestParam(value="szukanaFraza", required=true) String szukanaFraza,
+			@RequestParam(value="cenaOd", required=false) Double cenaOd, @RequestParam(value="cenaDo", required=false) Double cenaDo,
+			CheckBoxLicKup chLicKup) 
 	{
 		List<Produkty> produkty;
 		List<Kategoria> podkategorie = new ArrayList<Kategoria>();
 		Boolean hasPodkategory = false;
 		
-		if(szukanaKat.equals(0))
+		String kupLic[] = chLicKup.getKupLicyt();
+		Integer podkat[] = chLicKup.getPodkat();
+		produkty =produktyService.getFullProduktyLike(szukanaFraza, szukanaKat, cenaOd, cenaDo, kupLic, podkat);
+		
+		if(!szukanaKat.equals(0))
 		{
-			produkty = produktyService.getFullProduktyLike(szukanaFraza);
-		}
-		else
-		{
-			produkty = produktyService.getFullProduktyLike(szukanaFraza, szukanaKat);
 			if(produkty.size() > 0)
 			{
 				podkategorie = kategorieService.getPodKategory(szukanaKat);
 				hasPodkategory = true;
 			}
 		}
+
 		//System.out.println(produkty.size());
 		
 		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
@@ -97,17 +101,48 @@ public class SzukajController
 			if(p instanceof ProduktyKupTeraz)
 			{
 				czyKupTeraz.add(true);
-				System.out.println("kup teraz");
+				//System.out.println("kup teraz");
 			}
 			else
 				czyKupTeraz.add(false);
 		}
-	
+		if(!szukanaKat.equals(0))
+		{
+			Kategoria k = kategorieService.getKategory(szukanaKat);
+			model.addAttribute("szukanaKat", k.getNazwa());
+		}else{
+			model.addAttribute("szukanaKat", "Wszystkie");
+		}
+		
+		if(cenaOd != null)
+		{
+			model.addAttribute("cenaOd", cenaOd);
+		}
+		if(cenaDo != null)
+		{
+			model.addAttribute("cenaDo", cenaDo);
+		}
+		if(kupLic != null)
+		{
+			for(int i=0;i<kupLic.length; i++)
+			{
+				if(kupLic[i].equals("kupTeraz"))
+				{
+					model.addAttribute("kupCheck", true);
+				}else{
+					model.addAttribute("licCheck", true);
+				}
+			}
+		}
 		
 		model.addAttribute("szukaneProdukty", produkty);
 		model.addAttribute("czyKupTeraz", czyKupTeraz);
 		model.addAttribute("podkategorie", podkategorie);
 		model.addAttribute("hasPodkategory", hasPodkategory);
+		model.addAttribute("szukKat", szukanaKat);
+		model.addAttribute("szukFraz", szukanaFraza);
+		model.addAttribute("check", new CheckBoxLicKup());
+		
 		//System.out.println(podkategorie.size());
 		
 		

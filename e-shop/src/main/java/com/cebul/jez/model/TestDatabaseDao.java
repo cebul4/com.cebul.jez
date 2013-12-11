@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -56,7 +57,7 @@ public class TestDatabaseDao
 		ProduktyLicytuj p1 = new ProduktyLicytuj("drugi produkt", "dfrugii grudii taki sobie tma pridkut", 
 				12.0, new Date(), k, z, u, new Date());
 		
-		Collection<Zdjecie> zdj = new ArrayList<Zdjecie>();
+		List<Zdjecie> zdj = new ArrayList<Zdjecie>();
 		zdj.add(z);
 		p1.setZdjecia(zdj);
 		

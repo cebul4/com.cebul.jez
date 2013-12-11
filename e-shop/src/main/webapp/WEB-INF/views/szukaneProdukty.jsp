@@ -95,14 +95,16 @@
 			
 		</div>
 		<div id='main'>
-			<div id='main-left'>
-				<form>
+			<div id='main-left' style="font-size: 10pt;">
+				<sf:form modelAttribute="check" method="GET">
 					<c:choose>
 						<c:when test="${hasPodkategory}">
 								<span style="font-weight: bold;">Podkategoria:</span>
 								</br>
 								<c:forEach items="${podkategorie}" var="element"> 
-									<input type="checkbox" name="kat${element.id}" value="${element.id}"  />${element.nazwa}
+									
+									<sf:checkbox path="podkat" style="width: 50px;"  value="${element.id}" />
+									<span style="font-size: 10pt;">${element.nazwa}</span>
 									</br>
 								</c:forEach>
 								</br>
@@ -110,21 +112,56 @@
 					</c:choose>
 					<span style="font-weight: bold;">Cena:</span>
 					</br>
-					od:<Input type="text" name="cenaOd" id="cenaOd" style="width: 40px; height: 20px;" />
-					do:<Input type="text" name="cenaDo" id="cenaDo" style="width: 40px; height: 20px;"/>
+					<input type="hidden" name="szukanaFraza" value="${szukFraz}" />
+					<input type="hidden" name="szukanaKat" value="${szukKat}" />
+					<c:choose>
+							<c:when test="${!empty cenaOd}">
+								od:<Input type="text" value="${cenaOd }" name="cenaOd" id="cenaOd" style="width: 40px; height: 20px;" />
+							</c:when>
+							<c:otherwise>
+								od:<Input type="text" name="cenaOd" id="cenaOd" style="width: 40px; height: 20px;" />
+							</c:otherwise>
+					</c:choose>
+					<c:choose>
+							<c:when test="${!empty cenaDo}">
+								do:<Input value="${cenaDo }" type="text" name="cenaDo" id="cenaDo" style="width: 40px; height: 20px;"/>
+							</c:when>
+							<c:otherwise>
+								do:<Input type="text" name="cenaDo" id="cenaDo" style="width: 40px; height: 20px;"/>
+							</c:otherwise>
+					</c:choose>
+					
 					</br>
 					</br>
 					<span style="font-weight: bold;">Licytuj / KupTeraz</span>
 					</br>
-					<input style="width: 15px;" type="checkbox" name="kupTeraz" value="tak"  />Kup Teraz
+					<c:choose>
+						<c:when test="${kupCheck}">
+							<sf:checkbox checked="checked" path="kupLicyt" style="width: 50px;"  value="kupTeraz" />Kup Teraz
+						</c:when>
+						<c:otherwise>
+							<sf:checkbox path="kupLicyt" style="width: 50px;"  value="kupTeraz" />Kup Teraz
+						</c:otherwise>
+					</c:choose>
 					</br>
-					<input style="width: 15px;" type="checkbox" name="licytuj" value="tak"  />Licytuj
+					
+					<c:choose>
+						<c:when test="${licCheck}">
+							<sf:checkbox checked="checked" path="kupLicyt" style="width: 50px;"  value="licytuj" />Licytuj
+						</c:when>
+						<c:otherwise>
+							<sf:checkbox path="kupLicyt" style="width: 50px;"  value="licytuj" />Licytuj
+						</c:otherwise>
+					</c:choose>
+					
 					</br>
-					<input class="sub" style="margin-left: 0px;" type="submit" value="Szukaj" />
-				</form>
+					</br>
+					<input class="sub" style="margin-left: 0px;" type="submit" value="Filtruj" />
+				</sf:form>
 								
 			</div>
 			<div id='main-right' style='padding-left: 10px; overflow-y: scroll;overflow-x:hidden;'>
+				<span style="font-size: 16pt; color: #8AC74A;">Produkty z kategorii: ${szukanaKat}</span>
 				<c:forEach items="${szukaneProdukty}" var="element" varStatus="status"> 
 					<a style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
 						<div style="float: left; width: 800px; border-bottom: 1px solid #DDDDDD">

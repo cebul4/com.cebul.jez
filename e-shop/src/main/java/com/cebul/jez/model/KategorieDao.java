@@ -54,5 +54,10 @@ public class KategorieDao
 	
 		return result;
 	}
+	public Kategoria getKategory(Integer id)
+	{
+		Session session = getSessionFactory();
+		return (Kategoria)session.get(Kategoria.class, id);
+	}
 	
 }

@@ -91,4 +91,24 @@ public class ProduktyService
 	{
 		return produktyDao.getSprzedaneProdukty(u);
 	}
+	@Transactional
+	public List<Produkty> getWystawioneProdukty(User u)
+	{
+		return produktyDao.getWystawioneProdukty(u);
+	}
+	@Transactional
+	public boolean updateProduktInfo(Produkty p)
+	{
+		return produktyDao.updateProduktInfo(p);
+	}
+	@Transactional
+	public boolean deleteProdukt(Integer produktId)
+	{
+		return produktyDao.deleteProdukt(produktId);
+	}
+	@Transactional
+	public List<Produkty> getFullProduktyLike(String like, Integer kategoria, Double cenaOd, Double cenaDo, String []kupLic, Integer []podkat)
+	{
+		return produktyDao.getFullProduktyLike(like, kategoria, cenaOd, cenaDo, kupLic, podkat);
+	}
 }

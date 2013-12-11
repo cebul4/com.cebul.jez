@@ -437,4 +437,30 @@ public class MojeKontoController
 		//session.setAttribute("sessionUser", arg1);
 		return "modyfikujKontoUser";
 	}
+	@RequestMapping(value = "/mojekonto/wystawioneProdukty/")
+	public String showWystawioneProdukty(Model model, HttpSession session)
+	{
+		User me = (User) session.getAttribute("sessionUser");
+		List<Produkty> sprzedaneProdukty = (List<Produkty>)produktyService.getWystawioneProdukty(me);
+		//System.out.println("size= "+sprzedaneProdukty.size());
+		//System.out.println("id Pierwszego = "+sprzedaneProdukty.get(0).getId());
+		
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		for(Produkty p : sprzedaneProdukty)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				//System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
+		
+		model.addAttribute("sprzedane", sprzedaneProdukty);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		
+		return "wystawioneProdukty";
+	}
 }

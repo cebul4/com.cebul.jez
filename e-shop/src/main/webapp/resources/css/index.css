@@ -16,7 +16,7 @@ body{
 #main
 {
 	width: 1000px;
-	height: 750px;
+	min-height: 750px;
 	
 }
 #bottom
@@ -76,7 +76,7 @@ body{
 	padding-left: 20px;
 	padding-top: 20px;
 	width: 780px;
-	height: 730px;
+	min-height: 730px;
 	float: left;
 	
 }

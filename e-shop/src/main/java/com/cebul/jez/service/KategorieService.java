@@ -37,4 +37,9 @@ public class KategorieService
 	{
 		return kategorieDao.getMainKategory(podkategoria);
 	}
+	@Transactional
+	public Kategoria getKategory(Integer id)
+	{
+		return kategorieDao.getKategory(id);
+	}
 }

@@ -38,12 +38,13 @@ public class DodajProduktyController
 	 * @param kategory identyfikator kategorii dla której szukane są podkategorie
 	 * @return zwraca obiekt JSon zawierajacy podkategorie
 	 */
-	@RequestMapping(method = RequestMethod.GET, params="podkategory")
+	@RequestMapping(method = RequestMethod.GET, params="kategory")
 	public @ResponseBody JsonKat znajdzWyszukiwarka(Model model, @RequestParam Integer kategory) 
 	{
 		List<Kategoria> r = kategorieService.getPodKategory(kategory);
 		JsonKat jso = new JsonKat();
 		jso.generateKategorie(r);
+		//System.out.println("jestemmm tutaj");
 		
 		return jso;
 	}

@@ -30,8 +30,8 @@ public class ProduktyDao extends Dao
 		String l = "%"+like+"%";
 		Session session = getSessionFactory();
 		Query query = session.createQuery("select p.nazwa from Produkty p where " +
-				" p.nazwa LIKE :like and  (p.id in (select i2.id from ProduktyKupTeraz i2 ) " +
-				"or p.id in (select id2.id from ProduktyLicytuj id2 ))  GROUP BY p.nazwa ")
+				" p.nazwa LIKE :like and  (p.id in (select i2.id from ProduktyKupTeraz i2 WHERE i2.kupiony = false) " +
+				"or p.id in (select id2.id from ProduktyLicytuj id2 WHERE id2.dataZakonczenia >= CURRENT_DATE() ))  GROUP BY p.nazwa ")
 				.setParameter("like", l);
 		List<String> result = new ArrayList<String>();
 		if(!query.list().isEmpty())
@@ -47,8 +47,8 @@ public class ProduktyDao extends Dao
 				"left join fetch p.kategorie as kat where " +
 				"kat.id IN (select k.id from Kategoria k left join k.parentKategory as parentK " +
 				"WHERE parentK.id = :kategoria ) and p.nazwa LIKE :like " +
-				"and (p.id in (select i2.id from ProduktyKupTeraz i2 ) " +
-				"or p.id in (select id2.id from ProduktyLicytuj id2 ) GROUP BY p.nazwa )  ")
+				"and (p.id in (select i2.id from ProduktyKupTeraz i2 WHERE i2.kupiony = false ) " +
+				"or p.id in (select id2.id from ProduktyLicytuj id2 id2.dataZakonczenia >= CURRENT_DATE() ) GROUP BY p.nazwa )  ")
 				.setParameter("like", l).setParameter("kategoria", kategoria);
 		List<String> result = new ArrayList<String>();
 		if(!query.list().isEmpty())
@@ -73,9 +73,84 @@ public class ProduktyDao extends Dao
 				"left join fetch p.kategorie as kat where " +
 				"kat.id IN (select k.id from Kategoria k left join k.parentKategory as parentK " +
 				"WHERE parentK.id = :kategoria ) and p.nazwa LIKE :like " +
-				"and (p.id in (select i2.id from ProduktyKupTeraz i2 ) " +
-				"or p.id in (select id2.id from ProduktyLicytuj id2 )  )  ")
+				"and (p.id in (select i2.id from ProduktyKupTeraz i2 WHERE i2.kupiony = false ) " +
+				"or p.id in (select id2.id from ProduktyLicytuj id2 WHERE id2.dataZakonczenia >= CURRENT_DATE() )  )  ")
 				.setParameter("like", l).setParameter("kategoria", kategoria);
+		List<Produkty> result = new ArrayList<Produkty>();
+		if(!query.list().isEmpty())
+			result = query.list();
+		
+		return result;
+	}
+	
+	public List<Produkty> getFullProduktyLike(String like, Integer kategoria, Double cenaOd, Double cenaDo, String []kupLic, Integer []podkat)
+	{
+		String l = "%"+like+"%";
+		Session session = getSessionFactory();
+		
+		// wpisanie do tabeli Historia wyszukiwania
+		Kategoria k = (Kategoria) session.get(Kategoria.class, kategoria);
+		Hist_Wyszuk hw = new Hist_Wyszuk();
+		hw.setData(new Date());
+		hw.setKategoria(k);
+		session.save(hw);
+		//////
+		
+		String sql = "from Produkty p " +
+				"left join fetch p.kategorie as kat where " +
+				"p.nazwa LIKE :like ";
+		if(cenaOd != null)
+		{
+			sql += "AND p.cena >= "+cenaOd+" ";
+		}
+		if(cenaDo != null)
+		{
+			sql += "AND p.cena <= "+cenaDo+" ";
+		}
+		if(podkat != null)
+		{
+			String tmp = "";
+			for(int i=0;i<podkat.length;i++)
+			{
+				if(i == podkat.length-1)
+				{
+					tmp += podkat[i];
+				}else{
+					tmp += podkat[i]+",";
+				}
+			}
+			sql += " AND kat.id IN ("+tmp+") ";
+		}else{
+			if(!kategoria.equals(0))
+			{
+				sql += " AND kat.id IN (select k.id from Kategoria k left join k.parentKategory as parentK " +
+					"WHERE parentK.id = "+kategoria+" )";
+			}
+		}
+		if(kupLic != null && kupLic.length>0)
+		{
+			int tmp = kupLic.length;
+			System.out.println("kupLic rozmiar = "+tmp);
+			if(tmp < 2)
+			{
+				if(kupLic[0].equals("kupTeraz"))
+				{
+					sql += "and p.id in (select i2.id from ProduktyKupTeraz i2 WHERE i2.kupiony = false ) ";
+				}else
+				{
+					sql += "and p.id in (select id2.id from ProduktyLicytuj id2 WHERE id2.dataZakonczenia >= CURRENT_DATE() )   ";
+				}
+			}else{
+				sql += "and (p.id in (select i2.id from ProduktyKupTeraz i2 WHERE i2.kupiony = false ) " +
+						"or p.id in (select id2.id from ProduktyLicytuj id2 WHERE id2.dataZakonczenia >= CURRENT_DATE() )  )  ";
+			}
+		}else{
+			sql += "and (p.id in (select i2.id from ProduktyKupTeraz i2 WHERE i2.kupiony = false ) " +
+				"or p.id in (select id2.id from ProduktyLicytuj id2 WHERE id2.dataZakonczenia >= CURRENT_DATE() )  )  ";
+		}
+		System.out.println(sql);
+		Query query = session.createQuery(sql)
+				.setParameter("like", l);
 		List<Produkty> result = new ArrayList<Produkty>();
 		if(!query.list().isEmpty())
 			result = query.list();
@@ -95,8 +170,8 @@ public class ProduktyDao extends Dao
 				
 		Query query = session.createQuery("from Produkty p " +
 				"WHERE p.nazwa LIKE :like " +
-				"and (p.id in (select i2.id from ProduktyKupTeraz i2 ) " +
-				"or p.id in (select id2.id from ProduktyLicytuj id2 )  )  ")
+				"and (p.id in (select i2.id from ProduktyKupTeraz i2  WHERE i2.kupiony = false ) " +
+				"or p.id in (select id2.id from ProduktyLicytuj id2 WHERE id2.dataZakonczenia >= CURRENT_DATE() )  )  ")
 				.setParameter("like", l);
 		List<Produkty> result = new ArrayList<Produkty>();
 		if(!query.list().isEmpty())
@@ -249,5 +324,60 @@ public class ProduktyDao extends Dao
 		return resultFinal;
 		//return result;
 		
+	}
+	public List<Produkty> getWystawioneProdukty(User u)
+	{
+		Session session = getSessionFactory();
+		
+		Query query = session.createQuery("from Produkty p inner join p.user as us WHERE us.id = :idW AND " +
+				"p.id in (select pk.id from ProduktyKupTeraz pk WHERE pk.kupiony = false) " +
+				"OR " +
+				"p.id in (select pl.id from ProduktyLicytuj pl left join pl.aktualnyWlasciciel as w " +
+				"WHERE pl.dataZakonczenia >= CURRENT_DATE() " +
+				"AND w.id is not null) ").setParameter("idW", u.getId() );
+		
+		List<Object> result = new ArrayList<Object>();
+		result =  query.list();
+		
+		List<Produkty> resultFinal = new ArrayList<Produkty>();
+
+		Object[] ob;
+		int index = 0;
+		for(Object o : result)
+		{
+			ob = (Object[]) result.get(index);
+			for(int i=0;i<ob.length; i++)
+			{
+				if(ob[i] instanceof Produkty)
+				{
+					resultFinal.add((Produkty)ob[i]);
+				}
+			}
+			index++;
+		}
+				
+		return resultFinal;
+		//return result;
+		
+	}
+	public boolean updateProduktInfo(Produkty p)
+	{
+		Session session = getSessionFactory();
+		Produkty produkt = (Produkty) session.get(Produkty.class, p.getId());
+		Kategoria kat = (Kategoria) session.get(Kategoria.class, p.getKategorie().getId());
+		//System.out.println(kat.getNazwa());
+		produkt.setKategorie(kat);
+		produkt.setNazwa(p.getNazwa());
+		produkt.setOpis(p.getOpis());
+		session.update(produkt);
+		
+		return true;
+	}
+	public boolean deleteProdukt(Integer produktId)
+	{
+		Session session = getSessionFactory();
+		Produkty p = (Produkty) session.get(Produkty.class, produktId);
+		session.delete(p);
+		return true;
 	}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,27 +51,27 @@ public class Produkty implements Serializable{
 	@NotNull
 	private Date dataDodania;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch=FetchType.EAGER)
 	@JoinColumn(name="IdKat")
 	private Kategoria kategorie;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch=FetchType.EAGER)
 	@JoinColumn(name="IdZdjGlow")
 	private Zdjecie zdjecie;
 	
-	@OneToOne(cascade=CascadeType.REFRESH, fetch=FetchType.LAZY)
+	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch=FetchType.LAZY)
 	@JoinColumn(name="IdWlas")
 	private User user;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinTable(name = "prod_zdj", joinColumns = { @JoinColumn(name = "IdProdukt") }, 
 	inverseJoinColumns = { @JoinColumn(name = "IdZdjecia") })
-	private Collection<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
+	private List<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
 	
-	public Collection<Zdjecie> getZdjecia() {
+	public List<Zdjecie> getZdjecia() {
 		return zdjecia;
 	}
-	public void setZdjecia(Collection<Zdjecie> zdjecia) {
+	public void setZdjecia(List<Zdjecie> zdjecia) {
 		this.zdjecia = zdjecia;
 	}
 	public Produkty()
@@ -158,7 +159,32 @@ public class Produkty implements Serializable{
 	{
 		this.zdjecia.add(zdj);
 	}
-	
+	public void removeZdj(Integer []rem)
+	{
+		List<Zdjecie> remZdj = new ArrayList<Zdjecie>();
+		for(int i=0; i<rem.length; i++)
+		{
+			for(Zdjecie z : zdjecia)
+			{
+				if(z.getId().equals(rem[i]))
+				{
+					remZdj.add(z);
+					if(z.getId().equals(zdjecie.getId()) )
+					{
+						setZdjecie(null);
+					}
+					//zdjecia.remove(z);
+				}
+			}
+		}
+		zdjecia.removeAll(remZdj);
+		if(zdjecia.size() > 0)
+		{
+			setZdjecie(getZdjecia().get(0));
+		}else{
+			setZdjecie(null);
+		}
+	}
 	
 	
 	
