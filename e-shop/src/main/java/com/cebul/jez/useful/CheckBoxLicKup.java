@@ -19,5 +19,5 @@ public class CheckBoxLicKup
 		this.podkat = podkat;
 	}
 
-	
+	//sakjdghksaikdsa
 }
