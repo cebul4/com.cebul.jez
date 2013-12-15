@@ -185,7 +185,27 @@ public class Produkty implements Serializable{
 			setZdjecie(null);
 		}
 	}
+	@Override
+	public boolean equals(Object o) {
+		
+		if(o == null)
+	        return false;
+
+	    if(!(o instanceof Produkty))
+	        return false;
+	    
+	    Produkty p = (Produkty) o;
+	    
+	    if(!getId().equals(p.getId()) )
+	    		return false;
+	    
+	    return true;
+	}
 	
-	
+	public int hashcode() {
+	    int hash = 3;
+	    hash = 47 * hash + getNazwa().hashCode() + getId().hashCode();
+	    return hash;
+	}
 	
 }

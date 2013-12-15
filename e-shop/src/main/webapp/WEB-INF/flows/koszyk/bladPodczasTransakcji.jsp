@@ -96,11 +96,25 @@
 		<div id='main'>
 			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
 				
-				<span style="margin-top: 30px; font-size: 16pt; font-weight: bold;">Dziękujemy za dokonanie zakupu. </span>
-				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Zapraszamy ponownie.</span>
+				<span style="margin-top: 30px; font-size: 16pt; font-weight: bold;">Podczas zatwierdzania transakcji wystąpił błąd. </span>
+				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Niektóre przedmioty które znajdowały się w koszyku, właśnie zostały kupione przez innego uzytkownika.</span>
 				</br>
 				</br>
-				<a id="zatw" href="${flowExecutionUrl}&_eventId=zakoncz" style="color: white; fony-weight: bold; background-color: #8AC74A; text-decoration: none; width: 200px; text-align: center; padding: 5px;" >Zakończ </a>
+				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Błędne przedmioty to:</span>
+				<table id='tabInfo'>
+				<c:forEach items="${zleProd}" var="element"> 
+					<tr>
+					
+						<td style="color: red; font-size: 16pt; text-decoration: underline;">${element.nazwa}</td><td style="color: red; font-size: 14pt; ">${element.cena} zł</td>
+					</tr>
+				</c:forEach>
+				</table>
+				</br>
+				</br>
+				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Koszyk został z nich oczyszczony.</span>
+				</br>
+				</br>
+				<a id="zatw" href="${flowExecutionUrl}&_eventId=bladTrans" style="color: white; fony-weight: bold; background-color: #8AC74A; text-decoration: none; width: 200px; text-align: center; padding: 5px;" >Powrót do koszyka</a>
 			</div>
 		</div>
 		</div>

@@ -37,6 +37,27 @@ public class ProduktyKupTeraz extends Produkty implements Serializable
 		this.kupiony = kupiony;
 	}
 
-	
+	@Override
+	public boolean equals(Object o) {
+		
+		if(o == null)
+	        return false;
+
+	    if(!(o instanceof ProduktyKupTeraz))
+	        return false;
+	    
+	    ProduktyKupTeraz p = (ProduktyKupTeraz) o;
+	    
+	    if(!getId().equals(p.getId()) )
+	    		return false;
+	    
+	    return true;
+	}
+	@Override
+	public int hashcode() {
+	    int hash = 3;
+	    hash = 47 * hash + getNazwa().hashCode() + getId().hashCode();
+	    return hash;
+	}
 	
 }

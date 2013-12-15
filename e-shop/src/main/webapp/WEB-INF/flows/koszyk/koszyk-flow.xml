@@ -62,9 +62,19 @@
 	
 	<action-state id="zapiszZamowienie">
 		<evaluate expression="koszykBeanFlow.zapiszZamowienie(zamowienie)" />
-		<transition  to="zakonczFlow"></transition>
+		<transition  to="isTransactionOK"></transition>
 	</action-state>
 	
+	<decision-state id="isTransactionOK">
+		<if test="koszykBeanFlow.isTransactionOK()" then="zakonczFlow" else="bladPodczasTransakcji" />
+	</decision-state>
+	
+	<view-state id="bladPodczasTransakcji">
+		<on-render>
+   			 <evaluate expression="koszykBeanFlow.getJuzKupione()" result="viewScope.zleProd" />
+   		</on-render>
+		<transition  to="start"></transition>
+	</view-state>
 	
 	<view-state id="zakonczFlow">
 		<transition  to="endState"></transition>

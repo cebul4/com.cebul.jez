@@ -111,4 +111,9 @@ public class ProduktyService
 	{
 		return produktyDao.getFullProduktyLike(like, kategoria, cenaOd, cenaDo, kupLic, podkat);
 	}
+	@Transactional
+	public List<Produkty> sprawdzProdukty(List<Produkty> produkty)
+	{
+		return produktyDao.sprawdzProdukty(produkty);
+	}
 }

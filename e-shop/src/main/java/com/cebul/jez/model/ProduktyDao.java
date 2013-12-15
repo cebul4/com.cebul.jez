@@ -380,4 +380,30 @@ public class ProduktyDao extends Dao
 		session.delete(p);
 		return true;
 	}
+	public List<Produkty> sprawdzProdukty(List<Produkty> produkty)
+	{
+		String s = "";
+		int index = 0;
+		int len = produkty.size() - 1;
+		for(Produkty p : produkty)
+		{
+			if(index == len)
+				s += p.getId().toString();
+			else
+				s += p.getId().toString()+",";
+			index++;
+		}
+		
+		Session session = getSessionFactory();
+		Query query = session.createQuery("from Produkty p WHERE " +
+				"p.id in (select pk.id from ProduktyKupTeraz pk WHERE pk.kupiony = true AND pk.id in ("+s+") )");
+		
+		List<Produkty> result = new ArrayList<Produkty>();
+		result = (List<Produkty>)query.list();
+		
+		if(result.size() > 0)
+			return result;
+		
+		return null;
+	}
 }

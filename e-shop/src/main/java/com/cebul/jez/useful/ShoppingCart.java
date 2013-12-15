@@ -56,6 +56,11 @@ public class ShoppingCart implements Serializable
 	public void setSuma(Double suma) {
 		this.suma = suma;
 	}
+	public void clear()
+	{
+		this.items = new ArrayList<Produkty>();
+		this.suma = 0.0;
+	}
 	
 	
 }

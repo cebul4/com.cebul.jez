@@ -34,10 +34,21 @@ public class KoszykFlowBean
 	@Autowired
 	private UserService userService;
 	
+	private List<Produkty> juzKupione;
+	
 	public KoszykFlowBean()
 	{
 		
 	}
+	
+	public List<Produkty> getJuzKupione() {
+		return juzKupione;
+	}
+
+	public void setJuzKupione(List<Produkty> juzKupione) {
+		this.juzKupione = juzKupione;
+	}
+
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
@@ -117,9 +128,34 @@ public class KoszykFlowBean
 	public void zapiszZamowienie(Zamowienie zamowienie)
 	{
 		zamowienie.setData(new Date());
-		zamowienieService.zapiszZamowienie(zamowienie);
-		produktyService.setKupione(zamowienie.getProdukty());
-		shoppingCart = new ShoppingCart();
+		this.juzKupione = zamowienieService.zapiszZamowienie(zamowienie);
+		if(juzKupione == null)
+		{
+			shoppingCart.clear();
+		}else{
+			//shoppingCart.getItems().removeAll(juzKupione);
+			// zrobione w ten sposb poniewaz podczas usuwania rzuca wyjatkiem 
+			//java.util.ConcurrentModificationException
+			for(Produkty p : juzKupione)
+			{
+				shoppingCart.addToSum(-p.getCena());
+			}
+			List<Produkty> good = shoppingCart.getItems();
+			good.removeAll(juzKupione);
+			//System.out.println("good size = "+good.size());
+			shoppingCart.setItems(good);
+			//System.out.println("shopping cart size = "+shoppingCart.getItems().size());
+			
+		}
+		
+	}
+	public boolean isTransactionOK()
+	{
+		if(juzKupione == null)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 }
