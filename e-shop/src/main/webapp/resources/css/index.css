@@ -148,3 +148,21 @@ body{
 {
 	background-color: #8AC74A;
 }
+.tabInfo{
+	
+	padding: 10px;
+}
+.tabInfo td{
+	padding: 5px;
+	font-size: 16pt;
+}
+#edytujLink
+{
+	color: red;
+	text-decoration: none;
+}
+#edytujLink:hover
+{
+	color: #8AC74A;
+	text-decoration: underline;
+}

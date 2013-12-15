@@ -151,7 +151,7 @@ function doAjaxPost()
 		<div id='main'>
 		<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/dodajProdukt' />">Dodaj Produkt</a>
-				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneProdukty' />">Wystawione Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneProdukty/' />">Wystawione Produkty</a>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/sprzedaneProdukty' />">Sprzedane Produkty</a>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/modyfikujKonto' />">Modyfikuj kontot</a>
 								

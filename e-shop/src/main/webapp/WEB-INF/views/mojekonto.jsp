@@ -10,8 +10,8 @@
 	<meta content="pl" http-equiv="Content-Language">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>e-shop</title>
-<link href="${pageContext.request.contextPath}/resources/css/index.css"
-	type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
@@ -101,8 +101,63 @@
 				<a class="categorieLeft" href="<c:url value='/mojekonto/modyfikujKonto/' />">Modyfikuj kontot</a>
 								
 			</div>
-			<div id='main-right'>
-				<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" />
+			<div id='main-right' align="center">
+				<p style="font-size: 16pt; color: #8AC74A;" >Dane dotyczace Twojego konta:</p>
+				<table style="padding: 10px;" class="tabInfo" >
+					<tr>
+						<td>Login:</td>
+						<td>${sessionUser.login}</td>
+					</tr>
+					<tr>
+						<td>Imię:</td>
+						<td>${sessionUser.imie}</td>
+					</tr>
+					<tr>
+						<td>Nazwisko:</td>
+						<td>${sessionUser.nazwisko}</td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td>${sessionUser.email}</td>
+					</tr>
+					<tr>
+						<td>Płeć:</td>
+						<c:choose>
+							<c:when test="${sessionUser.plec == 'm'}">
+								<td>mężczyzna</td>
+							</c:when>
+							<c:otherwise>
+								<td>kobieta</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
+					<tr>
+						<td>Data urodz. :</td>
+						<td>${sessionUser.rok} -
+							<c:choose>
+								<c:when test="${sessionUser.miesiac >= 10}">
+									${sessionUser.miesiac} -
+								</c:when>
+								<c:otherwise>
+									0${sessionUser.miesiac} -
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${sessionUser.dzien >= 10}">
+									${sessionUser.dzien}
+								</c:when>
+								<c:otherwise>
+									0${sessionUser.dzien}
+								</c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+					<tr>
+						<td>Ranga:</td>
+						<td>${sessionUser.ranga}</td>
+					</tr>
+				</table>
+				<a id="edytujLink"  href="<c:url value='/mojekonto/modyfikujKonto/' />" >Edytuj dane</a>
 			</div>
 		</div>
 		<div id='bottom'>

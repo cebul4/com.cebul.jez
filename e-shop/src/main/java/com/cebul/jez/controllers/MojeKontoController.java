@@ -83,6 +83,7 @@ public class MojeKontoController
 	@RequestMapping(value = "/mojekonto/")
 	public String getGlownyWidok()
 	{
+		
 		return "mojekonto";
 	}
 	/**
