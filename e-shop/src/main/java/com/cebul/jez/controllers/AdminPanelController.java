@@ -90,11 +90,29 @@ public class AdminPanelController
 		return "panel";
 	}
 	
+	
+	/**
+	 * @author Robert
+	 * Funkcja dodawania admina
+	 * Obsługuje żądania inne niż POST
+	 * @param model - dostep do modelu
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/panel/dodajAdmina")
 	public String addAdmin(Model model)
 	{
 		return "/dodajAdmina";
 	}
+	
+	/**
+	 * @author Robert
+	 * Funckja obsługuje dodoawanie admina poprzez formularz
+	 * Dodawanie admina poprzez podanie loginu
+	 * @param model - dostęp do modelu
+	 * @param addLogin - zmienna przechowująca login podany z formularza
+	 * @param session - atrybut sesji
+	 * @return - po poprawnym dodaniu admina przekierowuje do strony głównej admina
+	 */
 	@RequestMapping(value = "/panel/dodajAdmina", method=RequestMethod.POST)
 	public String addAdminFromLogin(Model model, @RequestParam(value="login") String addLogin, HttpSession session)
 	{
@@ -103,186 +121,54 @@ public class AdminPanelController
 				
 		return "redirect:/admin_home/";
 	}
-	/*@RequestMapping(value = "/panel/dodajProdukt")
-	public String dodajProduktForm()
+	
+	/**
+	 * @author Robert
+	 * Funkcja dodawanie Kategorii
+	 * Obsługa metod innych niż POST
+	 * @param model - dodaje do modelu nowy Obiekt Kategoria
+	 * @return zwraca logiczną nazwę widoku
+	 * 
+	 */
+	@RequestMapping(value= "/panel/dodajKategorie")
+	public String addKatForm(Model model)
 	{
-		return "wybierzRodzajProduktu";
+		model.addAttribute(new Kategoria());
+		
+		return "dodajKategorie";
 	}
-	@RequestMapping(value = "/panel/dodajProdukt/wybierzRodzajProd" , method=RequestMethod.POST)
-	public String wybranyRodzakProd(Model model, @RequestParam(value="wyborProd") String wybor, HttpSession session)
+	
+	/**
+	 * @author Robert
+	 * Dodawanie kategorii poprzez formularz
+	 * obsługa żądań typu POST
+	 * 
+	 * @param kategoria - obiekt typu Kategoria do przetworzenia z formularza
+	 * @param bindingResult - zwraca błędy przesyłu
+	 * @param model - dostęp do modelu
+	 
+	 * @return zwraca logiczna nazwę widoku
+	 */
+	@RequestMapping(value= "/panel/dodajKategorie", method= RequestMethod.POST)
+	public String addKatFromForm(@Valid Kategoria kategoria, BindingResult bindingResult, Model model)
 	{
-		List<Kategoria> kat = kategorieService.getMainKategory();
-		model.addAttribute("MainKat", kat);
-		if(wybor.equals("KupTeraz"))
+		if (bindingResult.hasErrors())
 		{
-			model.addAttribute("produkt", new ProduktyKupTeraz());
-			return "dodajProduktKupTeraz";
-			//return "redirect:/mojekonto/dodajProdukt/generateFormKup";
-		}else if(wybor.equals("Licytuj"))
-		{
-			model.addAttribute("produkt", new ProduktyLicytuj());
-			return "dodajProduktLicytuj";
+			return "/dodajKategorie";
+			
 		}
+		
+		boolean add = kategorieService.addKategoria(kategoria);
+		
+		if (!add)
+		{
+			return "/dodajKategorie";
+		}
+		
+		
 		return "redirect:/panel/";
 	}
 	
-	@RequestMapping(value = "/panel/dodajProdukt/generateFormKup")
-	public String generateUserForm(Model model)
-	{
-		model.addAttribute("produkt", new ProduktyKupTeraz());
-		return "dodajProduktKupTeraz";
-	}
-	@RequestMapping(value = "/panel/dodajProdukt/dodajKupTeraz", method=RequestMethod.POST)
-	public String addProduktForForm(@Valid ProduktyKupTeraz pk, BindingResult bindingResult, Model model,  HttpSession session, HttpServletRequest request) throws Exception
-	{
-		if(bindingResult.hasErrors())
-		{
-			model.addAttribute("produkt", pk);
-			model.addAttribute(bindingResult);
-			bindingResult.reject("zleeeeee");
-			System.out.println(bindingResult.getAllErrors());
-			//model.addAttribute("produkt", new ProduktyKupTeraz());
-			//return "redirect:/mojekonto/dodajProdukt/generateFormKup";
-			return "dodajProduktKupTeraz";
-		}
-		User u = (User) session.getAttribute("sessionUser");
-		pk.setUser(u);
-		boolean itsDone = produktyService.saveProduktKupTeraz(pk);
-		if(!itsDone)
-		{
-			
-			return "/panel/dodajProdukt/";
-		}
-		session.setAttribute("prod", pk);
-		session.setAttribute("firstAdd", "yes");
-		return "dodajZdjecie";
-	}
-	@RequestMapping(value = "/panel/dodajProdukt/dodajLicytuj", method=RequestMethod.POST)
-	public String addProduktForFormLicytuj(@Valid ProduktyLicytuj pl, BindingResult bindingResult, Model model,  HttpSession session, HttpServletRequest request) throws Exception
-	{
-		//pl.setDataZakonczenia(new Date());
-		if(bindingResult.hasErrors())
-		{
-			model.addAttribute("produkt", pl);
-			model.addAttribute(bindingResult);
-			bindingResult.reject("zleeeeee");
-			System.out.println(bindingResult.getAllErrors());
-			//model.addAttribute("produkt", new ProduktyKupTeraz());
-			//return "redirect:/mojekonto/dodajProdukt/generateFormKup";
-			return "dodajProduktLicytuj";
-		}
-		if(!pl.getDataZakonczenia().after(new Date()))
-		{
-			pl.setDataZakonczenia(null);
-			model.addAttribute("produkt", pl);
-			return "dodajProduktLicytuj";
-		}
-
-		User u = (User) session.getAttribute("sessionUser");
-		pl.setUser(u);
-		boolean itsDone = produktyService.saveProduktLicytuj(pl);
-		if(!itsDone)
-		{
-			return "/panel/dodajProdukt/";
-		}
-		session.setAttribute("prod", pl);
-		session.setAttribute("firstAdd", "yes");
-		return "dodajZdjecie";
-	}
-	*/
-	/*@ResponseBody
-	@RequestMapping(value = "/admin_home/images/{imageId}", method = RequestMethod.GET, produces="image/*")
-	public void getImage(@PathVariable Integer imageId, HttpServletResponse response) throws IOException {
-	    response.setContentType("image/jpeg");
-	    //Zdjecie requestedImage = zdjecieService.getZdjecie(2);
-	    Zdjecie requestedImage = produktyService.getProdukt(imageId).getZdjecie();
-	    
-	    InputStream in= new ByteArrayInputStream(requestedImage.getZdjecie()); 
-	    System.out.println("input: "+in);
-	    if (in != null) {
-	        IOUtils.copy(in, response.getOutputStream());  
-	    }
-	}
-	@RequestMapping(value = "/panel/dodajProdukt/dodajZdjecie", method=RequestMethod.POST)
-	public String dodajZdjecie(@RequestParam(value="image", required=false) MultipartFile image, 
-			@RequestParam(value="mainImage", required=false) String mainImage, Model model,  HttpSession session, HttpServletRequest request) throws Exception
-	{
-		
-		if(session.getAttribute("prod") != null)
-		{
-			Produkty p = (Produkty) session.getAttribute("prod");
-			try{
-				if(!image.isEmpty())
-				{
-					validateImage(image);
-					//saveImage(image);
-					//saveImageOnHardDrive(image, "H:\\");
-					Zdjecie z = returnImage(image);
-					p.addZdjecie(z);
-					if(session.getAttribute("firstAdd") != null || mainImage.equals("main") )
-					{
-						session.removeAttribute("firstAdd");
-						p.setZdjecie(z);
-					}
-					produktyService.updateProdukt(p);
-					
-				}
-			}catch(Exception e){
-					System.out.println("przed dodaniem sie wykladam");
-					//System.out.println(e.getMessage());
-					return "dodajZdjecie";
-			}
-				
-			return "dodajZdjecie";
-		}
-		return "redirect:/panel/";
-	}
-	public void validateImage(MultipartFile image) throws Exception 
-	{
-		if(!image.getContentType().equals("image/jpeg") && !image.getContentType().equals("image/png") && !image.getContentType().equals("image/x-png"))
-		{
-			throw new Exception("Plik nie ejst plikiem JPG. mam nontent= "+image.getContentType());
-		}
-	}
-	public void saveImageOnHardDrive(MultipartFile image, String path)
-	{
-		try
-		{
-			System.out.println("path= "+path);
-			File file = new File(path+image.getName());
-			org.apache.commons.io.FileUtils.writeByteArrayToFile(file, image.getBytes());
-		}catch(Exception e){
-			System.out.println("nie moge zapisac na dysku");
-		}
-	}
-	public void saveImage(MultipartFile image)
-	{
-		try{
-			Zdjecie zdj = new Zdjecie();
-			byte[] bFile  = image.getBytes();
-			zdj.setZdjecie(bFile);
-			zdjecieService.saveZdjecie(zdj);
-			
-		}catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-			System.out.println("nie udalo sie, przykro mi");
-		}
-	}
-	public Zdjecie returnImage(MultipartFile image)
-	{
-		Zdjecie zdj = new Zdjecie();
-		try{
-			byte[] bFile  = image.getBytes();
-			zdj.setZdjecie(bFile);
-			//zdjecieService.saveZdjecie(zdj);
-		}catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		return zdj;
-	}
-	*/
 	@RequestMapping(value = "/panel/dodajProdukt/zakoncz/")
 	public String zakonczaDodawanieZdj(HttpSession session)
 	{

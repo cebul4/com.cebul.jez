@@ -42,4 +42,9 @@ public class KategorieService
 	{
 		return kategorieDao.getKategory(id);
 	}
+	@Transactional
+	public boolean addKategoria(Kategoria k)
+	{
+		return kategorieDao.addKategoria(k);
+	}
 }

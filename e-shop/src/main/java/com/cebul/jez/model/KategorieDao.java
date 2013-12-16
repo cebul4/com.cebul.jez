@@ -60,4 +60,28 @@ public class KategorieDao
 		return (Kategoria)session.get(Kategoria.class, id);
 	}
 	
+	public boolean addKategoria(Kategoria k)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		boolean exsist = isExist(k);
+		if(!exsist)
+		{
+			session.save(k);
+			return true;
+		}
+		return false;
+	}
+	public boolean isExist(Kategoria k)
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT * FROM kategorie WHERE nazwa = :catname ").
+				addEntity(Kategoria.class).setParameter("catname", k.getNazwa());
+		List<Kategoria> result = query.list();
+		if(!result.isEmpty())
+		{
+			return true;
+		}
+		return false;
+	}
+	
 }

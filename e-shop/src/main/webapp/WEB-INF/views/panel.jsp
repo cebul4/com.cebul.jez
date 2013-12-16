@@ -41,7 +41,7 @@
 				<div>
 					<c:choose>
 						<c:when test="${!empty sessionScope.sessionUser}">
-							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: blue; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
 							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
@@ -96,7 +96,7 @@
 		<div id='main'>
 			<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Dodaj podkategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj podkategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/' />">Sprzedane Produkty</a>
 				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj kontot</a>
 								
