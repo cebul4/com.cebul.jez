@@ -22,6 +22,7 @@ import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.useful.CheckBoxLicKup;
+import com.cebul.jez.useful.JsonKat;
 import com.cebul.jez.useful.JsonObject;
 
 
@@ -71,7 +72,7 @@ public class SzukajController
 	 * @return
 	 */
 	@RequestMapping(value="/szukajProd/", method = RequestMethod.GET)
-	public String znajdzWyszukiwarka(Model model, @RequestParam(value="szukanaKat", required=true) Integer szukanaKat, @RequestParam(value="szukanaFraza", required=true) String szukanaFraza,
+	public String znajdzWyszukiwarka(Model model, @RequestParam(value="szukanaKat", required=false) Integer szukanaKat, @RequestParam(value="szukanaFraza", required=false) String szukanaFraza,
 			@RequestParam(value="cenaOd", required=false) Double cenaOd, @RequestParam(value="cenaDo", required=false) Double cenaDo,
 			CheckBoxLicKup chLicKup) 
 	{
@@ -83,7 +84,7 @@ public class SzukajController
 		Integer podkat[] = chLicKup.getPodkat();
 		produkty =produktyService.getFullProduktyLike(szukanaFraza, szukanaKat, cenaOd, cenaDo, kupLic, podkat);
 		
-		if(!szukanaKat.equals(0))
+		if(szukanaKat != null && !szukanaKat.equals(0))
 		{
 			if(produkty.size() > 0)
 			{
@@ -106,7 +107,7 @@ public class SzukajController
 			else
 				czyKupTeraz.add(false);
 		}
-		if(!szukanaKat.equals(0))
+		if(szukanaKat != null && !szukanaKat.equals(0))
 		{
 			Kategoria k = kategorieService.getKategory(szukanaKat);
 			model.addAttribute("szukanaKat", k.getNazwa());
@@ -134,6 +135,10 @@ public class SzukajController
 				}
 			}
 		}
+		if(podkat != null)
+		{
+			model.addAttribute("checkPod", podkat);
+		}
 		
 		model.addAttribute("szukaneProdukty", produkty);
 		model.addAttribute("czyKupTeraz", czyKupTeraz);
@@ -148,4 +153,14 @@ public class SzukajController
 		
 		return "szukaneProdukty";
 	}
+	@RequestMapping(value="/podkat.json", method = RequestMethod.GET, params="katId")
+	public @ResponseBody JsonKat znajdzPodkat(Model model, @RequestParam Integer katId) 
+	{
+		List<Kategoria> podKat = kategorieService.getPodKategory(katId);
+		JsonKat jso = new JsonKat();
+		jso.generateKategorie(podKat);
+		
+		return jso;
+	}
+	
 }

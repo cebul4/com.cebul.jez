@@ -16,7 +16,10 @@
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
-
+$( window ).load(function() {
+	var h = $("#main-right").outerHeight(true);
+	 $("#main").css("height", h+20);
+	});
 </script>
 </head>
 <body>
@@ -102,8 +105,23 @@
 								<span style="font-weight: bold;">Podkategoria:</span>
 								</br>
 								<c:forEach items="${podkategorie}" var="element"> 
+									<c:choose>
+										<c:when test="${!empty checkPod}">
+											<c:forEach items="${checkPod}" var="element2"> 
+												<c:choose>
+													<c:when test="${element2 == element.id}">
+														<sf:checkbox checked="checked" path="podkat" style="width: 50px;"  value="${element.id}" />
+														
+													</c:when>
+												</c:choose>
+											</c:forEach>
+											
+										</c:when>
+										<c:otherwise>
+											<sf:checkbox path="podkat" style="width: 50px;"  value="${element.id}" />
+										</c:otherwise>
+									</c:choose>
 									
-									<sf:checkbox path="podkat" style="width: 50px;"  value="${element.id}" />
 									<span style="font-size: 10pt;">${element.nazwa}</span>
 									</br>
 								</c:forEach>

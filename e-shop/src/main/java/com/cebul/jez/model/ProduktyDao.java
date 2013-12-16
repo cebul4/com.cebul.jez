@@ -85,20 +85,28 @@ public class ProduktyDao extends Dao
 	
 	public List<Produkty> getFullProduktyLike(String like, Integer kategoria, Double cenaOd, Double cenaDo, String []kupLic, Integer []podkat)
 	{
-		String l = "%"+like+"%";
+		String l;
+		if(like != null)
+			 l = "%"+like+"%";
+		else
+			l = "%";
 		Session session = getSessionFactory();
 		
 		// wpisanie do tabeli Historia wyszukiwania
-		Kategoria k = (Kategoria) session.get(Kategoria.class, kategoria);
-		Hist_Wyszuk hw = new Hist_Wyszuk();
-		hw.setData(new Date());
-		hw.setKategoria(k);
-		session.save(hw);
+		if(kategoria != null)
+		{
+			Kategoria k = (Kategoria) session.get(Kategoria.class, kategoria);
+			Hist_Wyszuk hw = new Hist_Wyszuk();
+			hw.setData(new Date());
+			hw.setKategoria(k);
+			session.save(hw);
+		}
 		//////
 		
 		String sql = "from Produkty p " +
-				"left join fetch p.kategorie as kat where " +
+				"left join fetch p.kategorie as kat where "+
 				"p.nazwa LIKE :like ";
+		
 		if(cenaOd != null)
 		{
 			sql += "AND p.cena >= "+cenaOd+" ";
@@ -119,9 +127,10 @@ public class ProduktyDao extends Dao
 					tmp += podkat[i]+",";
 				}
 			}
-			sql += " AND kat.id IN ("+tmp+") ";
+			if(podkat.length > 0)
+				sql += " AND kat.id IN ("+tmp+") ";
 		}else{
-			if(!kategoria.equals(0))
+			if(kategoria != null && !kategoria.equals(0))
 			{
 				sql += " AND kat.id IN (select k.id from Kategoria k left join k.parentKategory as parentK " +
 					"WHERE parentK.id = "+kategoria+" )";

@@ -166,3 +166,14 @@ body{
 	color: #8AC74A;
 	text-decoration: underline;
 }
+#podKatDiv{
+	 background-color: #FAFAFA;
+	 position: absolute;
+	 width: 720px;
+	 height: 650px;
+	 display: none;
+	 background-image: linear-gradient(#DCFABC 0%, #FFFFFF 100%);
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+	padding: 30px;
+}

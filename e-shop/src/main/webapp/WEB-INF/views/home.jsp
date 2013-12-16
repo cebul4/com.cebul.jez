@@ -16,6 +16,60 @@
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
 
+function showPodkategorie(ob)
+{
+	var str = ob.id;
+	var res = str.substr(3);
+	var i = parseInt(res);
+	
+	$.getJSON( "/jez/szukaj/podkat.json", {"katId": i})
+	.done(function( json ) {
+	   // alert("sakjdlkasjla");
+	    
+		var resp = "<span onclick='hidePodKat();' style='margin-left: 650px;margin-top: 10px; cursor: pointer; color: #8AC74A; font-size: 30pt; font-weight: bold;'> [X] </span>";
+	   
+		$.each(json.kategorie, function( index, value ) {
+	    	
+	    	//alert( index + ": " + value );
+	    	var link = "/jez/szukaj/szukajProd/?podkat="+value.id+"&_podkat=on";
+	    	resp += '<li><a href="'+link+'">'+value.nazwa+'</a></li>';
+	    	});
+	    
+	  // alert(resp);
+	  	var ob = $('#main-right');
+		var p = ob.position();
+		var left = p.left+20;
+		var top = p.top+20;
+		
+	   $("#podKatDiv").html(resp);
+	   $('#podKatDiv').css("top", top).css("left", left);
+	   $("#podKatDiv").show(500);
+	  })
+	 .fail(function( jqxhr, textStatus, error ) {
+	   alert("error="+error);
+	 }); 
+	
+}
+function hidePodKat()
+{
+	$("#podKatDiv").hide(300);	
+}
+function highlite(ob)
+{
+	var str = ob.id;
+	$("#"+str).css("background-color", "#8AC74A");
+	$("#"+str).css("background-image", "linear-gradient(#8AC74A 0%, #578921 100%");
+	
+	$("#"+str).css("cursor", "pointer");
+	
+}
+function nothighlite(ob)
+{
+	var str = ob.id;
+	$("#"+str).css("background-color", "white");
+	$("#"+str).css("background-image", "linear-gradient(#FFFFFF 0%, #FFFFFF 100%");
+	$("#"+str).css("cursor", "auto");
+}
 </script>
 </head>
 <body>
@@ -96,9 +150,10 @@
 		<div id='main'>
 			<div id='main-left'>
 			<c:forEach items="${kategoryList}" var="element"> 
-				<a href="<c:url value='/kategoria/${element.id}' />" class="categorieLeft" onmouseover="showPodkategorie()">
+				<span  id="kat${element.id}"  class="categorieLeft" onmouseOver="highlite(this);" onmouseout="nothighlite(this);" onclick="showPodkategorie(this)">
 					${element.nazwa}
-				</a>
+				</span>
+				
 			</c:forEach>
 								
 			</div>
@@ -131,6 +186,9 @@
 		</div>
 	</div>
 	<div id='podpowiedzi' >
+		
+	</div>
+	<div id="podKatDiv">
 		
 	</div>
 </body>
