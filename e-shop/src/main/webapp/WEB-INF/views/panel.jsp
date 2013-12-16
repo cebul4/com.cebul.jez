@@ -99,6 +99,7 @@
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj podkategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/' />">Sprzedane Produkty</a>
 				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj kontot</a>
+				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
 			<div id='main-right'>

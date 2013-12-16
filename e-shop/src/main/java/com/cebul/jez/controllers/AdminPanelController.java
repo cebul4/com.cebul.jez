@@ -175,6 +175,14 @@ public class AdminPanelController
 		session.removeAttribute("prod");
 		return "redirect:/panel/";
 	}
+	
+	@RequestMapping(value = "/panel/statystyki")
+	public String stats(Model model)
+	{
+		return "statystyki";
+	}
+	
+	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
