@@ -86,7 +86,7 @@ function doAjaxPost()
 			
 			<div id="top-mid">
 				<div id='imgCont' align="center">
-					<a href="<c:url value='/' />" style="border: none;">
+					<a href="<c:url value='/admin_home' />" style="border: none;">
 						<img  style='height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
 					</a>
 				</div>
@@ -96,7 +96,7 @@ function doAjaxPost()
 				<div>
 					<c:choose>
 						<c:when test="${!empty sessionScope.sessionUser}">
-							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: blue; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
 							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
@@ -150,10 +150,11 @@ function doAjaxPost()
 		</div>
 		<div id='main'>
 		<div id='main-left'>
-				<a class="categorieLeft" href="<c:url value='/mojekonto/dodajProdukt' />">Dodaj Produkt</a>
-				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneProdukty' />">Wystawione Produkty</a>
-				<a class="categorieLeft" href="<c:url value='/mojekonto/sprzedaneProdukty' />">Sprzedane Produkty</a>
-				<a class="categorieLeft" href="<c:url value='/mojekonto/modyfikujKonto' />">Modyfikuj kontot</a>
+				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
+				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/' />">Panel3</a>
+				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj konto</a>
+				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 		</div>
 		<div id='main-right' align='center'>

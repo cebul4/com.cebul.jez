@@ -15,93 +15,58 @@
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/jquery.flot.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/jquery.flot.pie.js' />" type="text/javascript" ></script>
 <script>
 
 $(function() {
 
-    // We use an inline data source in the example, usually data would
-    // be fetched from a server
+	// Example Data
 
-    var data = [],
-            totalPoints = 300;
+	var data = [
+		{ label: "Series1",  data: 10},
+		{ label: "Series2",  data: 30},
+		{ label: "Series3",  data: 90},
+		{ label: "Series4",  data: 70},
+		{ label: "Series5",  data: 80},
+		{ label: "Series6",  data: 110}
+	];
 
-    function getRandomData() {
+	//var data = [
+	//	{ label: "Series1",  data: [[1,10]]},
+	//	{ label: "Series2",  data: [[1,30]]},
+	//	{ label: "Series3",  data: [[1,90]]},
+	//	{ label: "Series4",  data: [[1,70]]},
+	//	{ label: "Series5",  data: [[1,80]]},
+	//	{ label: "Series6",  data: [[1,0]]}
+	//];
 
-            if (data.length > 0)
-                    data = data.slice(1);
+	//var data = [
+	//	{ label: "Series A",  data: 0.2063},
+	//	{ label: "Series B",  data: 38888}
+	//];
 
-            // Do a random walk
+	// Randomly Generated Data
 
-            while (data.length < totalPoints) {
+	//var data = [],
+	//	series = Math.floor(Math.random() * 6) + 3;
 
-                    var prev = data.length > 0 ? data[data.length - 1] : 50,
-                            y = prev + Math.random() * 10 - 5;
+	//for (var i = 0; i < series; i++) {
+	//	data[i] = {
+	//		label: "Series" + (i + 1),
+	//		data: Math.floor(Math.random() * 100) + 1
+	//	}
+	//}
 
-                    if (y < 0) {
-                            y = 0;
-                    } else if (y > 100) {
-                            y = 100;
-                    }
-
-                    data.push(y);
-            }
-
-            // Zip the generated y values with the x values
-
-            var res = [];
-            for (var i = 0; i < data.length; ++i) {
-                    res.push([i, data[i]])
-            }
-
-            return res;
-    }
-
-    // Set up the control widget
-
-    var updateInterval = 30;
-    $("#updateInterval").val(updateInterval).change(function () {
-            var v = $(this).val();
-            if (v && !isNaN(+v)) {
-                    updateInterval = +v;
-                    if (updateInterval < 1) {
-                            updateInterval = 1;
-                    } else if (updateInterval > 2000) {
-                            updateInterval = 2000;
-                    }
-                    $(this).val("" + updateInterval);
-            }
-    });
-
-    var plot = $.plot("#placeholder", [ getRandomData() ], {
-            series: {
-                    shadowSize: 0        // Drawing is faster without shadows
-            },
-            yaxis: {
-                    min: 0,
-                    max: 100
-            },
-            xaxis: {
-                    show: false
-            }
-    });
-
-    function update() {
-
-            plot.setData([getRandomData()]);
-
-            // Since the axes don't change, we don't need to call plot.setupGrid()
-
-            plot.draw();
-            setTimeout(update, updateInterval);
-    }
-
-    update();
-
-    // Add the Flot version string to the footer
-
-    $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
-});
-
+	var placeholder = $("#placeholder");
+	
+	
+	$.plot(placeholder, data, {
+		series: {
+			pie: { 
+				show: true
+			}
+		}
+	});
 
 </script>
 </head>
@@ -193,10 +158,10 @@ $(function() {
 				<!--<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" /> -->
 				
 				<div class="demo-container">
-						<div id="placeholder" class="demo-placeholder" style="width:780px; height:450px"></div>
+						<div id="placeholder" style="width:550px"></div>
 				</div>
 				
-				<p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>
+				<!--  <p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>-->
 			</div>
 		</div>
 		<div id='bottom'>

@@ -31,7 +31,7 @@
 			
 			<div id="top-mid">
 				<div id='imgCont' align="center">
-					<a href="<c:url value='/' />" style="border: 0 px solid black; text-decoration: none;">
+					<a href="<c:url value='/admin_home' />" style="border: 0 px solid black; text-decoration: none;">
 						<img  style='border: 0 px solid black; height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
 					</a>
 				</div>

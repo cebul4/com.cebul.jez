@@ -31,7 +31,7 @@
 			
 			<div id="top-mid">
 				<div id='imgCont' align="center">
-					<a href="<c:url value='/' />" style="border: 0 px solid black; text-decoration: none;">
+					<a href="<c:url value='/admin_home' />" style="border: 0 px solid black; text-decoration: none;">
 						<img  style='border: 0 px solid black; height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
 					</a>
 				</div>
@@ -97,8 +97,8 @@
 			<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj podkategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Sprzedane Produkty</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj kontot</a>
+				<a class="categorieLeft" href="<c:url value='/panel/' />">Panel3</a>
+				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj konto</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
