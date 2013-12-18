@@ -95,7 +95,7 @@
 		</div>
 		<div id='main'>
 			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
-				
+				<span></span>
 				<span style="margin-top: 30px; font-size: 16pt; font-weight: bold;">Dziękujemy za dokonanie zakupu. </span>
 				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Zapraszamy ponownie.</span>
 				</br>
