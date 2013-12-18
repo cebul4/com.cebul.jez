@@ -47,4 +47,9 @@ public class KategorieService
 	{
 		return kategorieDao.addKategoria(k);
 	}
+	@Transactional
+	public boolean updateCategory(Kategoria k)
+	{
+		return kategorieDao.updateCategory(k);
+	}
 }

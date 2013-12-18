@@ -182,6 +182,43 @@ public class AdminPanelController
 		return "statystyki";
 	}
 	
+	@RequestMapping(value= "/panel/edytujKategorie/")
+	public String edytujKategorieForm(Model model, HttpSession session)
+	{
+		//Kategoria kat = (Kategoria) session.getAttribute("kategoryList");
+		// test
+		// System.out.println("aaa=" + kat.getId());
+		 
+		//model.addAttribute("kategoria", kat);
+		
+		//model.addAttribute(new Kategoria());
+		
+		List<Kategoria> kat = kategorieService.getMainKategory();
+		model.addAttribute("kategoryListModel", kat);
+		
+		return "edytujKategorie";
+	}
+	
+	@RequestMapping(value = "/panel/edytujKategorie/zapisz/",  method=RequestMethod.POST)
+	public String updateKategoria(@Valid Kategoria kat, BindingResult bindingResult, Model model, HttpSession session)
+	{
+		if(bindingResult.hasErrors())
+		{
+			
+			return "redirect:/panel/edytujKategorie/";
+		}
+		
+		boolean updateOk = kategorieService.updateCategory(kat);
+		
+		if (!updateOk)
+		{
+			return "redirect: /panel/edytujKategorie/";
+		}
+		
+		return "/admin_home/panel/";
+		
+	}
+	
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {

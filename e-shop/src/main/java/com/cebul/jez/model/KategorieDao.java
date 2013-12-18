@@ -84,4 +84,19 @@ public class KategorieDao
 		return false;
 	}
 	
+	public boolean updateCategory(Kategoria kat)
+	{
+		Session session = getSessionFactory();
+		
+		
+		Kategoria updateCat = (Kategoria) session.get(Kategoria.class, kat.getId());
+		
+		updateCat.setNazwa(kat.getNazwa());
+		updateCat.setParentKategory(kat.getParentKategory());
+		
+		session.update(updateCat);
+		
+		return true;
+	}	
+	
 }
