@@ -200,6 +200,8 @@ public class AdminPanelController
 		
 		///lkhkjhkj
 		
+		// hghjgthjgj
+		
 		return "edytujKategorie";
 	}
 	
