@@ -37,6 +37,10 @@ public class Komentarz
     @JoinColumn(name="IdOdb")
 	private User odbiorca;
 	
+	@OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="IdProd")
+	private Produkty produkt;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -54,6 +58,24 @@ public class Komentarz
 	}
 	public void setOcena(Integer ocena) {
 		this.ocena = ocena;
+	}
+	public User getNadawca() {
+		return nadawca;
+	}
+	public void setNadawca(User nadawca) {
+		this.nadawca = nadawca;
+	}
+	public User getOdbiorca() {
+		return odbiorca;
+	}
+	public void setOdbiorca(User odbiorca) {
+		this.odbiorca = odbiorca;
+	}
+	public Produkty getProdukt() {
+		return produkt;
+	}
+	public void setProdukt(Produkty produkt) {
+		this.produkt = produkt;
 	}
 	
 	

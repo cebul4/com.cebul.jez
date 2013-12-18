@@ -67,7 +67,7 @@ public class ZamowienieService
 	@Transactional
 	public List<Produkty> getNieKomentProd(User u)
 	{
-		// bhjghjgh
+		
 		return zamowienieDao.getNieKomentProd(u);
 	}
 }

@@ -42,10 +42,12 @@ import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.entity.User;
+import com.cebul.jez.entity.Zamowienie;
 import com.cebul.jez.entity.Zdjecie;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.service.UserService;
+import com.cebul.jez.service.ZamowienieService;
 import com.cebul.jez.service.ZdjecieService;
 
 /**
@@ -74,6 +76,9 @@ public class MojeKontoController
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ZamowienieService zam;
 	
 	
 	/**
@@ -468,7 +473,23 @@ public class MojeKontoController
 	public String wystawKomentarzLista(Model model, HttpSession session)
 	{
 		User me = (User) session.getAttribute("sessionUser");
-		List<Produkty> sprzedaneProdukty = (List<Produkty>)produktyService.getWystawioneProdukty(me);
+		List<Produkty> produktyDoKoment = zam.getNieKomentProd(me);
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		
+		for(Produkty p : produktyDoKoment)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				//System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
+		
+		model.addAttribute("produktyDoKoment", produktyDoKoment);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
 		
 		return "komentarzeDoWystawienia";
 	}

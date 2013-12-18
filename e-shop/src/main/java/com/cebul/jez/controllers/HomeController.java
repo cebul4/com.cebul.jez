@@ -31,6 +31,7 @@ import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.service.TestDataBaseService;
 import com.cebul.jez.service.UserService;
+import com.cebul.jez.service.ZamowienieService;
 import com.cebul.jez.useful.Mail;
 
 /**
@@ -58,6 +59,8 @@ public class HomeController {
 	
 	@Autowired
 	private TestDataBaseService serv;
+	
+	
 		
 	/**
 	 * obsługuje żądanie do strony gównej (tak zwany index) oraz home
@@ -76,6 +79,7 @@ public class HomeController {
 		//serv.test1();
 		
 		//System.out.println(new Date().after(new Date()));
+		
 		
 		List<Produkty> produkty = produktyService.getLastFourProdukt();
 		//model.addAttribute("lastFourItems", produkty);

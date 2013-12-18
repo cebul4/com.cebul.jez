@@ -104,7 +104,48 @@
 				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneKomentarze/' />">Wystawione komentarze</a>				
 			</div>
 			<div id='main-right' align="center">
-				
+				<c:forEach items="${produktyDoKoment}" var="element" varStatus="status"> 
+						<a class="greenSelect" style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
+						<div  class="divProd" style=" width: 760px; height: 70px;border-bottom: 1px solid #DFDFDF; ">
+							<div style="float:left;">
+							<c:choose>
+									<c:when test="${!empty element.zdjecie}">
+											<img style="width: 65px; height: 65px;" src="${pageContext.request.contextPath}/images/${element.id}" />
+									</c:when>
+									<c:otherwise>
+											<img style="width: 65px; " src="<c:url value='/resources/images/unknownItem.png' />" />
+									</c:otherwise>
+							</c:choose>
+							</div>
+								<div style="width: 830px;">
+									<div style="padding: 10px; float:left;  width: 420px; height: 30px;">
+										
+										<span style=" font-size: 12pt; font-weight: bold;">${element.nazwa}</span>
+										
+										
+									</div>
+									<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 30px;">
+										<span style="font-size: 12pt; font-weight: bold;">${element.cena} zł</span>
+										
+										<c:choose>
+											<c:when test="${czyKupTeraz[status.count-1]}">
+												<span style="display:block; margin-top: 5px; font-size: 10pt;">Kup Teraz</span>
+											</c:when>
+											<c:otherwise>
+												<span style="display:block; margin-top: 5px; font-size: 10pt;">Licytacja</span>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div>
+										<a href="${pageContext.request.contextPath}/produkty/komentarz/${element.id}/">
+											<img style="width: 60px; margin-top: 5px;" src="<c:url value='/resources/images/Chat.png' />" />
+										</a>
+										
+									</div>
+								</div>
+						</div>
+						</a>
+					</c:forEach>
 			</div>
 		</div>
 		<div id='bottom'>
