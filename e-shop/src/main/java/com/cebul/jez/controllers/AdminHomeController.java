@@ -84,7 +84,7 @@ public class AdminHomeController {
 		//request.setAttribute("lastFourItems", produkty);
 		//System.out.println(produkty.size());
 		
-		
+		//sahjdksak
 		List<Kategoria> kat = kategorieService.getMainKategory();
 		model.addAttribute("kategoryListModel", kat);
 		session.setAttribute("kategoryList", kat);
