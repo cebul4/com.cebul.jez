@@ -95,6 +95,13 @@
 		</div>
 		<div id='main'>
 			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
+				<div style="font=size: 16pt; color: gray; ">
+					<span style="font-weight: bold; background-color: #8AC74A; color: white; padding: 10px;">Krok 1</span>
+					<span style="margin-left: 20px; margin-right: 20px;"> >>> </span>
+					<span style="font-style:italic;" >Krok 2</span>
+					<span style="margin-left: 20px; margin-right: 20px;"> >>> </span>
+					<span style="font-style:italic;">Krok 3</span>
+				</div>
 				<table align="center" style="margin-top: 50px;">
 					<sf:form commandName="tmp">
 						<tr>
@@ -126,7 +133,7 @@
 						</tr>
 						<tr>
 							<td></br>
-							<input style="margin-left: 160px;" class="sub" type="submit" name="_eventId_dodatkoweDaneZamowienia" value="Kolejny krok" />
+							<input style="margin-left: 100px;" class="sub" type="submit" name="_eventId_dodatkoweDaneZamowienia" value="Kolejny krok" />
 							<input style="margin-left: 0px;" class="sub" type="submit" name="_eventId_cancel" value="Anuluj" />
 							</td>
 						</tr>						

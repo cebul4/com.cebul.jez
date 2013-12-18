@@ -94,6 +94,13 @@
 			
 		</div>
 		<div id='main'>
+			<div style="font=size: 16pt; color: gray; margin-top: 15px; margin-left: 350px; margin-bottom: 10px;">
+					<span style="font-style:italic;">Krok 1</span>
+					<span style="margin-left: 20px; margin-right: 20px;"> >>> </span>
+					<span style="font-weight: bold; background-color: #8AC74A; color: white; padding: 10px;" >Krok 2</span>
+					<span style="margin-left: 20px; margin-right: 20px;"> >>> </span>
+					<span style="font-style:italic;">Krok 3</span>
+			</div>
 			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
 				
 				<div  style='border: 1px solid #F2FFE1 ;background-color:#F2FFE1; -moz-border-radius: 30px; border-radius: 30px; min-height:300px; width: 920px; padding: 30px;'>

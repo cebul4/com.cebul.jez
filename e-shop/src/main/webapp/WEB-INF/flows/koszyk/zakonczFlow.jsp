@@ -95,7 +95,14 @@
 		</div>
 		<div id='main'>
 			<div align="center" id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
-				<span>dsfdsfdsfds</span>
+				<div style="font=size: 16pt; color: gray; margin-top: 15px; margin-left: 70px; margin-bottom: 30px;">
+					<span style="font-style:italic;">Krok 1</span>
+					<span style="margin-left: 20px; margin-right: 20px;"> >>> </span>
+					<span  style="font-style:italic;" >Krok 2</span>
+					<span style="margin-left: 20px; margin-right: 20px;"> >>> </span>
+					<span style="font-weight: bold; background-color: #8AC74A; color: white; padding: 10px;">Krok 3</span>
+				</div>
+			
 				<span style="margin-top: 30px; font-size: 16pt; font-weight: bold;">Dziękujemy za dokonanie zakupu. </span>
 				<span style="margin-top: 10px; margin-bottom: 30px; font-size: 16pt; font-weight: bold;">Zapraszamy ponownie.</span>
 				</br>
