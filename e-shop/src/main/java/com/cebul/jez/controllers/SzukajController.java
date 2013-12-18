@@ -161,6 +161,7 @@ public class SzukajController
 		jso.generateKategorie(podKat);
 		
 		return jso;
+		// testuj enowego brancha
 	}
 	
 }
