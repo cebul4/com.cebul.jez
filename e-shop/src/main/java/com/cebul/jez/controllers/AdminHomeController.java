@@ -33,6 +33,8 @@ import com.cebul.jez.service.TestDataBaseService;
 import com.cebul.jez.service.UserService;
 import com.cebul.jez.useful.Mail;
 
+// test pobierania jezyk3 
+// sciaga czy nie ?
 
 /**
  * 
