@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cebul.jez.entity.DokumentZamowienia;
 import com.cebul.jez.entity.Platnosc;
 import com.cebul.jez.entity.Produkty;
+import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zamowienie;
 import com.cebul.jez.model.ZamowienieDao;
 import com.cebul.jez.useful.ShoppingCart;
@@ -62,5 +63,10 @@ public class ZamowienieService
 		}
 		
 		return null;
+	}
+	@Transactional
+	public List<Produkty> getNieKomentProd(User u)
+	{
+		return zamowienieDao.getNieKomentProd(u);
 	}
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.cebul.jez.entity.DokumentZamowienia;
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Platnosc;
+import com.cebul.jez.entity.Produkty;
+import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zamowienie;
 import com.cebul.jez.flows.Tmp;
 
@@ -51,5 +53,9 @@ public class ZamowienieDao extends Dao
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(z);
 		return true;
+	}
+	public List<Produkty> getNieKomentProd(User u)
+	{
+		return null;
 	}
 }

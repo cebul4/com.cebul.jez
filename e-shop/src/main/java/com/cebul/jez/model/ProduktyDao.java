@@ -415,4 +415,5 @@ public class ProduktyDao extends Dao
 		
 		return null;
 	}
+	
 }

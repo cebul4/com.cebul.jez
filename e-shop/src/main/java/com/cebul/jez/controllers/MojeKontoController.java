@@ -464,4 +464,12 @@ public class MojeKontoController
 		
 		return "wystawioneProdukty";
 	}
+	@RequestMapping(value = "/mojekonto/wystawKomentarz/")
+	public String wystawKomentarzLista(Model model, HttpSession session)
+	{
+		User me = (User) session.getAttribute("sessionUser");
+		List<Produkty> sprzedaneProdukty = (List<Produkty>)produktyService.getWystawioneProdukty(me);
+		
+		return "komentarzeDoWystawienia";
+	}
 }
