@@ -196,6 +196,10 @@ public class AdminPanelController
 		//List<Kategoria> kat = kategorieService.getMainKategory();
 		//model.addAttribute("kategoryListModel", kat);
 		
+		/// bhjghjgk
+		
+		///lkhkjhkj
+		
 		return "edytujKategorie";
 	}
 	
