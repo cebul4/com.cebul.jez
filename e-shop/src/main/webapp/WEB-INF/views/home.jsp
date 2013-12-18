@@ -27,13 +27,16 @@ function showPodkategorie(ob)
 	   // alert("sakjdlkasjla");
 	    
 		var resp = "<span onclick='hidePodKat();' style='margin-left: 650px;margin-top: 10px; cursor: pointer; color: #8AC74A; font-size: 30pt; font-weight: bold;'> [X] </span>";
-	   
+		resp += "<span style='margin-left: 100px; font-size: 16pt; color: gray;' >Dostepne podkategorie:</span>";
+		resp += "<ul style='margin-left: 120px;'>";
 		$.each(json.kategorie, function( index, value ) {
 	    	
 	    	//alert( index + ": " + value );
 	    	var link = "/jez/szukaj/szukajProd/?podkat="+value.id+"&_podkat=on";
-	    	resp += '<li><a href="'+link+'">'+value.nazwa+'</a></li>';
+	    	resp += '<li><a style="color: gray; text-decoration: none;" href="'+link+'">'+value.nazwa+'</a></li>';
 	    	});
+		
+		resp += "</ul>";
 	    
 	  // alert(resp);
 	  	var ob = $('#main-right');
