@@ -43,6 +43,11 @@ public class Komentarz implements Serializable
     @JoinColumn(name="IdProd")
 	private Produkty produkt;
 	
+	public Komentarz()
+	{
+		
+	}
+	
 	public Komentarz(String komentarz, Integer ocena, User nadawca, User odbiorca, Produkty produkt)
 	{
 		this.komentarz = komentarz;

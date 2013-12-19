@@ -75,4 +75,11 @@ public class ZamowienieService
 	{
 		return zamowienieDao.dodajKomentarz(idProduktu, komentarz, ocena, nadawca);
 	}
+	@Transactional
+	public boolean getProduktZZamowienia(User u, Integer idProd)
+	{
+		if( zamowienieDao.getProduktZZamowienia(u, idProd) == null)
+			return false;
+		return true;
+	}
 }
