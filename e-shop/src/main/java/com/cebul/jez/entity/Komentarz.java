@@ -1,5 +1,7 @@
 package com.cebul.jez.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Komentarze")
-public class Komentarz 
+public class Komentarz implements Serializable
 {
 
 	@Id
@@ -41,6 +43,14 @@ public class Komentarz
     @JoinColumn(name="IdProd")
 	private Produkty produkt;
 	
+	public Komentarz(String komentarz, Integer ocena, User nadawca, User odbiorca, Produkty produkt)
+	{
+		this.komentarz = komentarz;
+		this.ocena = ocena;
+		this.nadawca = nadawca;
+		this.odbiorca = odbiorca;
+		this.produkt = produkt;
+	}
 	public Integer getId() {
 		return id;
 	}

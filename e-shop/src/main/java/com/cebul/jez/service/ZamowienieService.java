@@ -70,4 +70,9 @@ public class ZamowienieService
 		
 		return zamowienieDao.getNieKomentProd(u);
 	}
+	@Transactional
+	public boolean dodajKomentarz(Integer idProduktu, String komentarz, Integer ocena, User nadawca)
+	{
+		return zamowienieDao.dodajKomentarz(idProduktu, komentarz, ocena, nadawca);
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cebul.jez.entity.DokumentZamowienia;
 import com.cebul.jez.entity.Kategoria;
+import com.cebul.jez.entity.Komentarz;
 import com.cebul.jez.entity.Platnosc;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.User;
@@ -90,5 +91,14 @@ public class ZamowienieDao extends Dao
 		}
 
 		return resultFinal;
+	}
+	public boolean dodajKomentarz(Integer idProduktu, String komentarz, Integer ocena, User nadawca)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		Produkty p = (Produkty) session.get(Produkty.class, idProduktu);
+		Komentarz k = new Komentarz(komentarz, ocena, nadawca, p.getUser(), p);
+		session.save(k);
+		
+		return true;
 	}
 }
