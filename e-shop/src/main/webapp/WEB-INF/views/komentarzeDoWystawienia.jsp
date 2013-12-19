@@ -137,7 +137,7 @@
 										</c:choose>
 									</div>
 									<div>
-										<a href="${pageContext.request.contextPath}/produkty/komentarz/${element.id}/">
+										<a href="${pageContext.request.contextPath}/komentarze/dodajKomentarz/${element.id}/">
 											<img style="width: 60px; margin-top: 5px;" src="<c:url value='/resources/images/Chat.png' />" />
 										</a>
 										
