@@ -36,6 +36,7 @@ import com.cebul.jez.useful.Mail;
 // test pobierania jezyk3 
 // sciaga czy nie ?
 // jeszcze jeden test
+// test czy działa 
 
 /**
  * 
