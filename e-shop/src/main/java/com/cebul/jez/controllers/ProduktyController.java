@@ -222,11 +222,29 @@ public class ProduktyController
 		    }
 	   
 	}
+	/**
+	 * mapuje /produkty/usun/{produktId}/
+	 * usuwa produkt o podanym id z koszyka
+	 * @param produktId identyfikator produktu
+	 * @param model obiekt modelu
+	 * @param session obiekt sesji
+	 * @return zwraca logiczna nazwe widoku
+	 */
 	@RequestMapping(value = {"/produkty/usun/{produktId}/"}, method = RequestMethod.GET)
 	public String usunProduktZBazy(@PathVariable Integer produktId, Model model, HttpSession session){
 		produktyService.deleteProdukt(produktId);
 		return "redirect:/mojekonto/wystawioneProdukty/";
 	}
+	/**
+	 * mapuje /produkty/edytuj/{produktId}/
+	 * wyswietla dane dotyczące produkty który chcemy edytować. Sprawdza czy mamy prawo do edycji danego produktu 
+	 * (musimy być właścicielami)
+	 * 
+	 * @param produktId identyfikator produktu
+	 * @param model obiekt modelu
+	 * @param session obiekt sesji
+	 * @return zwraca logiczna nazwę widoku
+	 */
 	@RequestMapping(value = {"/produkty/edytuj/{produktId}/"}, method = RequestMethod.GET)
 	public String edytujProduktWBazie(@PathVariable Integer produktId, Model model, HttpSession session){
 		
@@ -290,6 +308,15 @@ public class ProduktyController
 		}
 		return "nieJestesSprzedajacym";
 	}
+	/**
+	 * aktualizuje dane w bazie dotyczące produktu
+	 * 
+	 * @param produkt obiekt produktu który ma zostać zaktualizowany
+	 * @param bindingResult
+	 * @param model obiekt modelu
+	 * @param session obiekt sesji
+	 * @return przekierowuje na odpowiednią stronę
+	 */
 	@RequestMapping(value = "/produkty/updateProdukt/",  method=RequestMethod.POST)
 	public String updateKontoUsera(@Valid Produkty produkt, BindingResult bindingResult, Model model, HttpSession session)
 	{
@@ -314,6 +341,15 @@ public class ProduktyController
 		//session.setAttribute("sessionUser", arg1);
 		return "redirect:/mojekonto/wystawioneProdukty/";
 	}
+	/**
+	 * usówa zdjęcia z bazy danych nalezące do danego produktu
+	 * 
+	 * @param check zawiera identyfiaktory zdjec ktore majac zostać usuniete
+	 * @param idProd indentyfiaktor produktu
+	 * @param model obiekt model
+	 * @param session obiekt sesji
+	 * @return przekierowuje na odpowiedni strone edycji produktu
+	 */
 	@RequestMapping(value = "/produkty/updateProdukt/usunZdjecie/",  method=RequestMethod.POST)
 	public String usunZdjecieZProduktu(CheckboxZdj check, @RequestParam(value="idProd", required=false) Integer idProd, Model model, HttpSession session)
 	{
@@ -327,6 +363,16 @@ public class ProduktyController
 		}
 		return "redirect:/produkty/edytuj/"+idProd+"/";
 	}
+	/**
+	 * dodaje zdjecie wysłane przez użytkownika do danego produktu
+	 * @param produktId identyfiaktor produktu
+	 * @param image wysłane przez użytkownika zdjecie
+	 * @param model obiekt modelu
+	 * @param session obiekt sesji
+	 * @param request obiekt request
+	 * @return przekierowuje na odpowiedni strone edycji produktu
+	 * @throws Exception zgłaszany podczas błędu w dodawnaiu do bazy
+	 */
 	@RequestMapping(value = "/produkty/edytuj/dodajZdjecie/", method=RequestMethod.POST)
 	public String dodajZdjecieDoProduktu(@RequestParam(value="produktId", required=false) Integer produktId, @RequestParam(value="image", required=false) MultipartFile image, 
 			 Model model,  HttpSession session, HttpServletRequest request) throws Exception

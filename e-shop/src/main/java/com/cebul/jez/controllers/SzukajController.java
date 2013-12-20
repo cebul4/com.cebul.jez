@@ -153,6 +153,13 @@ public class SzukajController
 		
 		return "szukaneProdukty";
 	}
+	/**
+	 * obsługuje anynchroniczne rządanie od klienta. Zwraca obiekt typu JSon
+	 * pobiera podkategorie danej kategorii
+	 * @param model obiekt model
+	 * @param katId identyfikator kategorii
+	 * @return obiekt json
+	 */
 	@RequestMapping(value="/podkat.json", method = RequestMethod.GET, params="katId")
 	public @ResponseBody JsonKat znajdzPodkat(Model model, @RequestParam Integer katId) 
 	{

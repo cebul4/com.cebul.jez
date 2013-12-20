@@ -6,6 +6,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+/**
+ * przechowuje najpotrzebniejsze informacje o 
+ * uzytkowniku aby nie przekazywać całego obiektu użytkownnika
+ * @author Mateusz
+ *
+ */
 @Component
 @Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class UserShortInfo implements Serializable

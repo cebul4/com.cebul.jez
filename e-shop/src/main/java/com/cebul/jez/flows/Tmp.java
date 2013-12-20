@@ -2,6 +2,13 @@ package com.cebul.jez.flows;
 
 import java.io.Serializable;
 
+/**
+ * zawiera inrofmacje dotyczące płatnosci oraz dokumentu potwierdzajaćego zakup
+ * używany podczas wyboru płatności i dokumentu przez użytkownika
+ * podpianny do formularza podczas jednego z etapu dodawania zamówienia
+ * @author Mateusz
+ *
+ */
 public class Tmp implements Serializable
 {
 	private String platnosc;

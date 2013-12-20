@@ -417,6 +417,12 @@ public class MojeKontoController
 		
 		return "sprzedaneProdukty";
 	}
+	/**
+	 * umożliwia wyswietlenie formularza do edycji danych użytkownika
+	 * @param model obiekt model
+	 * @param session obiekt sessji
+	 * @return zwraca logiczną anzwę widoku
+	 */
 	@RequestMapping(value = "/mojekonto/modyfikujKonto/")
 	public String modyfikujKontoForm(Model model, HttpSession session)
 	{
@@ -426,6 +432,16 @@ public class MojeKontoController
 		model.addAttribute("user", me);
 		return "modyfikujKontoUser";
 	}
+	/**
+	 * zapisuje zmodyfikowany obiekt użytkownika do bazdy
+	 * przed zapisem sprwdza równiez jego poprawność
+	 * @param user zmodyfikowany obiekt użytkownika
+	 * @param bindingResult umozliwia sprawdzenie poprawnosci obiektu
+	 * @param model obiekt model	
+	 * @param session obiekt sesji
+	 * @return zwraca logiczną anzwę widoku lub w przypadku błedu podczas aktualizacji
+	 * przekierowuje na odpowiednią podstronę
+	 */
 	@RequestMapping(value = "/mojekonto/modyfikujKonto/zapisz/",  method=RequestMethod.POST)
 	public String updateKontoUsera(@Valid User user, BindingResult bindingResult, Model model, HttpSession session)
 	{
@@ -443,6 +459,12 @@ public class MojeKontoController
 		//session.setAttribute("sessionUser", arg1);
 		return "modyfikujKontoUser";
 	}
+	/**
+	 * wyświetla produkty które zostały wystawione przez użytkownika
+	 * @param model obiekt model
+	 * @param session obiekt sesji
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/mojekonto/wystawioneProdukty/")
 	public String showWystawioneProdukty(Model model, HttpSession session)
 	{
@@ -469,6 +491,13 @@ public class MojeKontoController
 		
 		return "wystawioneProdukty";
 	}
+	/**
+	 * umożliwiaq wyświetlenie listy przedmiotów do których możemy wtsawic komentarz
+	 * 
+	 * @param model obiekt model
+	 * @param session obiekt sesji
+	 * @return zwraca logiczna nazwe widoku
+	 */
 	@RequestMapping(value = "/mojekonto/wystawKomentarz/")
 	public String wystawKomentarzLista(Model model, HttpSession session)
 	{
