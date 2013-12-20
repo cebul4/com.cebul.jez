@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import com.cebul.jez.entity.ProduktyLicytuj;
 
+/**
+ * obiekt który jest zwracany podczas asynchronicznego wyowlania od klienta
+ * zgodny ze strukturą JSon
+ * przechowuje informacje o produkcie przeznaczonym do licytacji
+ * @author Mateusz
+ *
+ */
 public class JsonLicytacja implements Serializable
 {
 	ProduktyLicytuj prod;

@@ -1,5 +1,12 @@
 package com.cebul.jez.useful;
 
+/**
+ * reprezentuje checkboxy ze strony filtrowania wyników wyszukiwania
+ *uzywany do przekazywania informacji od klienta do serwera o podkategoriach 
+ *oraz opcjach "licytuj" i  "kup teraz" które mają posłużyc do filtrowania wyników wyszukiwania
+ * @author Mateusz
+ *
+ */
 public class CheckBoxLicKup 
 {
 	private String kupLicyt[];

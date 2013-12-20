@@ -1,14 +1,14 @@
 package com.cebul.jez.useful;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.mapping.Array;
-
-import com.cebul.jez.entity.Kategoria;
-import com.cebul.jez.entity.Produkty;
-
+/**
+ * obiekt który jest zwracany podczas asynchronicznego wyowlania od klienta
+ * zgodny ze strukturą JSon
+ * przechowuje informacje o nazwach produktów
+ * @author Mateusz
+ *
+ */
 public class JsonObject 
 {
 	private String produkty[];

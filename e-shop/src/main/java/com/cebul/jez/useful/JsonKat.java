@@ -4,6 +4,13 @@ import java.util.List;
 
 import com.cebul.jez.entity.Kategoria;
 
+/**
+ * obiekt który jest zwracany podczas asynchronicznego wyowlania od klienta
+ * zgodny ze strukturą JSon
+ * przechowuje informacje o kategoriach
+ * @author Mateusz
+ *
+ */
 public class JsonKat 
 {
 	private Kategoria kategorie[];
