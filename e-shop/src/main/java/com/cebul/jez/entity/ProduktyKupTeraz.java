@@ -11,6 +11,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+/**
+ *  obiekt reprezentujacy tabelę ProduktyKupTeraz w bazie danych
+ *  rozszerza klasę Produkty
+ *  klucz główny ( id ) jest współczielony z tabelą Produkty
+ *  przechowuje informacje o produktach przeznaczonych do sprzedaży ajko "Kup Tearz"
+ * @author Mateusz
+ *
+ */
+
 @Entity
 @Table(name="ProduktyKupTeraz")
 @PrimaryKeyJoinColumn(name="Id")

@@ -9,6 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ *  obiekt reprezentujacy tabelę Zdjecia w bazie danych
+ *  przechowuje zdjęcia produktów, które wysłał na serwer użytkownik
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="Zdjecia")
 public class Zdjecie 

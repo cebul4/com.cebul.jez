@@ -12,6 +12,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+/**
+ *  obiekt reprezentujacy tabelę kategorie w bazie danych
+ *  rozszerza klasę Produkty
+ *  klucz główny ( id ) jest współczielony z tabelą Produkty
+ *  przechowuje informacje o produktach przeznaczonych do Licytacji
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="ProduktyLicytuj")
 @PrimaryKeyJoinColumn(name="Id")

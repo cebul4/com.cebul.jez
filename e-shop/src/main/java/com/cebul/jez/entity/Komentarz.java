@@ -12,6 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ *  obiekt reprezentujacy tabelę Komentarze w bazie danych
+ *  zawiera kometarze wystawione przez kupującego dla sprzedawcy
+ * @author Mateusz
+ *
+ */
+
 @Entity
 @Table(name="Komentarze")
 public class Komentarz implements Serializable

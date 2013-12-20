@@ -24,6 +24,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ *  obiekt reprezentujacy tabelę Produkty w bazie danych
+ *  obiekt bazowy dla klas ProduktyKupTerz oraz ProduktyLicytuj
+ *  przechowuje ogólne informacje (cechy wspólne ) o produktach, 
+ *  zarówno tych licytowanych jak i przeznaczonych do "Kup teraz"
+ * @author Mateusz
+ *
+ */
+
 @Entity
 @Table(name="Produkty")
 @Inheritance(strategy=InheritanceType.JOINED)

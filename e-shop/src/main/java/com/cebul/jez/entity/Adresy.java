@@ -9,6 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+/**
+ * 
+ * @author Mateusz
+ * Obiekt reprezentujacy tabelę Adresy w bazie danych
+ * zawiera informacje dotyczące adresu korespondencyjnego uzytkownika
+ * 
+ */
 @Entity
 @Table(name="Adresy")
 public class Adresy implements Serializable
@@ -26,10 +33,17 @@ public class Adresy implements Serializable
 	@Size(min=6, max=6, message="Niepoprawny kod pocztowy.")
 	private String kod_pocztowy;
 
+	/**
+	 * Pobiera wartość id
+	 * @return zwraca identyfikator adresu
+	 */
 	public Integer getId() {
 		return id;
 	}
-
+/**
+ * Ustawia identyfikator adresu według paramteru id
+ * @param id identyfikator adresu
+ */
 	public void setId(Integer id) {
 		this.id = id;
 	}

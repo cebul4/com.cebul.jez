@@ -9,6 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ *  obiekt reprezentujacy tabelę Zamow_Prod w bazie danych
+ *  łączy tabele zamówienia i produkty
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="Zamow_Prod")
 public class Zamow_Prod 

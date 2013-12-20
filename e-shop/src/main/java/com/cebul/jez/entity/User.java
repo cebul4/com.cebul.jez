@@ -16,6 +16,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ *  obiekt reprezentujacy tabelę Users w bazie danych
+ *  zawiera informajce o użytkonwiku
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="users")
 public class User implements Serializable

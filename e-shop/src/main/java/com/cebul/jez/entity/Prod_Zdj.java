@@ -8,6 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ *  obiekt reprezentujacy tabelę Prod_Zdj w bazie danych
+ *  łączy tabele produkty i zdjecia
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="Prod_Zdj")
 public class Prod_Zdj 

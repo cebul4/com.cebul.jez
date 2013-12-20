@@ -9,6 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ *  obiekt reprezentujacy tabelę Platnosci w bazie danych
+ *  zawiera informacje o możliwych płatnosciach
+ * @author Mateusz
+ *
+ */
+
 @Entity
 @Table(name="Platnosci")
 public class Platnosc implements Serializable

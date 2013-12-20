@@ -12,6 +12,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ *  obiekt reprezentujacy tabelę Wiadomosci w bazie danych
+ *  zawiera wiadomosci wysłane przez jednego użytkownika do drugiego
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="Wiadomosci")
 public class Wiadomosc {

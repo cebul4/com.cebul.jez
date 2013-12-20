@@ -13,6 +13,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ *  obiekt reprezentujacy tabelę kategorie w bazie danych
+ *  zawiera kategorie do których przyporządkowywane są produkty
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="kategorie")
 public class Kategoria implements Serializable

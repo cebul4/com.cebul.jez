@@ -9,6 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Obiekt reprezentujacy tabelę DokumentZamowienia w bazie danych
+ * zawiera możliwe do wyboru dokumenty potwierdzajace zakup
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="DokumentZamowienia")
 public class DokumentZamowienia implements Serializable

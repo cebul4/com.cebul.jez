@@ -18,6 +18,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+/**
+ *  obiekt reprezentujacy tabelę Zamowienie w bazie danych
+ *  przechowuje informajce dotyczące zamówienia złożonego przez klienta
+ * @author Mateusz
+ *
+ */
 @Entity
 public class Zamowienie implements Serializable
 {

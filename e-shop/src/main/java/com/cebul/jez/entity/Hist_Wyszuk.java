@@ -11,6 +11,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * obiekt reprezentujacy tabelę Hist_wyszuk w bazie danych
+ * zawiera informacje o tym które kategorie są przeszukiwane podczas wyszukiwania
+ * na podstawie tych informacji powstają wykresy przedstawiajace popularność wyszukiwanych kategorii
+ * @author Mateusz
+ *
+ */
 @Entity
 @Table(name="Hist_Wyszuk")
 public class Hist_Wyszuk 
