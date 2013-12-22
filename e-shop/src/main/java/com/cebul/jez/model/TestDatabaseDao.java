@@ -1,16 +1,12 @@
 package com.cebul.jez.model;
 
-import java.io.File;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
@@ -18,22 +14,18 @@ import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zdjecie;
 
+/**
+ * służy do testowania podstawowych opercaji na abzie dnaych aby sprawdzic integralność danych
+ * @author Mateusz
+ *
+ */
 @Repository
-public class TestDatabaseDao 
+public class TestDatabaseDao extends Dao
 {
 
-	@Autowired
-	private SessionFactory sessionFactory;
-	
-	private Session getSessionFactory()
-	{
-		return sessionFactory.getCurrentSession();
-	}
-	
-	private void setSessionFactory(SessionFactory sessionFactory)
-	{
-		this.sessionFactory = sessionFactory;
-	}
+	/**
+	 * metoda testujaca podstawowe operacja na bazie dnaych
+	 */
 	public void testData1()
 	{
 		Session session = getSessionFactory();

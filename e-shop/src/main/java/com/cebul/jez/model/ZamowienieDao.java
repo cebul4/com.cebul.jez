@@ -1,6 +1,6 @@
 package com.cebul.jez.model;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +9,25 @@ import org.hibernate.classic.Session;
 import org.springframework.stereotype.Repository;
 
 import com.cebul.jez.entity.DokumentZamowienia;
-import com.cebul.jez.entity.Kategoria;
+
 import com.cebul.jez.entity.Komentarz;
 import com.cebul.jez.entity.Platnosc;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zamowienie;
-import com.cebul.jez.flows.Tmp;
 
+/**
+ * umożliwia pobieranie oraz utrwalanie obiektów Zamowienie z i do bazy danych
+ * @author Mateusz
+ *
+ */
 @Repository
 public class ZamowienieDao extends Dao 
 {
+	/**
+	 * pobiera dostepne płatności z bazy danych
+	 * @return lista dostepnych płatności
+	 */
 	public List<Platnosc> getPlatnosci()
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -27,6 +35,10 @@ public class ZamowienieDao extends Dao
 		List<Platnosc> result = query.list();
 		return result;
 	}
+	/**
+	 * pobiera dostepne dokumenty z bazy danych
+	 * @return lista dostepnyc dokumentów
+	 */
 	public List<DokumentZamowienia> getDokumenty()
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -34,6 +46,11 @@ public class ZamowienieDao extends Dao
 		List<DokumentZamowienia> result = query.list();
 		return result;
 	}
+	/**
+	 * pobiera obiekt platności na podstawie nazwy
+	 * @param s nazwa płatności
+	 * @return obiekt Platnosc
+	 */
 	public Platnosc getPlatnoscLike(String s)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -42,6 +59,11 @@ public class ZamowienieDao extends Dao
 		List<Platnosc> result = query.list();
 		return result.get(0);
 	}
+	/**
+	 * pobiera obiekt dokumeny na podstawie nazwy
+	 * @param s nazwa dokumentu
+	 * @return obiekt DokumentZamowienia
+	 */
 	public DokumentZamowienia getDokumentLike(String s)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -50,12 +72,22 @@ public class ZamowienieDao extends Dao
 		List<DokumentZamowienia> result = query.list();
 		return result.get(0);
 	}
+	/**
+	 * utrwala zamowienie w bazie danych
+	 * @param z zamowienie które ma zostac utrwalone
+	 * @return zwraca true jeśli operacja się powiedzie, w przeciwnym wypadku false
+	 */
 	public boolean zapiszZamowienie(Zamowienie z)
 	{
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(z);
 		return true;
 	}
+	/**
+	 * zwraca produkty kótóre nie mają przydzielonego komentarza (które możne komentować dany użytkownik)
+	 * @param u użytkownik
+	 * @return lista produktów które moga być komentowane
+	 */
 	public List<Produkty> getNieKomentProd(User u)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -92,6 +124,12 @@ public class ZamowienieDao extends Dao
 
 		return resultFinal;
 	}
+	/**
+	 * pobiera produkt który był kupiowny w dnaycm zamówieniu przez konkretnego uzytkownika
+	 * @param u użytkownik
+	 * @param idProd identyfikator produktu
+	 * @return produkt z zamówienia
+	 */
 	public Produkty getProduktZZamowienia(User u, Integer idProd)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -131,6 +169,14 @@ public class ZamowienieDao extends Dao
 		
 		return null;
 	}
+	/**
+	 * dodaje koemtarz do konkretnrgo produktu 
+	 * @param idProduktu identyfikator produktu
+	 * @param komentarz komentarz
+	 * @param ocena ocena jaką wystawił użytkonik podczas dodawania komentarza
+	 * @param nadawca użytkownik który wystawia komentarz
+	 * @return zwrac atrue jesli operacja powiedzie się
+	 */
 	public boolean dodajKomentarz(Integer idProduktu, String komentarz, Integer ocena, User nadawca)
 	{
 		Session session = sessionFactory.getCurrentSession();

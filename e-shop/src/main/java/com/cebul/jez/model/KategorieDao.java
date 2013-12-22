@@ -3,29 +3,22 @@ package com.cebul.jez.model;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.cebul.jez.entity.Kategoria;
 
+/**
+ * umożliwia pobieranie oraz utrwalanie obiektów Komentarz z i do bazy danych
+ * @author Mateusz
+ *
+ */
 @Repository
-public class KategorieDao 
+public class KategorieDao extends Dao
 {
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	private Session getSessionFactory()
-	{
-		return sessionFactory.getCurrentSession();
-	}
-	
-	private void setSessionFactory(SessionFactory sessionFactory)
-	{
-		this.sessionFactory = sessionFactory;
-	}
-	
+	/**
+	 * pobiera listę kategori oznaczonych jako główne
+	 * @return lista kategorii głownych
+	 */
 	public List<Kategoria> getMainKategory()
 	{
 		Session session = getSessionFactory();
@@ -35,6 +28,11 @@ public class KategorieDao
 		return result;
 		
 	}
+	/**
+	 * pobiera kategorię główną dla podanej podkategorii
+	 * @param podkategoria 
+	 * @return zwraca kategorie główną
+	 */
 	public Kategoria getMainKategory(Kategoria podkategoria)
 	{
 		Session session = getSessionFactory();
@@ -43,6 +41,11 @@ public class KategorieDao
 		Kategoria result = (Kategoria) query.list().get(0);
 		return result;
 	}
+	/**
+	 * pobiera podkategorie dla kategori głównej
+	 * @param parent identyfiaktor kategorii głównej
+	 * @return lista podkategorii
+	 */
 	public List<Kategoria> getPodKategory(Integer parent)
 	{
 		
@@ -54,12 +57,21 @@ public class KategorieDao
 	
 		return result;
 	}
+	/**
+	 * pobiera obiekt kategorii na podstwie podanego identyfiaktora
+	 * @param id identyfikator kategorii
+	 * @return obiekt Kategorii
+	 */
 	public Kategoria getKategory(Integer id)
 	{
 		Session session = getSessionFactory();
 		return (Kategoria)session.get(Kategoria.class, id);
 	}
-	
+	/**
+	 * dodaje kategorię do bazy
+	 * @param k kategoria która ma być utrwalona
+	 * @return zwraca true jeśli operacja się powiedzie, w przeciwnym wypaku false
+	 */
 	public boolean addKategoria(Kategoria k)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -71,6 +83,11 @@ public class KategorieDao
 		}
 		return false;
 	}
+	/**
+	 * sprawdza czy podana kategoria isteje w bazie danych
+	 * @param k kategoria która ma zostać sprawdzona
+	 * @return zwraca true jeśli kategoria istenieje w bazie dnaych, false w przeciwnym wypadku
+	 */
 	public boolean isExist(Kategoria k)
 	{
 		Session session = getSessionFactory();
@@ -83,7 +100,11 @@ public class KategorieDao
 		}
 		return false;
 	}
-	
+	/**
+	 * aktualizuje utrwalone w bazie dnaych obiekt kategorii
+	 * @param kat obiekt który ma zostac zaktualizowany w bazie dnacyh
+	 * @return zwraca tru jeśli aktualizacja się powiedzie, w przeciwnym wypadku false
+	 */
 	public boolean updateCategory(Kategoria kat)
 	{
 		Session session = getSessionFactory();

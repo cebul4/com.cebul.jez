@@ -22,9 +22,19 @@ import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zdjecie;
 
+/**
+ * umożliwia pobieranie oraz utrwalanie obiektów Produkty z i do bazy danych
+ * @author Mateusz
+ *
+ */
 @Repository
 public class ProduktyDao extends Dao
 {
+	/**
+	 * pobiera nazwy produktów z bazy danych na podstawie słowa kluczowego "like"
+	 * @param like słowo kluczowe
+	 * @return lista nazw produktów pasujacych do wzorca
+	 */
 	public List<String> getProduktyLike(String like)
 	{
 		String l = "%"+like+"%";
@@ -39,6 +49,12 @@ public class ProduktyDao extends Dao
 		//System.out.println(result.get(0).getNazwa());
 		return result;
 	}
+	/**
+	 * pobiera nazwy produktów z bazy danych na podstawie słowa kluczowego "like" oraz nalezących do danej kategorii
+	 * @param like słowo kluczowe
+	 * @param kategoria kategoria do której ma należeć produkt
+	 * @return lista nazw produktów pasujacych do kryterium
+	 */
 	public List<String> getProduktyLike(String like, Integer kategoria)
 	{
 		String l = "%"+like+"%";
@@ -56,6 +72,12 @@ public class ProduktyDao extends Dao
 		
 		return result;
 	}
+	/**
+	 * pobiera produkty pasujące do danego wzorca oraz należące do danej kategorii
+	 * @param like wzorzec
+	 * @param kategoria kategoria do której ma należeć wzorzec
+	 * @return lista produktów
+	 */
 	public List<Produkty> getFullProduktyLike(String like, Integer kategoria)
 	{
 		String l = "%"+like+"%";
@@ -82,7 +104,16 @@ public class ProduktyDao extends Dao
 		
 		return result;
 	}
-	
+	/**
+	 * metoda używana do zaawansowanego wyszukowania produktów na podstawie kliku kryteriów
+	 * @param like słowo kluczowe
+	 * @param kategoria kategoria do której ma należeć produkt
+	 * @param cenaOd minimalna cena produktu
+	 * @param cenaDo maksymalna cena produktu
+	 * @param kupLic okresla czy produkt ma być typu "Kup teraz" czy "Licytuj"
+	 * @param podkat podkategoria do której ma należeć produkt
+	 * @return lista produktów 
+	 */
 	public List<Produkty> getFullProduktyLike(String like, Integer kategoria, Double cenaOd, Double cenaDo, String []kupLic, Integer []podkat)
 	{
 		String l;
@@ -166,6 +197,11 @@ public class ProduktyDao extends Dao
 		
 		return result;
 	}
+	/**
+	 * pobiera produkty z bazy dnaych na podstawie słowa kluczowego
+	 * @param like słowo kluczowe
+	 * @return lista produktów
+	 */
 	public List<Produkty> getFullProduktyLike(String like)
 	{
 		String l = "%"+like+"%";
@@ -188,6 +224,10 @@ public class ProduktyDao extends Dao
 		
 		return result;
 	}
+	/**
+	 * pobiera cztery ostatnio dodane produkty
+	 * @return lista produktów
+	 */
 	public List<Produkty> getLastFourProdukt()
 	{
 		Session session = getSessionFactory();
@@ -201,6 +241,11 @@ public class ProduktyDao extends Dao
 		return result;
 		
 	}
+	/**
+	 * pobiera produkt o określonym identyfikatorze
+	 * @param id identyfikator produktu
+	 * @return produkt
+	 */
 	public Produkty getProdukt(Integer id)
 	{
 		Produkty p = new Produkty();
@@ -209,6 +254,11 @@ public class ProduktyDao extends Dao
 		return p;
 		
 	}
+	/**
+	 * utrwala w bazie dnaych produkt który jest typu "Kup tearz"
+	 * @param p produkt do utrwalenia
+	 * @return zwraca true jeśli operacja sie powiedzie, w przeciwnym przypadku false
+	 */
 	public boolean saveProduktKupTeraz(ProduktyKupTeraz p)
 	{
 		try{
@@ -222,6 +272,11 @@ public class ProduktyDao extends Dao
 		}
 		return true;
 	}
+	/**
+	 * uaktualnia dane dotyczące produktu
+	 * @param p produkt który ma zostac uaktualniony
+	 * @return zwraca true jesli operacja sie powiedzie, w przeciwnym wypadku false
+	 */
 	public boolean updateProdukt(Produkty p)
 	{
 		try{
@@ -233,6 +288,11 @@ public class ProduktyDao extends Dao
 		}
 		return true;
 	}
+	/**
+	 * utrwala obiekt typu "Licytuj" w pazie danych
+	 * @param p produkt przeznaczony do utrwalenia
+	 * @return zwraca true jesli operacaj sie powiedzi, w przeciwnym wypadku false
+	 */
 	public boolean saveProduktLicytuj(ProduktyLicytuj p)
 	{
 		try{
@@ -246,6 +306,11 @@ public class ProduktyDao extends Dao
 		}
 		return true;
 	}
+	/**
+	 * pobiera identyfiaktory zdjęć należących do danego produktu
+	 * @param p produkt którego identyfiaktory zdjeć mają zostać przeszukane
+	 * @return lista identyfiaktorów zdjęć
+	 */
 	public List<Integer> getZdjeciaId(Produkty p)
 	{
 		Session session = getSessionFactory();
@@ -257,6 +322,11 @@ public class ProduktyDao extends Dao
 		//System.out.println(result.get(0).getNazwa());
 		return result;
 	}
+	/**
+	 * pobiera zdjecie z bazy dnaych na podstawie identyfikatora
+	 * @param id identyfiaktor zdjęcia
+	 * @return obiekt zdjecia
+	 */
 	public Zdjecie getZdjecie(Integer id)
 	{
 		Session session = getSessionFactory();
@@ -268,6 +338,10 @@ public class ProduktyDao extends Dao
 		//System.out.println(result.get(0).getNazwa());
 		return result;
 	}
+	/**
+	 * ustawia własność "kupione" na true listy podanych produktów i aktualizuje dane w bazie
+	 * @param produkty lista produktów do zaktualizowania
+	 */
 	public void setKupione(List<Produkty> produkty)
 	{
 		Session session = getSessionFactory();
@@ -282,6 +356,10 @@ public class ProduktyDao extends Dao
 			}
 		}
 	}
+	/**
+	 * aktualziuje dane dotyczące produktu typu "Licytuj" 
+	 * @param p produkt którego dane maja zostać zaktualizowane 
+	 */
 	public void updateLicytacja(ProduktyLicytuj p)
 	{
 		int id = p.getId();
@@ -299,6 +377,11 @@ public class ProduktyDao extends Dao
 		prod.setCena(cena);
 		session.update(prod);
 	}
+	/**
+	 * pobiera produkty które zostały sprzedane przez użytkownika
+	 * @param u użytkownik
+	 * @return lista produktów
+	 */
 	public List<Produkty> getSprzedaneProdukty(User u)
 	{
 		Session session = getSessionFactory();
@@ -334,6 +417,11 @@ public class ProduktyDao extends Dao
 		//return result;
 		
 	}
+	/**
+	 * pobiera produkty które wystawił na sprzedaż dnay użytkownik
+	 * @param u uzytkownik
+	 * @return lista produktów
+	 */
 	public List<Produkty> getWystawioneProdukty(User u)
 	{
 		Session session = getSessionFactory();
@@ -369,6 +457,11 @@ public class ProduktyDao extends Dao
 		//return result;
 		
 	}
+	/**
+	 * aktualizuje wspólne dane (dotyczące produktów typu "kup teraz" oraz "licytuj")
+	 * @param p produkt którego dane maja zostać zaktualizowane
+	 * @return zwraca true jeśli operacja się powiedzie oraz false w przeciwnym wypadku
+	 */
 	public boolean updateProduktInfo(Produkty p)
 	{
 		Session session = getSessionFactory();
@@ -382,6 +475,11 @@ public class ProduktyDao extends Dao
 		
 		return true;
 	}
+	/**
+	 * usówa produkt z bazy danych
+	 * @param produktId identyfikator produktu który ma zostać usuniety
+	 * @return zwraca true jesli operacja sie powiedzie, fals ew rpzeciwnym wypadku
+	 */
 	public boolean deleteProdukt(Integer produktId)
 	{
 		Session session = getSessionFactory();
@@ -389,6 +487,11 @@ public class ProduktyDao extends Dao
 		session.delete(p);
 		return true;
 	}
+	/**
+	 * sprawdza czy produkty nie zostal juz kupiony przez innego użytkownika (ważne podczas zatwierdzania zamówienia)
+	 * @param produkty produkt który ma zostać sprawdzony
+	 * @return  lista produktów które zostały już kupione i nie moga być kupione ponownie
+	 */
 	public List<Produkty> sprawdzProdukty(List<Produkty> produkty)
 	{
 		String s = "";

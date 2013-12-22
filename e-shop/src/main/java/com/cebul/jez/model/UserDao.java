@@ -10,16 +10,28 @@ import org.springframework.stereotype.Repository;
 
 import com.cebul.jez.entity.User;
 
+/**
+ * umożliwia pobieranie oraz utrwalanie obiektów User z i do bazy danych
+ * @author Mateusz
+ *
+ */
 @Repository
 public class UserDao extends Dao
 {
-	
+/**
+ * zapisuje pustego użytkonika do bazyd danych
+ */
 	public void saveUser()
 	{
 		Session session = sessionFactory.getCurrentSession();
 		User u = new User();
 		session.save(u);
 	}
+	/**
+	 * utrwala obiekt uzytkownika w bazie dnaych
+	 * @param u uzytkownik
+	 * @return zwraca true jeśli operacja sie uda, false w przeciwnym wypadku
+	 */
 	public boolean addUser(User u)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -31,6 +43,11 @@ public class UserDao extends Dao
 		}
 		return false;
 	}
+	/**
+	 * sprawdza czy użytkownik istnieje w bazie dnaych
+	 * @param user użytkownik
+	 * @return zwraca true jesli użytkonik isteniej w baze, w przeciwnym wypadku false
+	 */
 	public boolean isExist(User user)
 	{
 		Session session = getSessionFactory();
@@ -43,6 +60,10 @@ public class UserDao extends Dao
 		}
 		return false;
 	}
+	/**
+	 * aktywuje konto usera
+	 * @param id identyfiaktor uzytkownika
+	 */
 	public void activeUser(Integer id)
 	{
 		Session session = sessionFactory.getCurrentSession();
@@ -53,6 +74,11 @@ public class UserDao extends Dao
 			session.update(u);
 		}	
 	}
+	/**
+	 * pobiera obiekt użytkownika na podstawie loginu
+	 * @param login 
+	 * @return obiekt użytkownika
+	 */
 	public User getUser(String login)
 	{
 		Session session = getSessionFactory();
@@ -64,6 +90,11 @@ public class UserDao extends Dao
 		
 		return result.get(0);
 	}
+	/**
+	 * pobiera obiekt użytkownika na podstawie identyfikatora
+	 * @param id identyfiaktor użytkownika
+	 * @return obiekt użytkownika
+	 */
 	public User getUser(Integer id)
 	{
 		Session session = getSessionFactory();
@@ -71,6 +102,11 @@ public class UserDao extends Dao
 		System.out.println("test w dao "+u.getLogin());
 		return u;
 	}
+	/**
+	 * sprawdza czy użytkonwik istnieje w bazie dnaych na podstawie loginu
+	 * @param login
+	 * @return zwraca true jeśli użytkownik istneieje, w przeciwnym wypadku false
+	 */
 	public boolean isUserExsist(String login)
 	{
 		Session session = getSessionFactory();
@@ -84,6 +120,11 @@ public class UserDao extends Dao
 		}
 		return false;
 	}
+	/**
+	 * uaktualnia dane uzytkownika w bazie dnaych
+	 * @param user uzytkownik którego dane mają zostac uatualnione
+	 * @return
+	 */
 	public boolean updateUser(User user)
 	{
 		Session session = getSessionFactory();
@@ -101,7 +142,10 @@ public class UserDao extends Dao
 		
 		return true;
 	}
-	
+	/**
+	 * ustawia range użytkownika na "admin" na podstawie podanego loginu
+	 * @param login 
+	 */
 	public void setAdmin(String login)
 	{
 		Session session = getSessionFactory();
