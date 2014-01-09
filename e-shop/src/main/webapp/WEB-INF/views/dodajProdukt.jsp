@@ -80,12 +80,28 @@
 						</form>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px;">
-								<a href="<c:url value='/mojekonto/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
+									<c:choose>
+									<c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
+										  	<a href="<c:url value='/panel/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">PANEL ADMINA</a>
+									</c:when>
+				  					<c:otherwise>
+				  							<a href="<c:url value='/mojekonto/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
+				  					</c:otherwise>
+			  					</c:choose>
+								
 							</div>
 						</td>
-						<td>
+								<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
+								<c:choose>
+									<c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
+										  
+									</c:when>
+				  					<c:otherwise>
+				  							<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
+				  					</c:otherwise>
+			  					</c:choose>
+								
 							</div>
 						</td>
 						
