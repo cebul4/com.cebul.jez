@@ -61,7 +61,7 @@ public class Produkty implements Serializable{
 	private Date dataDodania;
 	
 	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch=FetchType.EAGER)
-	@JoinColumn(name="IdKat")
+	@JoinColumn(name="IdKat", nullable=false)
 	private Kategoria kategorie;
 	
 	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch=FetchType.EAGER)

@@ -23,7 +23,7 @@ function ladujPodkategorie()
 	$.getJSON( "/jez/dodajProdukt/podkategorie.json", {"kategory": parseInt(val)})
 		.done(function( json ) {
 		    
-		    var resp = "<option value='0'>WYBIERZ PODKATEGORIE</option>";
+		    var resp = "<option value='null'>WYBIERZ PODKATEGORIE</option>";
 		    $.each(json.kategorie, function( index, value ) {
 		     	resp += '<option value="'+value.id+'">'+value.nazwa+'</option>';
 		    	});
@@ -188,7 +188,7 @@ function ladujPodkategorie()
 								</td>
 								<td>
 									<select onchange='ladujPodkategorie();' name='kategoria' id='kategoria' style="height: 35px; width: 200px; margin-top: 5px; background-color: #EDEDED;">
-											<option value="0">WYBIERZ KATEGORIE
+											<option value="null">WYBIERZ KATEGORIE
 											</option>
 											<c:forEach items="${kategoryList}" var="element"> 
 												<option value="${element.id}">
@@ -205,7 +205,7 @@ function ladujPodkategorie()
 								</td>
 								<td>
 									<sf:select  name='podkategoria' id='podkategoria' path='kategorie.id' style="height: 35px; width: 200px; margin-top: 5px; background-color: #EDEDED;">
-											<option value="0">WYBIERZ PODKATEGORIE
+											<option value="null">WYBIERZ PODKATEGORIE
 											</option>
 									</sf:select>
 								</td>	
