@@ -22,14 +22,14 @@ $(function() {
 
 	// Example Data
 
-	var data = [
-		{ label: "Series1",  data: 10},
-		{ label: "Series2",  data: 30},
-		{ label: "Series3",  data: 90},
-		{ label: "Series4",  data: 70},
-		{ label: "Series5",  data: 80},
-		{ label: "Series6",  data: 110}
-	];
+	//var data = [
+	//	{ label: "Series1",  data: 10},
+	//	{ label: "Series2",  data: 30},
+	//	{ label: "Series3",  data: 90},
+	//	{ label: "Series4",  data: 70},
+	//	{ label: "Series5",  data: 80},
+	//	{ label: "Series6",  data: 110}
+	//];
 
 	//var data = [
 	//	{ label: "Series1",  data: [[1,10]]},
@@ -47,15 +47,15 @@ $(function() {
 
 	// Randomly Generated Data
 
-	//var data = [],
-	//	series = Math.floor(Math.random() * 6) + 3;
+	var data = [],
+		series = Math.floor(Math.random() * 6) + 3;
 
-	//for (var i = 0; i < series; i++) {
-	//	data[i] = {
-	//		label: "Series" + (i + 1),
-	//		data: Math.floor(Math.random() * 100) + 1
-	//	}
-	//}
+	for (var i = 0; i < series; i++) {
+		data[i] = {
+			label: "Series" + (i + 1),
+			data: Math.floor(Math.random() * 100) + 1
+		}
+	}
 
 	var placeholder = $("#placeholder");
 	
@@ -67,7 +67,8 @@ $(function() {
 			}
 		}
 	});
-
+})
+	
 </script>
 </head>
 <body>
@@ -157,9 +158,10 @@ $(function() {
 			<div id='main-right'>
 				<!--<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" /> -->
 				
-				<div class="demo-container">
-						<div id="placeholder" style="width:550px"></div>
-				</div>
+				<img src="statystyki" width="500" height="300" border="0"/>
+				<!--  <div class="demo-container">
+						<div id="placeholder" style="width:550px; height:200px"></div>
+				</div> -->
 				
 				<!--  <p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>-->
 			</div>

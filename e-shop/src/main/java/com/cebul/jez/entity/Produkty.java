@@ -194,7 +194,7 @@ public class Produkty implements Serializable{
 			setZdjecie(null);
 		}
 	}
-	/*
+/*
 	@Override
 	public boolean equals(Object o) {
 		
@@ -217,5 +217,5 @@ public class Produkty implements Serializable{
 	    hash = 47 * hash + getNazwa().hashCode() + getId().hashCode();
 	    return hash;
 	}
-	*/
+*/	
 }

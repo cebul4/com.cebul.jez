@@ -149,11 +149,15 @@ public class AdminPanelController
 	 
 	 * @return zwraca logiczna nazwę widoku
 	 */
-	@RequestMapping(value= "/panel/dodajKategorie", method= RequestMethod.POST)
+	@RequestMapping(value= "/panel/dodajKategorie/", method= RequestMethod.POST)
 	public String addKatFromForm(@Valid Kategoria kategoria, BindingResult bindingResult, Model model)
 	{
 		if (bindingResult.hasErrors())
 		{
+			
+			System.out.println(bindingResult.toString());
+			System.out.println("bindingResult");
+			
 			return "/dodajKategorie";
 			
 		}
@@ -162,6 +166,8 @@ public class AdminPanelController
 		
 		if (!add)
 		{
+			System.out.println(add);
+			System.out.println("!add");
 			return "/dodajKategorie";
 		}
 		
@@ -176,25 +182,18 @@ public class AdminPanelController
 		return "redirect:/panel/";
 	}
 	
-	@RequestMapping(value = "/panel/statystyki")
-	public String stats(Model model)
-	{
-		return "statystyki";
-	}
 	
-	@RequestMapping(value= "/panel/edytujKategorie/")
+	
+	
+	
+	
+	@RequestMapping(value= "/panel/edytujKategorie")
 	public String edytujKategorieForm(Model model, HttpSession session)
 	{
-		//Kategoria kat = (Kategoria) session.getAttribute("kategoryList");
-		// test
-		// System.out.println("aaa=" + kat.getId());
-		 
-		//model.addAttribute("kategoria", kat);
 		
-		//model.addAttribute(new Kategoria());
+		int id = 2;
 		
-		//List<Kategoria> kat = kategorieService.getMainKategory();
-		//model.addAttribute("kategoryListModel", kat);
+		model.addAttribute(kategorieService.getKategory(id));
 		
 //komentaraz dla jezyka
 		
@@ -217,7 +216,7 @@ public class AdminPanelController
 			return "redirect: /panel/edytujKategorie/";
 		}
 		
-		return "/admin_home/panel/";
+		return "/admin_home/panel";
 		
 	}
 	

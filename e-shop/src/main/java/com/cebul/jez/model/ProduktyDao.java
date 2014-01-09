@@ -371,7 +371,7 @@ public class ProduktyDao extends Dao
 		//session.evict(p);
 		//session.evict(u);
 		ProduktyLicytuj prod = (ProduktyLicytuj) getProdukt(id);
-		if(u.getId().intValue() != prod.getAktualnyWlasciciel().getId().intValue())
+		if(prod.getAktualnyWlasciciel() == null || u.getId().intValue() != prod.getAktualnyWlasciciel().getId().intValue())
 			prod.setAktualnyWlasciciel(u);
 		
 		prod.setCena(cena);

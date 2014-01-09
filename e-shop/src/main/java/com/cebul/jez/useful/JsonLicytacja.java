@@ -13,18 +13,30 @@ import com.cebul.jez.entity.ProduktyLicytuj;
  */
 public class JsonLicytacja implements Serializable
 {
-	ProduktyLicytuj prod;
+	private Integer userId;
+	private Double cena;
 
-	public ProduktyLicytuj getProd() {
-		return prod;
+	public JsonLicytacja(ProduktyLicytuj pl)
+	{
+		userId = pl.getAktualnyWlasciciel().getId();
+		cena = pl.getCena();
 	}
 
-	public void setProd(ProduktyLicytuj prod) {
-		this.prod = prod;
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Double getCena() {
+		return cena;
+	}
+
+	public void setCena(Double cena) {
+		this.cena = cena;
 	}
 	
-	public ProduktyLicytuj generateLicytacja()
-	{
-		return prod;
-	}
+	
 }

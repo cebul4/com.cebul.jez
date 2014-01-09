@@ -190,10 +190,14 @@ public class ProduktyController
 	 * @return zwraca obiekt produktu
 	 */
 	@RequestMapping(value="/produkty/sprawdzDostepnosc.json", method = RequestMethod.GET, params="idProd")
-	public @ResponseBody ProduktyLicytuj sprawdzAukcje(Model model, @RequestParam Integer idProd) 
+	public @ResponseBody JsonLicytacja sprawdzAukcje(Model model, @RequestParam Integer idProd) 
 	{
 		ProduktyLicytuj r = (ProduktyLicytuj) produktyService.getProdukt(idProd);
-		return r;
+		//JsonLicytacja json = new JsonLicytacja();
+		//json.generateLicytacja()
+		//System.out.println(r.getUser().getId());
+		return new JsonLicytacja(r);
+		//return r;
 	}
 	/**
 	 * umożliwia wyświetlenie obrazka na stronie klienta

@@ -39,14 +39,16 @@ function myTimer()
 	
 	$('#loadingGif').css("display", "inline");
 	var idProd = $('#id').val();
-	
+	 //alert(idProd);
 	$.getJSON( "/jez/produkty/sprawdzDostepnosc.json", {"idProd": idProd})
 		.done(function( json ) {
 		   // alert(json.cena);
+		   
 				var cenka = json.cena;
 				var cenaFloat = cenka.toFixed(1);
 				var cenkaSugerowana = (cenka + 1).toFixed(1);
-		    	if(json.user.id == $("#sessionUserId").html() )
+				//alert(json.userId+" "+$("#sessionUserId").html())
+		    	if(json.userId == $("#sessionUserId").html() )
 		    	{
 		    		$("#stanAukcji").html("Obecnie wygrywasz licytację.");
 		    		$("#cena").html(cenaFloat);
@@ -58,11 +60,12 @@ function myTimer()
 		    		$("#cena").html(cenaFloat);
 		    		$("#cenaInput").val("");
 		    		$("#cenaInput").val(cenkaSugerowana);
-		    	}		
+		    	}
+		    
 		  $('#loadingGif').delay(1000).css("display", "none");   
 	})
 	.fail(function( jqxhr, textStatus, error ) {
-		   //alert("error="+error);
+		   alert("error="+error);
 	}); 
 }
 function sprawdzCene()
