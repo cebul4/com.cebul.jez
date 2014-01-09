@@ -46,6 +46,7 @@ public class ProduktyKupTeraz extends Produkty implements Serializable
 		this.kupiony = kupiony;
 	}
 
+	/*
 	@Override
 	public boolean equals(Object o) {
 		
@@ -68,5 +69,5 @@ public class ProduktyKupTeraz extends Produkty implements Serializable
 	    hash = 47 * hash + getNazwa().hashCode() + getId().hashCode();
 	    return hash;
 	}
-	
+*/	
 }

@@ -16,25 +16,27 @@
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
-	function ladujPodkategorie()
-	{
-		var val = $('#kategoria').val();
-			
-		$.getJSON( "/jez/dodajProdukt/podkategorie.json", {"podkategory": parseInt(val)})
-			.done(function( json ) {
-			    
-			    var resp = "<option value='0'>WYBIERZ PODKATEGORIE</option>";
-			    $.each(json.kategorie, function( index, value ) {
-			     	resp += '<option value="'+value.id+'">'+value.nazwa+'</option>';
-			    	});
-			    
-			    $('#podkategoria').html(resp);
-			    
-			  })
-			 .fail(function( jqxhr, textStatus, error ) {
-			   //alert("error="+error);
-			 }); 
-	}
+function ladujPodkategorie()
+{
+	var val = $('#kategoria').val();
+		
+	$.getJSON( "/jez/dodajProdukt/podkategorie.json", {"kategory": parseInt(val)})
+		.done(function( json ) {
+		    
+		    var resp = "<option value='0'>WYBIERZ PODKATEGORIE</option>";
+		    $.each(json.kategorie, function( index, value ) {
+		     	resp += '<option value="'+value.id+'">'+value.nazwa+'</option>';
+		    	});
+		    
+		    $('#podkategoria').html(resp);
+		    
+		  })
+		 .fail(function( jqxhr, textStatus, error ) {
+		   //alert("error="+error);
+		 }); 
+	
+	
+}
 	function sprawdzDate()
 	{
 		var str = $('#dataZakonczenia').val();
