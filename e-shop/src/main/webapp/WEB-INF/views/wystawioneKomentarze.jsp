@@ -104,82 +104,90 @@
 				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneKomentarze/' />">Wystawione komentarze</a>				
 			</div>
 			<div id='main-right' align="center">
-			<div  class="divProd" style=" width: 760px;height: 25px; border-bottom: 1px solid #DFDFDF; ">
-						
-								<div style="width: 830px;">
-									<div style="padding: 5px; float:left;  width: 180px; ">
-										
-										<span style=" font-size: 10pt; font-weight: bold; margin-bottom:5px;">User</span>
-								
-												
-									</div>
-									<div align="left" style="text-align:center; float:left;  width: 380px; min-height: 30px ; max-height: 100px;">
-										
-										<span style="font-size: 10pt;  font-weight: bold; text-align: left;">Komentarz
-				
-										</span>
-										
-									</div>
-									<div style="text-align:left; height:30px; float:left;  width: 180px; ">
-										<span style="font-size: 10pt; font-weight: bold;">Przedmiot </span>
-									</div>
-								</div>
-				</div>
-				<c:forEach items="${komentarze}" var="element" > 
-						
-						<div  class="divProd" style=" width: 760px; min-height: 60px ; max-height: 100px;border-bottom: 1px solid #DFDFDF; ">
-							<div style="float:left;">
-								
-							</div>
-								<div style="width: 830px;">
-									<div style="padding: 5px; float:left;  width: 180px; height: 50px;">
-										
-										<span style=" font-size: 10pt; font-weight: bold; margin-bottom:5px;">${element.nadawca.login}</span>
-										</br>
-										
-										<c:choose>
-											<c:when test="${element.ocena == 1}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
-											<c:when test="${element.ocena == 2}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+			
+				<c:choose>
+					<c:when test="${empty komentarze}">
+							<p style="font-size: 18pt; font-weight: bold;">Nie masz komentarzy do wystawienia. </p>  	
+					</c:when>
+  				<c:otherwise>
+	  					<div  class="divProd" style=" width: 760px;height: 25px; border-bottom: 1px solid #DFDFDF; ">
+							
+									<div style="width: 830px;">
+										<div style="padding: 5px; float:left;  width: 180px; ">
 											
-											</c:when>
-											<c:when test="${element.ocena == 3}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
-											<c:when test="${element.ocena == 4}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
-											<c:when test="${element.ocena == 5}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
-										</c:choose>
-												
+											<span style=" font-size: 10pt; font-weight: bold; margin-bottom:5px;">User</span>
+									
+													
+										</div>
+										<div align="left" style="text-align:center; float:left;  width: 380px; min-height: 30px ; max-height: 100px;">
+											
+											<span style="font-size: 10pt;  font-weight: bold; text-align: left;">Komentarz
+					
+											</span>
+											
+										</div>
+										<div style="text-align:left; height:30px; float:left;  width: 180px; ">
+											<span style="font-size: 10pt; font-weight: bold;">Przedmiot </span>
+										</div>
 									</div>
-									<div align="left" style="text-align:left; float:left;  width: 380px; min-height: 30px ; max-height: 100px;">
-										
-										<span style="font-size: 10pt; text-align: left;">${element.komentarz} 
-				
-										</span>
-										
-									</div>
-									<div style="text-align:left; padding: 10px; float:left;  width: 180px; height: 30px;">
-										<span style="font-size: 10pt; font-weight: bold;">${element.produkt.nazwa} </span>
-									</div>
+					</div>
+					<c:forEach items="${komentarze}" var="element" > 
+							
+							<div  class="divProd" style=" width: 760px; min-height: 60px ; max-height: 100px;border-bottom: 1px solid #DFDFDF; ">
+								<div style="float:left;">
+									
 								</div>
-						</div>
-					</c:forEach>
+									<div style="width: 830px;">
+										<div style="padding: 5px; float:left;  width: 180px; height: 50px;">
+											
+											<span style=" font-size: 10pt; font-weight: bold; margin-bottom:5px;">${element.nadawca.login}</span>
+											</br>
+											
+											<c:choose>
+												<c:when test="${element.ocena == 1}">
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+												</c:when>
+												<c:when test="${element.ocena == 2}">
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+												
+												</c:when>
+												<c:when test="${element.ocena == 3}">
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+												</c:when>
+												<c:when test="${element.ocena == 4}">
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+												</c:when>
+												<c:when test="${element.ocena == 5}">
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+													<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+												</c:when>
+											</c:choose>
+													
+										</div>
+										<div align="left" style="text-align:left; float:left;  width: 380px; min-height: 30px ; max-height: 100px;">
+											
+											<span style="font-size: 10pt; text-align: left;">${element.komentarz} 
+					
+											</span>
+											
+										</div>
+										<div style="text-align:left; padding: 10px; float:left;  width: 180px; height: 30px;">
+											<span style="font-size: 10pt; font-weight: bold;">${element.produkt.nazwa} </span>
+										</div>
+									</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<div id='bottom'>

@@ -445,19 +445,23 @@ public class MojeKontoController
 	@RequestMapping(value = "/mojekonto/modyfikujKonto/zapisz/",  method=RequestMethod.POST)
 	public String updateKontoUsera(@Valid User user, BindingResult bindingResult, Model model, HttpSession session)
 	{
-		if(bindingResult.hasErrors())
+		int ilebledow = bindingResult.getErrorCount();
+		if(bindingResult.hasErrors() && ilebledow > 1)
 		{
-			//System.out.println("hasło has error: "+user.getPass());
+			System.out.println("hasło has error: "+user.getPass());
 			return "redirect:/mojekonto/modyfikujKonto/";
 		}
-		
+		User me = (User) session.getAttribute("sessionUser");
+		user.setPass(me.getPass());
 		boolean itsDone = userService.updateUser(user);
 		if(!itsDone)
 		{
+			System.out.println("robie");
 			return "redirect:/mojekonto/modyfikujKonto/";
 		}
-		//session.setAttribute("sessionUser", arg1);
-		return "modyfikujKontoUser";
+		user.setPass("");
+		session.setAttribute("sessionUser", user);
+		return "redirect:/mojekonto/";
 	}
 	/**
 	 * wyświetla produkty które zostały wystawione przez użytkownika
