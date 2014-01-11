@@ -18,7 +18,7 @@ public class Hist_WyszDao extends Dao
 	{
 		Session session = getSessionFactory();
 		
-		Query query = session.createQuery("select data, idkat from hist_wyszuk");
+		Query query = session.createQuery("from Hist_Wyszuk");
 		
 		List<Hist_Wyszuk> result = new ArrayList<Hist_Wyszuk>();
 		result = (List<Hist_Wyszuk>) query.list();

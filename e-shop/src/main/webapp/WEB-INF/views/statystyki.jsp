@@ -18,56 +18,43 @@
 <script src="<c:url value='/resources/js/jquery.flot.pie.js' />" type="text/javascript" ></script>
 <script>
 
-$(function() {
-
-	// Example Data
-
-	//var data = [
-	//	{ label: "Series1",  data: 10},
-	//	{ label: "Series2",  data: 30},
-	//	{ label: "Series3",  data: 90},
-	//	{ label: "Series4",  data: 70},
-	//	{ label: "Series5",  data: 80},
-	//	{ label: "Series6",  data: 110}
-	//];
-
-	//var data = [
-	//	{ label: "Series1",  data: [[1,10]]},
-	//	{ label: "Series2",  data: [[1,30]]},
-	//	{ label: "Series3",  data: [[1,90]]},
-	//	{ label: "Series4",  data: [[1,70]]},
-	//	{ label: "Series5",  data: [[1,80]]},
-	//	{ label: "Series6",  data: [[1,0]]}
-	//];
-
-	//var data = [
-	//	{ label: "Series A",  data: 0.2063},
-	//	{ label: "Series B",  data: 38888}
-	//];
-
-	// Randomly Generated Data
-
-	var data = [],
-		series = Math.floor(Math.random() * 6) + 3;
-
-	for (var i = 0; i < series; i++) {
-		data[i] = {
-			label: "Series" + (i + 1),
-			data: Math.floor(Math.random() * 100) + 1
-		}
-	}
-
-	var placeholder = $("#placeholder");
+$( document ).ready(function() 
+{
+	var data = [];
+	 
 	
+	$.getJSON( "/jez/panel/statystyki/stats.json")
+	.done(function( json ) {
+	 
+	   var i = 0;
 	
-	$.plot(placeholder, data, {
-		series: {
-			pie: { 
-				show: true
+	  $.each(json.historia, function( index, value ) {
+		
+		  data[i] = {
+					label: value.label,
+					data: value.iloscWystapien
+				}
+	    	i++;
+	 	   });
+	  
+	  var series = i;
+	  
+	  var placeholder = $("#placeholder");
+		$.plot(placeholder, data, {
+			series: {
+				pie: { 
+					show: true
+				}
 			}
-		}
-	});
-})
+		});
+		
+	})
+	.fail(function( jqxhr, textStatus, error ) {
+		   alert("error="+error);
+	}); 
+	
+});
+
 	
 </script>
 </head>
@@ -158,10 +145,12 @@ $(function() {
 			<div id='main-right'>
 				<!--<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" /> -->
 				
-				<img src="statystyki" width="500" height="300" border="0"/>
-				<!--  <div class="demo-container">
-						<div id="placeholder" style="width:550px; height:200px"></div>
-				</div> -->
+				
+				 <div class="demo-container" style="width: 500px; height: 300px;">
+						<div id="placeholder" style="width:350px; height:200px">
+							<img src="statystyki" width="300" height="300" border="0"/>
+						</div>
+				</div> 
 				
 				<!--  <p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>-->
 			</div>

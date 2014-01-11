@@ -44,7 +44,7 @@ public class HistoryController {
 	public HistService histService;
 
 	@RequestMapping(value = "/panel/statystyki", method = RequestMethod.GET)
-	public void stats(HttpServletResponse response, Model model) throws IOException {
+	public String stats(HttpServletResponse response, Model model) throws IOException {
 		// return "statystyki";
 
 	/*	response.setContentType("image/png");
@@ -65,6 +65,7 @@ public class HistoryController {
 		
 		*/
 		
+		/*
 		Connection connection = null;
 		try {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -102,7 +103,9 @@ public class HistoryController {
 		}catch (SQLException e) {
 		e.printStackTrace();
 		}
+		*/
 		
+		return "statystyki";
 		
 	}
 
@@ -161,13 +164,14 @@ public class HistoryController {
 		return chart;
 	}
 
-	@RequestMapping(value = "/stats.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/panel/statystyki/stats.json", method = RequestMethod.GET)
 	public @ResponseBody
 	JsonHist getStats(Model model) {
-		List<Hist_Wyszuk> r = histService.getHistory();
-		JsonHist jso = new JsonHist();
-		jso.generateHistoria(r);
+	
+		List<Hist_Wyszuk> l = histService.getHistory();
+		JsonHist json = new JsonHist();
+		json.generateHistoria(l);
 
-		return jso;
+		return json;
 	}
 }
