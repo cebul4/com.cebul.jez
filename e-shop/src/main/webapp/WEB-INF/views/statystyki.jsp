@@ -145,8 +145,9 @@ $( document ).ready(function()
 			<div id='main-right'>
 				<!--<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" /> -->
 				
-				
-				 <div class="demo-container" style="width: 500px; height: 300px;">
+				<div style="font-size: 14pt; font-weight: bold; margin-left: 200px;">Najczęściej przeszukiwane kategorie</div>
+				 <div class="demo-container" style="width: 500px; min-height: 300px;">
+			
 						<div id="placeholder" style="width:350px; height:200px">
 							<img src="statystyki" width="300" height="300" border="0"/>
 						</div>

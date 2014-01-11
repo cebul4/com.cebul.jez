@@ -20,6 +20,7 @@ import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.entity.User;
+import com.cebul.jez.entity.Zamowienie;
 import com.cebul.jez.entity.Zdjecie;
 
 /**
@@ -456,6 +457,95 @@ public class ProduktyDao extends Dao
 		return resultFinal;
 		//return result;
 		
+	}
+	/**
+	 * pobiera produkty które kupił dnay użytkownik
+	 * @param u uzytkownik
+	 * @return lista produktów
+	 */
+	public List<Produkty> getKupioneProdukty(User u)
+	{
+		Session session = getSessionFactory();
+		
+		String sql = "from Zamowienie z inner join z.nabywca as nab inner join fetch z.produkty as p WHERE" +
+				" nab.id = :idUser";
+		Query query = session.createQuery(sql).setParameter("idUser", u.getId() );
+		
+		//List<Zamowienie> zam = new ArrayList<Zamowienie>();
+		//zam = query.list();
+		//System.out.println(zam.size());
+		
+		//List<Produkty> produkty = new ArrayList<Produkty>();
+		//for(Zamowienie z: zam)
+		//{
+		//	produkty.addAll(z.getProdukty());
+		//}
+		//System.out.println(produkty.size());
+		
+		List<Object> result = new ArrayList<Object>();
+		result =  query.list();
+		
+		List<Produkty> resultFinal = new ArrayList<Produkty>();
+		
+		Object[] ob;
+		int index = 0;
+		for(Object o : result)
+		{
+			ob = (Object[]) result.get(index);
+			
+			for(int i=0;i<ob.length; i++)
+			{
+				//System.out.println(ob[i]);
+				if(ob[i] instanceof Zamowienie)
+				{
+					Zamowienie z = (Zamowienie) ob[i];
+					resultFinal.addAll(z.getProdukty());
+				}
+			}
+			index++;
+		}
+		//System.out.println(resultFinal.size());
+		//System.out.println(resultFinal.get(0).getNazwa());
+		return resultFinal;
+	
+
+	}
+	/**
+	 * pobiera produkty które wylicytował dnay użytkownik
+	 * @param u uzytkownik
+	 * @return lista produktów
+	 */
+	public List<Produkty> getWylicytowane(User u)
+	{
+		Session session = getSessionFactory();
+		
+		String sql = "from ProduktyLicytuj pl left join pl.aktualnyWlasciciel as w " +
+				"WHERE pl.dataZakonczenia < CURRENT_DATE() " +
+				"AND w.id = :idUser) ";
+		Query query = session.createQuery(sql).setParameter("idUser", u.getId() );
+		
+		List<Object> result = new ArrayList<Object>();
+		result =  query.list();
+		
+		List<Produkty> resultFinal = new ArrayList<Produkty>();
+
+		Object[] ob;
+		int index = 0;
+		for(Object o : result)
+		{
+			ob = (Object[]) result.get(index);
+			for(int i=0;i<ob.length; i++)
+			{
+				if(ob[i] instanceof Produkty)
+				{
+					resultFinal.add((Produkty)ob[i]);
+				}
+			}
+			index++;
+		}
+		System.out.println(resultFinal.get(0).getNazwa());		
+		return resultFinal;
+		//return result;
 	}
 	/**
 	 * aktualizuje wspólne dane (dotyczące produktów typu "kup teraz" oraz "licytuj")

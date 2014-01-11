@@ -98,10 +98,19 @@
 				<a class="categorieLeft" href="<c:url value='/mojekonto/dodajProdukt' />">Dodaj Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneProdukty/' />">Wystawione Produkty</a>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/sprzedaneProdukty/' />">Sprzedane Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/kupioneProdukty/' />">Kupione Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/wylicytowaneProdukty/' />">Wylicytowane Produkty</a>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/modyfikujKonto/' />">Modyfikuj kontot</a>
-								
+				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawKomentarz/' />">Wystaw komentarz</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/otrzymaneKomentarze/' />">Otrzymane Komentarze</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneKomentarze/' />">Wystawione komentarze</a>				
 			</div>
 			<div id='main-right'>
+			<c:choose>
+					<c:when test="${empty sprzedane}">
+							<p style="margin-left: 100px; font-size: 18pt; font-weight: bold;">Nie sprzedałeś jeszcze rzadnego produktu. </p>  	
+					</c:when>
+  				<c:otherwise>
 				<c:forEach items="${sprzedane}" var="element" varStatus="status"> 
 						<a class="greenSelect" style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
 						<div  class="divProd" style=" width: 760px; height: 70px;border-bottom: 1px solid #DFDFDF; ">
@@ -139,6 +148,8 @@
 						</div>
 						</a>
 					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 			</div>
 		</div>
 		<div id='bottom'>

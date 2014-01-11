@@ -10,8 +10,8 @@
 	<meta content="pl" http-equiv="Content-Language">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>e-shop</title>
-<link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index.css"
+	type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
@@ -105,90 +105,51 @@
 				<a class="categorieLeft" href="<c:url value='/mojekonto/otrzymaneKomentarze/' />">Otrzymane Komentarze</a>
 				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneKomentarze/' />">Wystawione komentarze</a>				
 			</div>
-			<div id='main-right' align="center">
-							<c:choose>
-					<c:when test="${empty komentarze}">
-							<p style="font-size: 18pt; font-weight: bold;">Nie otrzymałeś jeszcze żadnego komentarza. </p>  	
+			<div id='main-right'>
+			<c:choose>
+					<c:when test="${empty wylicytowane}">
+							<p style="margin-left: 100px; font-size: 18pt; font-weight: bold;">Nie wylicytowałeś jeszcze żadnego produktu. </p>  	
 					</c:when>
   				<c:otherwise>
-	  					<div  class="divProd" style=" width: 760px;height: 25px; border-bottom: 1px solid #DFDFDF; ">
-							
-									<div style="width: 830px;">
-										<div style="padding: 5px; float:left;  width: 180px; ">
-											
-											<span style=" font-size: 10pt; font-weight: bold; margin-bottom:5px;">User</span>
-									
-													
-										</div>
-										<div align="left" style="text-align:center; float:left;  width: 380px; min-height: 30px ; max-height: 100px;">
-											
-											<span style="font-size: 10pt;  font-weight: bold; text-align: left;">Komentarz
-					
-											</span>
-											
-										</div>
-										<div style="text-align:left; height:30px; float:left;  width: 180px; ">
-											<span style="font-size: 10pt; font-weight: bold;">Przedmiot </span>
-										</div>
-									</div>
-					</div>
-				<c:forEach items="${komentarze}" var="element" > 
-						
-						<div  class="divProd" style=" width: 760px; min-height: 60px ; max-height: 100px;border-bottom: 1px solid #DFDFDF; ">
+				<c:forEach items="${wylicytowane}" var="element" varStatus="status"> 
+						<a class="greenSelect" style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
+						<div  class="divProd" style=" width: 760px; height: 70px;border-bottom: 1px solid #DFDFDF; ">
 							<div style="float:left;">
-								
+							<c:choose>
+									<c:when test="${!empty element.zdjecie}">
+											<img style="width: 65px; height: 65px;" src="${pageContext.request.contextPath}/images/${element.id}" />
+									</c:when>
+									<c:otherwise>
+											<img style="width: 65px; " src="<c:url value='/resources/images/unknownItem.png' />" />
+									</c:otherwise>
+							</c:choose>
 							</div>
 								<div style="width: 830px;">
-									<div style="padding: 5px; float:left;  width: 180px; height: 50px;">
+									<div style="padding: 10px; float:left;  width: 460px; height: 30px;">
 										
-										<span style=" font-size: 10pt; font-weight: bold; margin-bottom:5px;">${element.nadawca.login}</span>
-										</br>
+										<span style=" font-size: 12pt; font-weight: bold;">${element.nazwa}</span>
+										
+										
+									</div>
+									<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 30px;">
+										<span style="font-size: 12pt; font-weight: bold;">${element.cena} zł</span>
 										
 										<c:choose>
-											<c:when test="${element.ocena == 1}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
+											<c:when test="${czyKupTeraz[status.count-1]}">
+												<span style="display:block; margin-top: 5px; font-size: 10pt;">Kup Teraz</span>
 											</c:when>
-											<c:when test="${element.ocena == 2}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											
-											</c:when>
-											<c:when test="${element.ocena == 3}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
-											<c:when test="${element.ocena == 4}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
-											<c:when test="${element.ocena == 5}">
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-												<img id="ocenaBtn1" style="width: 15px; " src="<c:url value='/resources/images/circle.png' />" />
-											</c:when>
+											<c:otherwise>
+												<span style="display:block; margin-top: 5px; font-size: 10pt;">Licytacja</span>
+											</c:otherwise>
 										</c:choose>
-												
 									</div>
-									<div align="left" style="text-align:left; float:left;  width: 380px; min-height: 30px ; max-height: 100px;">
-										
-										<span style="font-size: 10pt; text-align: left;">${element.komentarz} 
-				
-										</span>
-										
-									</div>
-									<div style="text-align:left; padding: 10px; float:left;  width: 180px; height: 30px;">
-										<span style="font-size: 10pt; font-weight: bold;">${element.produkt.nazwa} </span>
-									</div>
+									
 								</div>
 						</div>
+						</a>
 					</c:forEach>
 				</c:otherwise>
-				</c:choose>
+			</c:choose>
 			</div>
 		</div>
 		<div id='bottom'>

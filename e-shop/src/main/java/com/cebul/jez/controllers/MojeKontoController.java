@@ -88,7 +88,6 @@ public class MojeKontoController
 	@RequestMapping(value = "/mojekonto/")
 	public String getGlownyWidok()
 	{
-		
 		return "mojekonto";
 	}
 	/**
@@ -525,5 +524,69 @@ public class MojeKontoController
 		model.addAttribute("czyKupTeraz", czyKupTeraz);
 		
 		return "komentarzeDoWystawienia";
+	}
+	/**
+	 * umożliwia wyświetlenie listy przedmiotów które zostały kupione prrzez danego użytkownika
+	 * @param model obiekt model
+	 * @param session obiekt sesji
+	 * @return zwraca logiczna nazwe widoku
+	 */
+	@RequestMapping(value = "/mojekonto/kupioneProdukty/")
+	public String kupioneProdukty(Model model, HttpSession session)
+	{
+		User me = (User) session.getAttribute("sessionUser");
+		List<Produkty> kupioneProdukty = produktyService.getKupioneProdukty(me);
+		//System.out.println("size= "+sprzedaneProdukty.size());
+		//System.out.println("id Pierwszego = "+sprzedaneProdukty.get(0).getId());
+		
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		for(Produkty p : kupioneProdukty)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				//System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
+		
+		model.addAttribute("kupione", kupioneProdukty);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		
+		return "kupioneProdukty";
+	}
+	/**
+	 * umożliwia wyświetlenie listy przedmiotów które zostały wylicytowane prrzez danego użytkownika
+	 * @param model obiekt model
+	 * @param session obiekt sesji
+	 * @return zwraca logiczna nazwe widoku
+	 */
+	@RequestMapping(value = "/mojekonto/wylicytowaneProdukty/")
+	public String wylicytowaneProdukty(Model model, HttpSession session)
+	{
+		User me = (User) session.getAttribute("sessionUser");
+		List<Produkty> wylicytowaneProdukty = produktyService.getWylicytowane(me);
+		//System.out.println("size= "+sprzedaneProdukty.size());
+		//System.out.println("id Pierwszego = "+sprzedaneProdukty.get(0).getId());
+		
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		for(Produkty p : wylicytowaneProdukty)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				//System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
+		
+		model.addAttribute("wylicytowane", wylicytowaneProdukty);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		
+		return "wylicytowaneProdukty";
 	}
 }

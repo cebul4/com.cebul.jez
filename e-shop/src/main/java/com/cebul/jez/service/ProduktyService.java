@@ -116,5 +116,15 @@ public class ProduktyService
 	{
 		return produktyDao.sprawdzProdukty(produkty);
 	}
+	@Transactional
+	public List<Produkty> getKupioneProdukty(User u)
+	{
+		return produktyDao.getKupioneProdukty(u);
+	}
+	@Transactional
+	public List<Produkty> getWylicytowane(User u)
+	{
+		return produktyDao.getWylicytowane(u);
+	}
 	
 }
