@@ -471,16 +471,7 @@ public class ProduktyDao extends Dao
 				" nab.id = :idUser";
 		Query query = session.createQuery(sql).setParameter("idUser", u.getId() );
 		
-		//List<Zamowienie> zam = new ArrayList<Zamowienie>();
-		//zam = query.list();
-		//System.out.println(zam.size());
 		
-		//List<Produkty> produkty = new ArrayList<Produkty>();
-		//for(Zamowienie z: zam)
-		//{
-		//	produkty.addAll(z.getProdukty());
-		//}
-		//System.out.println(produkty.size());
 		
 		List<Object> result = new ArrayList<Object>();
 		result =  query.list();

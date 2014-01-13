@@ -4,6 +4,7 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/tx 
@@ -11,8 +12,10 @@
 	http://www.springframework.org/schema/context 
 	http://www.springframework.org/schema/context/spring-context.xsd
 	
+	
 	http://www.springframework.org/schema/webflow-config
     http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+    http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
 	">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
@@ -26,11 +29,25 @@
     <property name="maxActive" value="10"/>
 </bean>	
 
+
+<!-- 
+<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+   <property name="jndiName" value="java:comp/env/jdbc/portal_aukcyjny"/>
+</bean>
+
+-->
+<!-- 
+<jee:jndi-lookup id="dataSource" jndi-name="/jdbc/portal_aukcyjny" resource-ref="true" expected-type="javax.sql.DataSource" />
+ -->
+   
 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
    <property name="dataSource" ref="dataSource"/>
    <property name="packagesToScan" value="com.cebul.jez.entity"/>
    <property name="hibernateProperties">
    	<props>
+   		<prop key="hibernate.connection.useUnicode">true</prop>
+        <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+         <prop key="hibernate.connection.charSet">UTF-8</prop>
    		<prop key="dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
    		<prop key="show_sql">true</prop>
    		<prop key="hibernate.hbm2ddl.auto">update</prop>
@@ -42,7 +59,9 @@
       <property name="sessionFactory" ref="sessionFactory" />
 </bean>
     
+  
 <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
 
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	<property name="host" value="smtp.gmail.com" />

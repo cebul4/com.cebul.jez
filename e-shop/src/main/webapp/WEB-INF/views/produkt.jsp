@@ -188,14 +188,16 @@ function sprawdzCene()
 					<span style="font-size: 12pt; display: block; color: gray; margin-bottom: 5px;">${path}</span>
 					
 						<div style='margin-right: 20px; margin-right: 10px; float: left; padding: 5px; border: 1px solid gray; height: 200px;'>
+								<div style="height: 150px;">
 								<c:choose>
 								<c:when test="${!empty produkt.zdjecie}">
-										<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/prodimag/${produkt.zdjecie.id}" />
+										<img style="max-width: 200px; max-height: 200px;" src="${pageContext.request.contextPath}/prodimag/${produkt.zdjecie.id}" />
 								</c:when>
 									<c:otherwise>
-										<img style="height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
+										<img style="max-height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
 									</c:otherwise>
 								</c:choose>
+								</div>
 						</div>
 						
 						</br>

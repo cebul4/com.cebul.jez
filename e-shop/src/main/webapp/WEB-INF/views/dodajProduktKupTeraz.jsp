@@ -126,7 +126,7 @@
 				<div style='margin-left: 150px;'>
 					<p style="font-size: 16pt; color: #8AC74A;" ><b>Uzupełnij informacje o produkcie: </b></p>
 					<table class='casualTab' style='margin-top: 30px;'>
-						<sf:form modelAttribute="produkt" action="/jez/mojekonto/dodajProdukt/dodajKupTeraz">
+						<sf:form modelAttribute="produkt" action="/jez/mojekonto/dodajProdukt/dodajKupTeraz" accept-charset="utf-8">
 							<tr>
 								<td style="font-weight: bold;" >Nazwa: </td>
 								<td>

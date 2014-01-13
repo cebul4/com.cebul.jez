@@ -181,16 +181,17 @@ function nothighlite(ob)
 					<p style="font-size: 16pt; color: #8AC74A;" ><b>Ostatnio dodane produkty </b></p>
 						<c:forEach items="${lastFourItems}" var="element"> 
 							<a class='produktLink' href="<c:url value='/produkty/${element.id}/' />">
-								<div style='display: block; float: left; padding: 5px;'>
+								<div style='display: block; float: left; padding: 5px; width: 190px; height: 190px;'>
+									<div style="height: 150px;">
 									<c:choose>
 										<c:when test="${!empty element.zdjecie}">
-											<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/imag/${element.id}" />
+											<img style="max-width: 200px; max-height: 150px;" src="${pageContext.request.contextPath}/imag/${element.id}" />
 										</c:when>
 										<c:otherwise>
-											<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
+											<img style="max-width: 200px; max-height: 150px;" src="<c:url value='/resources/images/unknownItem.png' />" />
 										</c:otherwise>
 									</c:choose>
-									
+									</div>
 									<div style='padding: 3px;'><span>${element.nazwa}</span></div>
 									<div style='padding: 3px;'><span>${element.cena} zł</span></div>
 								</div>
