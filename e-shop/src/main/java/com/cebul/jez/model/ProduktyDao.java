@@ -543,7 +543,7 @@ public class ProduktyDao extends Dao
 			}
 			index++;
 		}
-		System.out.println(resultFinal.get(0).getNazwa());		
+		//System.out.println(resultFinal.get(0).getNazwa());		
 		return resultFinal;
 		//return result;
 	}
