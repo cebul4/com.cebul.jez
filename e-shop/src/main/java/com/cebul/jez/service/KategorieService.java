@@ -52,4 +52,9 @@ public class KategorieService
 	{
 		return kategorieDao.updateCategory(k);
 	}
+	@Transactional
+	public List<Kategoria> getAll()
+	{
+		return kategorieDao.getAll();
+	}
 }

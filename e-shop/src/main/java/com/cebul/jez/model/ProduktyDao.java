@@ -430,9 +430,8 @@ public class ProduktyDao extends Dao
 		Query query = session.createQuery("from Produkty p inner join p.user as us WHERE us.id = :idW AND " +
 				"p.id in (select pk.id from ProduktyKupTeraz pk WHERE pk.kupiony = false) " +
 				"OR " +
-				"p.id in (select pl.id from ProduktyLicytuj pl left join pl.aktualnyWlasciciel as w " +
-				"WHERE pl.dataZakonczenia >= CURRENT_DATE() " +
-				"AND w.id is not null) ").setParameter("idW", u.getId() );
+				"p.id in (select pl.id from ProduktyLicytuj pl " +
+				"WHERE pl.dataZakonczenia >= CURRENT_DATE() ) ORDER BY p.dataDodania DESC").setParameter("idW", u.getId() );
 		
 		List<Object> result = new ArrayList<Object>();
 		result =  query.list();
@@ -534,7 +533,7 @@ public class ProduktyDao extends Dao
 			}
 			index++;
 		}
-		System.out.println(resultFinal.get(0).getNazwa());		
+		//System.out.println(resultFinal.get(0).getNazwa());		
 		return resultFinal;
 		//return result;
 	}
@@ -598,6 +597,21 @@ public class ProduktyDao extends Dao
 			return result;
 		
 		return null;
+	}
+	
+	/**
+	 * @author Robert
+	 * usuwa produkt z bazy danych
+	 * @param produktId identyfikator produktu który ma zostać usuniety
+	 * 
+	 */
+	public void usunProdukt(Integer produktId)
+	{
+		Session session = getSessionFactory();
+		Produkty p = getProdukt(produktId);
+		System.out.println("test usuniecia " + p.getNazwa());
+		session.delete(p);
+		
 	}
 	
 }

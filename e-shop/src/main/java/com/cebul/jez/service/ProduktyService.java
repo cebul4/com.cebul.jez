@@ -126,5 +126,10 @@ public class ProduktyService
 	{
 		return produktyDao.getWylicytowane(u);
 	}
+	@Transactional
+	public void usunProdukt(Integer produktId)
+	{
+		 produktyDao.usunProdukt(produktId);
+	}
 	
 }

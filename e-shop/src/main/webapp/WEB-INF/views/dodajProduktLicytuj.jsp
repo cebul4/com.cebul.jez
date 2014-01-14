@@ -10,12 +10,21 @@
 	<meta content="pl" http-equiv="Content-Language">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>e-shop</title>
-<link href="${pageContext.request.contextPath}/resources/css/index.css"
-	type="text/css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
-<script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
+
+<script src="<c:url value='/resources/js/jQueryUI/js/jquery.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/jQueryUI/js/jqueryui.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
+<link href="${pageContext.request.contextPath}/resources/js/jQueryUI/css/south-street/jquery-ui-1.10.3.custom.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script>
+
+$(function() {
+	$( "#datepicker" ).datepicker();
+	$( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+	$( "#datepicker" ).datepicker( "option", "showAnim", "bounce" );
+});
+	
 function ladujPodkategorie()
 {
 	var val = $('#kategoria').val();
@@ -39,7 +48,7 @@ function ladujPodkategorie()
 }
 	function sprawdzDate()
 	{
-		var str = $('#dataZakonczenia').val();
+		var str = $('#datepicker').val();
 		var m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
 
 		if(m != null)
@@ -61,7 +70,7 @@ function ladujPodkategorie()
 				return true;
 			}
 			
-			alert("data zakończenia nie może byc mniejsza od aktualnej daty.");
+			alert("Data zakończenia nie może byc mniejsza od aktualnej daty.");
 		}else{
 			alert("Wprowadzona przez Ciebie data jest nie poprawna");
 		}
@@ -213,7 +222,7 @@ function ladujPodkategorie()
 							<tr>
 								<td style="font-weight: bold;">Data zakonczenia:</td>
 								<td>
-									<sf:input onchange="sprawdzDate();" name="dataZakonczenia" id="dataZakonczenia" path="dataZakonczenia" />
+									<sf:input onchange="sprawdzDate();" name="dataZakonczenia" id="datepicker" path="dataZakonczenia" />
 									<sf:errors  path="dataZakonczenia" cssClass="error" />
 								</td>
 							</tr>

@@ -143,6 +143,7 @@ public class UserDao extends Dao
 		return true;
 	}
 	/**
+	 * @author Robert
 	 * ustawia range użytkownika na "admin" na podstawie podanego loginu
 	 * @param login 
 	 */
@@ -157,6 +158,28 @@ public class UserDao extends Dao
 		 if (u.getRanga().equals("user"))
 		 {
 			 u.setRanga("admin");
+			 session.update(u);
+			 
+		 }
+		
+	}
+	
+	/**
+	 * funkcja blokuje użytkownika określonego przez podane id, poprzez ustawienie pola Enabled na 0
+	 * @author Robert
+	 * @param id - id użytkownika
+	 */
+	public void blockUser(Integer id)
+	{
+		Session session = getSessionFactory();
+		User u = getUser(id);
+		
+		//u.getEnabled();
+		
+		
+		 if (u.getEnabled() == 1)
+		 {
+			 u.setEnabled(0);
 			 session.update(u);
 			 
 		 }

@@ -1,6 +1,7 @@
 package com.cebul.jez.controllers;
 
 import java.awt.image.BufferedImage;
+import java.beans.PropertyEditorSupport;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -119,7 +121,7 @@ public class AdminPanelController
 		
 	  userService.setAdmin(addLogin);
 				
-		return "redirect:/admin_home/";
+		return "redirect:/panel/";
 	}
 	
 	/**
@@ -134,6 +136,7 @@ public class AdminPanelController
 	public String addKatForm(Model model)
 	{
 		model.addAttribute(new Kategoria());
+		model.addAttribute("parent", kategorieService.getAll());
 		
 		return "dodajKategorie";
 	}
@@ -161,7 +164,7 @@ public class AdminPanelController
 			return "/dodajKategorie";
 			
 		}
-		
+	
 		boolean add = kategorieService.addKategoria(kategoria);
 		
 		if (!add)
@@ -182,24 +185,41 @@ public class AdminPanelController
 		return "redirect:/panel/";
 	}
 	
-	
-	
-	
-	
-	
+	/**
+	 * @author Robert
+	 * 
+	 * Funkcja odpowiada za edycje kategorii
+	 * 
+	 * @param model - dostęp do obiektu modelu
+	 * @param session - dośtęp do obiektu sesji
+	 * @return - zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value= "/panel/edytujKategorie")
-	public String edytujKategorieForm(Model model, HttpSession session)
+	public String edytujKategorieForm(Model model,HttpSession session)
 	{
-		
 		int id = 2;
 		
-		model.addAttribute(kategorieService.getKategory(id));
 		
-//komentaraz dla jezyka
+		model.addAttribute(kategorieService.getKategory(id));
+		model.addAttribute("parent", kategorieService.getAll());
+		
+
 		
 		return "edytujKategorie";
 	}
 	
+	
+	/**
+	 * @author Robert
+	 * 
+	 * Funkcja wyświetla formularz edycji kategorii
+	 * 
+	 * @param kat - obiekt klasy Kategoria. Uzyskujemy dostęp do danych w tabeli Kategorie bazy danych
+	 * @param bindingResult - obiekt zwraca błędy w razie nie powdzenia operacji
+	 * @param model - dostęp do obiektu modelu
+	 * @param session - dostęp do obiektu sesji
+	 * @return w razie powodzenia edycji przekierowuje do panelu admina, w przeciwnym wypadku wraca do formularza edycji
+	 */
 	@RequestMapping(value = "/panel/edytujKategorie/zapisz/",  method=RequestMethod.POST)
 	public String updateKategoria(@Valid Kategoria kat, BindingResult bindingResult, Model model, HttpSession session)
 	{
@@ -216,15 +236,75 @@ public class AdminPanelController
 			return "redirect: /panel/edytujKategorie/";
 		}
 		
-		return "/admin_home/panel";
+		return "redirect:/panel/";
 		
 	}
 	
+	/**
+	 * @author Robert
+	 * Funkcja blokowania użytkownika
+	 * Obsługuje żądania GET
+	 * @param model - dostep do modelu
+	 * @return zwraca logiczną nazwę widoku
+	 */
+	@RequestMapping(value = "/panel/blockUser")
+	public String block(Model model)
+	{
+		return "/blockUser";
+	}
+	
+	
+	/**
+	 * @author Robert
+	 * 
+	 * Funkcja blokuje użytkownika o ID podanym z formularza
+	 * Obsługuje żądania POST
+	 * @param model - dostęp do atrybutów modelu
+	 * @param id - identyfikator użytkownika, który ma zostać zablokowany
+	 * @param session - dostęp do obiektów sesji
+	 * @return przekierowuje do panelu admina
+	 */
+	@RequestMapping(value = "/panel/blockUser", method=RequestMethod.POST)
+	public String blockUser(Model model, @RequestParam(value="id") Integer id, HttpSession session)
+	{
+		
+	  userService.blockUser(id);
+				
+		return "redirect:/panel/";
+	}
+	
+	@RequestMapping(value = "/panel/usunProdukt")
+	public String usun(Model model)
+	{
+		return "/usunProdukt";
+	}
+	
+	@RequestMapping(value = "/panel/usunProdukt", method = RequestMethod.POST)
+	public String usunProdukt(@RequestParam(value="id") Integer produktId, Model model, HttpSession session){
+		produktyService.usunProdukt(produktId);
+		
+		return "redirect:/panel/";
+	}
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
+	
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder)
+	{
+		binder.registerCustomEditor(Kategoria.class,"parentKategory" ,new PropertyEditorSupport()
+		{
+			public void setAsText(String text) {
+				Kategoria k = kategorieService.getKategory(Integer.parseInt(text));
+				
+				setValue(k);
+			}
+			
+			
+		});
+	}
 }
 
