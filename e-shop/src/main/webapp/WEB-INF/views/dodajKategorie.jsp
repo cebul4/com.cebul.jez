@@ -12,6 +12,7 @@
 <title>e-shop</title>
 <link href="${pageContext.request.contextPath}/resources/css/index.css"
 	type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
@@ -113,21 +114,21 @@
 		<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Panel3</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj konto</a>
+				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
-		</div>
+			</div>
 				
 	   <div id='main-right'>
+	   <p style="font-size: 16pt; color: #8AC74A;" ><b>Dodawanie kategorii </b></p>
 		<sf:form method="POST" modelAttribute="kategoria">
 			<fieldset style='border: none;'>
 			
-			<table id='tabReg'>
+			<table class="casualTab">
 				<tr>
-							<td>
-								<label for="id">ID:</label>
-							</td>
+							
 							<td>
 								<sf:input  type="hidden" id="id" path="id" />
 								<sf:errors  path="id" cssClass="error" />
@@ -135,7 +136,7 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="nazwa"> Nazwa:</label>
+								<label for="nazwa"><b><i> Nazwa:</i></b></label>
 							</td>
 							<td>
 								<sf:input id="nazwa" path="nazwa"  />
@@ -145,7 +146,7 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="parentKategory"> ID PArent:</label>
+								<label for="parentKategory"><b><i> Kategoria nadrzędna:</i></b></label>
 							</td>
 							<td>
 							<select id="parentKategory" path="parentKategory" name="parentKategory">

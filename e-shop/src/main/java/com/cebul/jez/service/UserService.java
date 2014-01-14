@@ -62,4 +62,10 @@ public class UserService
 	{
 		 userDao.setAdmin(login);
 	}
+	
+	@Transactional
+	public void blockUser(Integer id)
+	{
+		 userDao.blockUser(id);
+	}
 }

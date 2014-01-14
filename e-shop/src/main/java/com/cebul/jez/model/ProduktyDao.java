@@ -471,7 +471,16 @@ public class ProduktyDao extends Dao
 				" nab.id = :idUser";
 		Query query = session.createQuery(sql).setParameter("idUser", u.getId() );
 		
+		//List<Zamowienie> zam = new ArrayList<Zamowienie>();
+		//zam = query.list();
+		//System.out.println(zam.size());
 		
+		//List<Produkty> produkty = new ArrayList<Produkty>();
+		//for(Zamowienie z: zam)
+		//{
+		//	produkty.addAll(z.getProdukty());
+		//}
+		//System.out.println(produkty.size());
 		
 		List<Object> result = new ArrayList<Object>();
 		result =  query.list();
@@ -557,9 +566,9 @@ public class ProduktyDao extends Dao
 		return true;
 	}
 	/**
-	 * usówa produkt z bazy danych
+	 * usuwa produkt z bazy danych
 	 * @param produktId identyfikator produktu który ma zostać usuniety
-	 * @return zwraca true jesli operacja sie powiedzie, fals ew rpzeciwnym wypadku
+	 * @return zwraca true jesli operacja sie powiedzie, false w przeciwnym wypadku
 	 */
 	public boolean deleteProdukt(Integer produktId)
 	{
@@ -568,6 +577,22 @@ public class ProduktyDao extends Dao
 		session.delete(p);
 		return true;
 	}
+	
+	/**
+	 * @author Robert
+	 * usuwa produkt z bazy danych
+	 * @param produktId identyfikator produktu który ma zostać usuniety
+	 * 
+	 */
+	public void usunProdukt(Integer produktId)
+	{
+		Session session = getSessionFactory();
+		Produkty p = getProdukt(produktId);
+		System.out.println("test usuniecia " + p.getNazwa());
+		session.delete(p);
+		
+	}
+	
 	/**
 	 * sprawdza czy produkty nie zostal juz kupiony przez innego użytkownika (ważne podczas zatwierdzania zamówienia)
 	 * @param produkty produkt który ma zostać sprawdzony

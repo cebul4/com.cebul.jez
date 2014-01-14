@@ -168,11 +168,12 @@ function doAjaxPost()
 		<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Panel3</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj konto</a>
+				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
-		</div>
+			</div>
 		<div id='main-right' align='center'>
 		<p style="font-size: 16pt; color: #8AC74A;" ><b>Podaj login użytkownika: </b></p>
 		

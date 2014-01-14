@@ -10,16 +10,71 @@
 	<meta content="pl" http-equiv="Content-Language">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>e-shop</title>
-<link href="${pageContext.request.contextPath}/resources/css/index.css"
-	type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
+function month()
+{
+var m = $("#miesiac").val();
+var r = $("#rok").val();
+var d = $("#dzien");
+var str = "";
+str = "<option value='null'>dzień:</option>";
+if(m != 2 && (m % 2 == 0))
+{
+for(var i=1; i<=31; i++)
+{
+str += "<option value='"+i+"'> "+i+"</option>";
+}
+d.html(str);
+}else if(m ==2 && (r % 4 == 0)){
+for(var i=1; i<=29; i++)
+{
+str += "<option value='"+i+"'> "+i+"</option>";
+}
+d.html(str);
+}else if(m ==2){
+for(var i=1; i<=28; i++)
+{
+str += "<option value='"+i+"'> "+i+"</option>";
+}
+d.html(str);
+}else if(m % 2 == 1){
+for(var i=1; i<=30; i++)
+{
+str += "<option value='"+i+"'> "+i+"</option>";
+}
+d.html(str);
+}
+} 
 
+function doAjaxPost() 
+{
+   //alert("sakdjlajla");
+	// get the form values
+    var username = $('#login').val();
+    $.ajax({
+	    type: "POST",
+		    url: "/jez/register/ajax.do",
+		    data: "username=" + username,
+		    success: function(response)
+		    {
+		    	if(response != "")
+		    	{
+		    		$("#login_error").text("Taki użytkownik juz istnieje!");
+		    	}else{
+		    		$("#login_error").text("");
+		    	}
+				
+	    	}
+    });
+}
 </script>
 </head>
 <body>
-	<div id='contener'>
+<div id='contener'>
 		<div id='top'>
 			<div id="top-left">
 				<ul type="square" style="margin-top: 25px; font: 700 12px/22px 'Lato',Arial,sans-serif; list-style-image: url(<c:url value='/resources/images/punktor.jpg' />)">
@@ -31,8 +86,8 @@
 			
 			<div id="top-mid">
 				<div id='imgCont' align="center">
-					<a href="<c:url value='/admin_home' />" style="border: 0 px solid black; text-decoration: none;">
-						<img  style='border: 0 px solid black; height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
+					<a href="<c:url value='/admin_home' />" style="border: none;">
+						<img  style='height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
 					</a>
 				</div>
 			</div>
@@ -45,7 +100,7 @@
 							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
-	  							<a style='margin-top: 40px;' href='/jez/logowanie'>Logowanie</a>
+	  							<a style='margin-top: 40px;' href='/jez/logowanie'>Zaloguj</a>
 								<a href='/jez/rejestracja'>Rejestracja</a>
 	  					</c:otherwise>
   					</c:choose>
@@ -80,7 +135,15 @@
 						</form>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px;">
-								<a href="<c:url value='/panel/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">PANEL ADMINA</a>
+									<c:choose>
+									<c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
+										  	<a href="<c:url value='/panel/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">PANEL ADMINA</a>
+									</c:when>
+				  					<c:otherwise>
+				  							<a href="<c:url value='/mojekonto/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
+				  					</c:otherwise>
+			  					</c:choose>
+								
 							</div>
 						</td>
 								<td>
@@ -102,7 +165,7 @@
 			
 		</div>
 		<div id='main'>
-			<div id='main-left'>
+		<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
@@ -111,17 +174,29 @@
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
-			<div id='main-right'>
-				<!--<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" /> -->
-			</div>
-		</div>
-		<div id='bottom'>
-			<span align="center" style="color: #578921; display: block;"><b>Copyright ? Cebul & Jeżyk</b></span>
-			
-		</div>
-	</div>
-	<div id='podpowiedzi' >
+		<div id='main-right' align='center'>
+		<p style="font-size: 16pt; color: #8AC74A;" ><b>Podaj id użytkownika: </b></p>
 		
+		<sf:form method="POST" action="/jez/panel/blockUser">
+			<fieldset style='border: none;'>
+			<table class='casualTab'>
+			<tr>
+				<td> <label><b><i>ID Użytkownika</i></b></label> </td>
+				<td>
+					<input style='width: 90px;' type="text" name="id" />
+				</td>	
+			</tr>
+			
+			<tr>
+				<td cols="2" align='center'>
+					<input class="sub" style='margin-left: 50px;' type="submit" value="Zablokuj" /> 
+				</td>
+			</tr>
+			</table>
+			</fieldset>
+		</sf:form>
+	
 	</div>
+</div>
 </body>
 </html>

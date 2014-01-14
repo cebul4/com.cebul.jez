@@ -78,6 +78,7 @@ public class KategorieDao extends Dao
 		boolean exsist = isExist(k);
 		if(!exsist)
 		{
+			
 			session.save(k);
 			return true;
 		}
@@ -119,5 +120,15 @@ public class KategorieDao extends Dao
 		
 		return true;
 	}	
+	
+	public List<Kategoria> getAll()
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT * FROM Kategorie").
+				addEntity(Kategoria.class);
+		List<Kategoria> result = query.list();
+		return result;
+		
+	}
 	
 }
