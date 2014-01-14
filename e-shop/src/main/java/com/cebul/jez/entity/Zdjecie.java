@@ -1,6 +1,7 @@
 package com.cebul.jez.entity;
 
 import java.io.File;
+import java.io.Serializable;
 import java.sql.Blob;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Zdjecia")
-public class Zdjecie 
+public class Zdjecie implements Serializable
 {
 	@Id
 	@GeneratedValue
