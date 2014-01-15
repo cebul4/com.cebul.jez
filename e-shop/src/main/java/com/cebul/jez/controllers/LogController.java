@@ -79,10 +79,10 @@ public class LogController
 		}
 		System.out.println("test uset login:"+usinfo.getLogin() );
 		
-		if(ranga.equals("admin"))
-		{
-			return "redirect:/admin_home";
-		}
+		//if(ranga.equals("admin"))
+		//{
+		//	return "redirect:/admin_home";
+		//}
 		return "redirect:/home";
 	}
 	/**

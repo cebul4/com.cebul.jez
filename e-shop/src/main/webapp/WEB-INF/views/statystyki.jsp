@@ -55,6 +55,43 @@ $( document ).ready(function()
 	
 });
 
+$( document ).ready(function() 
+		{
+			var data = [];
+			 
+			
+			$.getJSON( "/jez/panel/statystyki/most_buying_categories.json")
+			.done(function( json ) {
+			 
+			   var i = 0;
+			
+			  $.each(json.historia, function( index, value ) {
+				
+				  data[i] = {
+							label: value.label,
+							data: value.iloscWystapien
+						}
+			    	i++;
+			 	   });
+			  
+			  var series = i;
+			  
+			  var placeholder = $("#placeholder2");
+				$.plot(placeholder, data, {
+					series: {
+						pie: { 
+							show: true
+						}
+					}
+				});
+				
+			})
+			.fail(function( jqxhr, textStatus, error ) {
+				   alert("error="+error);
+			}); 
+			
+		});
+
 	
 </script>
 </head>
@@ -136,9 +173,10 @@ $( document ).ready(function()
 		<div id='main'>
 			<div id='main-left'>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
-				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj podkategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Sprzedane Produkty</a>
-				<a class="categorieLeft" href="<c:url value='/panel/' />">Modyfikuj kontot</a>
+				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
@@ -148,9 +186,13 @@ $( document ).ready(function()
 				<div style="font-size: 14pt; font-weight: bold; margin-left: 200px;">Najczęściej przeszukiwane kategorie</div>
 				 <div class="demo-container" style="width: 500px; min-height: 300px;">
 			
-						<div id="placeholder" style="width:350px; height:200px">
-							<img src="statystyki" width="300" height="300" border="0"/>
-						</div>
+						<div id="placeholder" style="width:460px; height:260px"></div>
+						
+				</div> 
+				<div style="font-size: 14pt; font-weight: bold; margin-left: 200px;">Kategorie, z których przedmioty są najczęściej kupowane</div>
+				 <div class="demo-container" style="width: 500px; min-height: 300px;">
+			
+						<div id="placeholder2" style="width:460px; height:260px"></div>
 				</div> 
 				
 				<!--  <p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>-->

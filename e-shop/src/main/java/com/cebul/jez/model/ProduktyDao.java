@@ -481,11 +481,13 @@ public class ProduktyDao extends Dao
 		int index = 0;
 		for(Object o : result)
 		{
+			
 			ob = (Object[]) result.get(index);
+		
 			
 			for(int i=0;i<ob.length; i++)
 			{
-				//System.out.println(ob[i]);
+				//System.out.println(ob[i].toString());
 				if(ob[i] instanceof Zamowienie)
 				{
 					Zamowienie z = (Zamowienie) ob[i];
@@ -496,6 +498,7 @@ public class ProduktyDao extends Dao
 		}
 		//System.out.println(resultFinal.size());
 		//System.out.println(resultFinal.get(0).getNazwa());
+		//System.out.println(resultFinal.get(0).getKategorie().getId());
 		return resultFinal;
 	
 

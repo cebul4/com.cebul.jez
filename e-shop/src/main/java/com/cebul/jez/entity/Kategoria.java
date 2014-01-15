@@ -58,7 +58,7 @@ public class Kategoria implements Serializable
 	}
 
 	public void setNazwa(String nazwa) {
-		nazwa = nazwa;
+		this.nazwa = nazwa;
 	}
 	
 	public Kategoria getParentKategory() {

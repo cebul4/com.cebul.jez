@@ -113,7 +113,7 @@ $(function()
 			<div id='main-right' style="min-height:750px;">
 			<c:choose>
 					<c:when test="${empty sprzedane}">
-							<p style="margin-left: 100px; font-size: 18pt; font-weight: bold;">Nie Wystawiłeś jeszcze rzadnego przedmiotu. </p>  	
+							<p style="margin-left: 100px; font-size: 18pt; font-weight: bold;">Nie wystawiłeś jeszcze żadnego przedmiotu. </p>  	
 					</c:when>
   				<c:otherwise>
 				<c:forEach items="${sprzedane}" var="element" varStatus="status"> 

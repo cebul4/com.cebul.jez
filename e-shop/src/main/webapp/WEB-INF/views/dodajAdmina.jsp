@@ -15,62 +15,7 @@
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
-function month()
-{
-var m = $("#miesiac").val();
-var r = $("#rok").val();
-var d = $("#dzien");
-var str = "";
-str = "<option value='null'>dzień:</option>";
-if(m != 2 && (m % 2 == 0))
-{
-for(var i=1; i<=31; i++)
-{
-str += "<option value='"+i+"'> "+i+"</option>";
-}
-d.html(str);
-}else if(m ==2 && (r % 4 == 0)){
-for(var i=1; i<=29; i++)
-{
-str += "<option value='"+i+"'> "+i+"</option>";
-}
-d.html(str);
-}else if(m ==2){
-for(var i=1; i<=28; i++)
-{
-str += "<option value='"+i+"'> "+i+"</option>";
-}
-d.html(str);
-}else if(m % 2 == 1){
-for(var i=1; i<=30; i++)
-{
-str += "<option value='"+i+"'> "+i+"</option>";
-}
-d.html(str);
-}
-} 
 
-function doAjaxPost() 
-{
-   //alert("sakdjlajla");
-	// get the form values
-    var username = $('#login').val();
-    $.ajax({
-	    type: "POST",
-		    url: "/jez/register/ajax.do",
-		    data: "username=" + username,
-		    success: function(response)
-		    {
-		    	if(response != "")
-		    	{
-		    		$("#login_error").text("Taki użytkownik juz istnieje!");
-		    	}else{
-		    		$("#login_error").text("");
-		    	}
-				
-	    	}
-    });
-}
 </script>
 </head>
 <body>
@@ -86,7 +31,7 @@ function doAjaxPost()
 			
 			<div id="top-mid">
 				<div id='imgCont' align="center">
-					<a href="<c:url value='/admin_home' />" style="border: none;">
+					<a href="<c:url value='/' />" style="border: none;">
 						<img  style='height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
 					</a>
 				</div>
@@ -114,7 +59,7 @@ function doAjaxPost()
 					<tr>
 						<form action="${pageContext.request.contextPath}/szukaj/szukajProd/" method="get">
 							<td>
-								<input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;"  value="Wpisz czego szuaksz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
+								<input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;"  value="Wpisz czego szukasz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
 							</td>
 							<td>
 								<select name='szukanaKat' id='szukanaKat' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">

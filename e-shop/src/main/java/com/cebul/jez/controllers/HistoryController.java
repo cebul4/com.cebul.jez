@@ -29,9 +29,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cebul.jez.entity.Hist_Wyszuk;
+import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.service.HistService;
 import com.cebul.jez.useful.JsonHist;
 import com.cebul.jez.useful.JsonObject;
+import com.cebul.jez.useful.JsonProd;
 
 import java.sql.Connection;
 
@@ -172,6 +174,17 @@ public class HistoryController {
 		JsonHist json = new JsonHist();
 		json.generateHistoria(l);
 
+		return json;
+	}
+	
+	@RequestMapping(value = "/panel/statystyki/most_buying_categories.json", method = RequestMethod.GET)
+	public @ResponseBody
+	JsonProd getMostBuyingStats(Model model) {
+	
+		List<Produkty> l = histService.getProdukty();
+		JsonProd json = new JsonProd();
+		json.generateHistoria(l);
+		
 		return json;
 	}
 }

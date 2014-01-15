@@ -32,7 +32,7 @@
                         
                         <div id="top-mid">
                                 <div id='imgCont' align="center">
-                                        <a href="<c:url value='/admin_home' />" style="border: 0 px solid black; text-decoration: none;">
+                                        <a href="<c:url value='/' />" style="border: 0 px solid black; text-decoration: none;">
                                                 <img style='border: 0 px solid black; height: 80px;' src="<c:url value='/resources/images/logo.jpg' />">
                                         </a>
                                 </div>
@@ -60,7 +60,7 @@
                                         <tr>
                                                 <form action="${pageContext.request.contextPath}/szukaj/szukajProd/" method="get">
                                                         <td>
-                                                                <input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;" value="Wpisz czego szuaksz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >        
+                                                                <input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;" value="Wpisz czego szukasz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >        
                                                         </td>
                                                         <td>
                                                                 <select name='szukanaKat' id='szukanaKat' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
