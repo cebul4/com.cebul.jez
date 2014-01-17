@@ -73,7 +73,7 @@ public class Produkty implements Serializable{
 	private User user;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinTable(name = "prod_zdj", joinColumns = { @JoinColumn(name = "IdProdukt") }, 
+	@JoinTable(name = "Prod_Zdj", joinColumns = { @JoinColumn(name = "IdProdukt") }, 
 	inverseJoinColumns = { @JoinColumn(name = "IdZdjecia") })
 	private List<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
 	

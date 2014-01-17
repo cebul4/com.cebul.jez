@@ -614,4 +614,35 @@ public class ProduktyDao extends Dao
 		
 	}
 	
+	public List<Produkty> getProdZKat(Integer idKat)
+	{
+		Session session = getSessionFactory();
+		
+		Query query = session.createQuery("from Produkty p inner join p.kategorie as kat WHERE kat.id = :idKat ").setParameter("idKat", idKat );
+		
+		List<Object> result = new ArrayList<Object>();
+		result =  query.list();
+		
+		List<Produkty> resultFinal = new ArrayList<Produkty>();
+
+		Object[] ob;
+		int index = 0;
+		for(Object o : result)
+		{
+			ob = (Object[]) result.get(index);
+			for(int i=0;i<ob.length; i++)
+			{
+				if(ob[i] instanceof Produkty)
+				{
+					resultFinal.add((Produkty)ob[i]);
+				}
+			}
+			index++;
+		}
+				
+		return resultFinal;
+		//return result;
+		
+	}
+	
 }

@@ -70,6 +70,7 @@ public class HomeController {
 	@RequestMapping(value = {"/", "/home"})
 	public String home(Model model, HttpSession session){
 		
+		
 		//dbService.test1();
 		//List<Produkty> r = produktyService.getProduktyLike("drug", 19);
 		//System.out.println(r.size());

@@ -177,7 +177,10 @@ function sprawdzCene()
 		<div id='main'>
 			<div id='main-left'>
 			<c:forEach items="${podkategorie}" var="element"> 
-				<a href="<c:url value='/kategoria/${element.id}' />" class="categorieLeft" onmouseover="showPodkategorie()">
+			
+				<c:set var="link"  value="${pageContext.request.contextPath}/szukaj/szukajProd/?podkat=${element.id }&_podkat=on" />
+				
+				<a href="${link}" class="categorieLeft" onmouseover="showPodkategorie()">
 					${element.nazwa}
 				</a>
 			</c:forEach>

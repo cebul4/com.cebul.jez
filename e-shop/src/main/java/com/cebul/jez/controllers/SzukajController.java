@@ -19,6 +19,7 @@ import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.entity.ProduktyLicytuj;
+import com.cebul.jez.entity.User;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.useful.CheckBoxLicKup;
@@ -35,7 +36,7 @@ import com.cebul.jez.useful.JsonObject;
  *
  */
 @Controller
-@RequestMapping("/szukaj")
+//@RequestMapping("/szukaj")
 public class SzukajController 
 {
 	@Autowired
@@ -53,7 +54,7 @@ public class SzukajController
 	 * @param slowo fraza która ma być użyta do przeszukania bazy danych pod kontem zgodnosći z nią
 	 * @return zwraca objekt Ktry zawiera pasujące słowa (objekt JSon)
 	 */
-	@RequestMapping(value="/szukaj.json", method = RequestMethod.GET, params="slowo")
+	@RequestMapping(value="/szukaj/szukaj.json", method = RequestMethod.GET, params="slowo")
 	public @ResponseBody JsonObject znajdzWyszukiwarka(Model model, @RequestParam String slowo) 
 	{
 		List<String> r = produktyService.getProduktyLike(slowo);
@@ -71,7 +72,7 @@ public class SzukajController
 	 * @param szukanaFraza zawiera informację o szukanej frazie
 	 * @return
 	 */
-	@RequestMapping(value="/szukajProd/", method = RequestMethod.GET)
+	@RequestMapping(value="/szukaj/szukajProd/", method = RequestMethod.GET)
 	public String znajdzWyszukiwarka(Model model, @RequestParam(value="szukanaKat", required=false) Integer szukanaKat, @RequestParam(value="szukanaFraza", required=false) String szukanaFraza,
 			@RequestParam(value="cenaOd", required=false) Double cenaOd, @RequestParam(value="cenaDo", required=false) Double cenaDo,
 			CheckBoxLicKup chLicKup) 
@@ -160,7 +161,7 @@ public class SzukajController
 	 * @param katId identyfikator kategorii
 	 * @return obiekt json
 	 */
-	@RequestMapping(value="/podkat.json", method = RequestMethod.GET, params="katId")
+	@RequestMapping(value="/szukaj/podkat.json", method = RequestMethod.GET, params="katId")
 	public @ResponseBody JsonKat znajdzPodkat(Model model, @RequestParam Integer katId) 
 	{
 		List<Kategoria> podKat = kategorieService.getPodKategory(katId);
@@ -170,5 +171,30 @@ public class SzukajController
 		return jso;
 		// testuj enowego brancha
 	}
-	
+	@RequestMapping(value = {"/kategoria/{kategoriaId}"}, method = RequestMethod.GET)
+	public String produktyZKat(@PathVariable Integer kategoriaId, Model model)
+	{
+		
+		List<Produkty> sprzedaneProdukty = (List<Produkty>)produktyService.getProdZKat(kategoriaId);
+		//System.out.println("size= "+sprzedaneProdukty.size());
+		//System.out.println("id Pierwszego = "+sprzedaneProdukty.get(0).getId());
+		
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		for(Produkty p : sprzedaneProdukty)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				//System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
+		
+		model.addAttribute("sprzedane", sprzedaneProdukty);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		
+		return "produktyZKat";
+	}
 }

@@ -68,7 +68,7 @@ public class Mail
 		  helper.setSubject(subject);
 		  
 		  //String adress = "http://"+pageContext.request.serverName+":"+pageContext.request.serverPort+pageContext.request.contextPath;
-		  String htmlText = "<p>Aby konto zostało aktywowane prosimy kliknąć poniższy link:</p>" +
+		  String htmlText = "<p>Aby konto zostalo aktywowane prosimy kliknac ponizszy link:</p>" +
 		  		"<a href='"+url+"'>Aktywuj konto</a>";
 		    helper.setText(htmlText,true);
 		    ((JavaMailSenderImpl)this.mailSender).send(mime);

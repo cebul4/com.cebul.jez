@@ -75,7 +75,7 @@ public class ProduktyController
 		
 		Produkty produkt = produktyService.getProdukt(produktId);
 		//Collection<Zdjecie> zdjecia = produkt.getZdjecia();
-		Collection<Integer> zdjecia = produktyService.getZdjeciaId(produkt); 
+		List<Integer> zdjecia = produktyService.getZdjeciaId(produkt); 
 		
 		Kategoria katGlow = kategorieService.getMainKategory(produkt.getKategorie().getParentKategory());
 		String path = katGlow.getNazwa()+" >>> "+produkt.getKategorie().getNazwa();
@@ -113,10 +113,14 @@ public class ProduktyController
 			//System.out.println("roznica = "+diffInDays+1);
 		}
 		
+		
+		if(zdjecia != null)
+			model.addAttribute("zdjecia", zdjecia);
+		
 		model.addAttribute("podkategorie", podkategorie);
 		model.addAttribute("produkt", produkt);
 		model.addAttribute("path", path);
-		model.addAttribute("zdjecia", zdjecia);
+		
 		model.addAttribute("czyKupTeraz", czyKupTeraz);
 		model.addAttribute("ktosLicytuje", ktosLicytuje);
 		model.addAttribute("czyJaWygrywam", czyJaWygrywam);

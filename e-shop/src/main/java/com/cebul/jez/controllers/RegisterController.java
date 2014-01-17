@@ -112,7 +112,7 @@ public class RegisterController
 			String str = request.getScheme() +"://"+ request.getServerName()+ ":"+
 					request.getServerPort() +request.getContextPath()+
 					"/rejestracja/active?userId="+user.getId(); 
-			mail.sendMimeMessage(str,"eshoptest123@gmail.com", t, "Rejestracja e-shop", "takie sobie cos tam");
+			mail.sendMimeMessage(str,"eshoptest@wp.pl", t, "Rejestracja e-shop", "takie sobie cos tam");
 		
 			// ustawienie sessji
 			
