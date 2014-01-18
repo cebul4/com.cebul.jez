@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ page contentType="text/html;charset=UTF-8" %> 
-<%@ page session="false"%>
+<%@ page session="true"%>
 <html>
 <head>
 <meta name="description" content="Portal aukcyjny" />
@@ -14,6 +14,9 @@
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
+<script>
+
+</script>
 </head>
 <body>
 <div id='contener'>
@@ -68,7 +71,15 @@
 						</form>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px;">
-								<a href="<c:url value='/mojekonto/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
+									<c:choose>
+									<c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
+										  	<a href="<c:url value='/panel/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">PANEL ADMINA</a>
+									</c:when>
+				  					<c:otherwise>
+				  							<a href="<c:url value='/mojekonto/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
+				  					</c:otherwise>
+			  					</c:choose>
+								
 							</div>
 						</td>
 						<td>
@@ -76,57 +87,37 @@
 								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
 							</div>
 						</td>
-						<td>
-							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/kontakt' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KONTAKT</a>
-							</div>
-						</td>
+						
 					</tr>
 				</table>
 			
 		</div>
 		<div id='main'>
-		<div id='main-cenetr' align='center'>
-			<div id="box" align="center" style="padding-top: 50px;">
-			<div align="center" style="width: 300px; padding: 20px;margin: 0 auto;;">
-			<table>
-			<tr>
-				<td style="padding-right: 10px;">
-					<img  style="width:80px; align: left;" src="<c:url value='/resources/images/smile.png' />">
-				</td>
-				<td>
-					<span style="color: orange;">Zaloguj sie do serwisu aby móc w pełni korzystać z dobrodziejstw internetu.</span>
-				</td>
-			</tr>
-			</table>
+			<div id='main-cenetr' align='center'>
+					
+				<h4 style='margin-top: 50px; color: red'>Kontakt </h4>
+				<p style="width: 500px; text-align: center;">
+					Zespół naszych administratorów czuwa nad bezpieczeństwem systemu. Jednak zawsze moze zdarzyć się sytuacja wyjatkowa, nieprzewidziana.
+					Jeśli zauważyłeś cos niepokojacego w naszym serwisie, sprzedajacy nie wysłał Ci kupionego towaru lub 
+					kupujący nie dokonał wpłaty, prosimy o kontakt z jednym z naszych administratorów. Zawsze chętnie pomożemy.
+				</p>
+					</br>
+					<table>
+			
+						<tr>
+							<td>
+								<b>cebul4@gmail.com</b>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>rhwentyllo@gmail.com</b>
+							</td>					
+						</tr>
+					</table>
 				
 			</div>
-			<table style="margin: 0 auto;" id="tabLog">
-			<form method="POST" action="j_spring_security_check" name="f">
-				
-					<tr>
-						<td>Login:</td>
-						<td><input class="tabLogTd" type="text" name="j_username" /></td>
-					</tr>
-					<tr>
-						<td>Hasło:</td>
-						<td><input class="tabLogTd" type="password" name="j_password" /></td>
-					</tr>
-					<tr>
-						<td>Remember me:</td>
-						<td><input type="checkbox" name="_spring_security_remember_me" /></td>
-					</tr>
-					<tr>
-						
-						<td colspan="2" align="center"><input id="tabLogSub"  type="submit" value="Zaloguj" name="commit" /></td>
-					</tr>
-				
-			</form>
-			</table>
-			</div>
-		</div>
 		</div>
 </div>
-
 </body>
 </html>

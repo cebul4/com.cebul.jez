@@ -108,7 +108,11 @@ $( window ).load(function() {
 								
 							</div>
 						</td>
-						
+						<td>
+							<div style="border-left: 1px solid black; padding-left: 10px; ">
+								<a href="<c:url value='/kontakt' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KONTAKT</a>
+							</div>
+						</td>
 					</tr>
 				</table>
 			

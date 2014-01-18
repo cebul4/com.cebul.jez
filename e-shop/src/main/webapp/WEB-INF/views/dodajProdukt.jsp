@@ -91,7 +91,7 @@
 								
 							</div>
 						</td>
-								<td>
+						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
 								<c:choose>
 									<c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
@@ -103,6 +103,9 @@
 			  					</c:choose>
 								
 							</div>
+						</td>
+						<td>
+							<a href="<c:url value='/kontakt' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KONTAKT</a>
 						</td>
 						
 					</tr>
