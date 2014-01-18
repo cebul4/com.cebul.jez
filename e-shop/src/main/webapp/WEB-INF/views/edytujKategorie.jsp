@@ -96,12 +96,13 @@
                 </div>
                 <div id='main'>
                 <div id='main-left'>
-					<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
-					<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
-					<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-					<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
-					<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
-					<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
+				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
+				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
+				<a class="categorieLeft" href="<c:url value='/panel/zamowienia' />">Zamówienia</a>
+				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
                                 

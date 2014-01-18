@@ -82,4 +82,9 @@ public class ZamowienieService
 			return false;
 		return true;
 	}
+	@Transactional
+	public List<Zamowienie> getZamowienie()
+	{
+		return zamowienieDao.getZamowienie();
+	}
 }

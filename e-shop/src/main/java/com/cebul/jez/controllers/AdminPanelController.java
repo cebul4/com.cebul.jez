@@ -45,11 +45,13 @@ import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.entity.User;
+import com.cebul.jez.entity.Zamowienie;
 import com.cebul.jez.entity.Zdjecie;
 import com.cebul.jez.model.UserDao;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.service.UserService;
+import com.cebul.jez.service.ZamowienieService;
 import com.cebul.jez.service.ZdjecieService;
 
 
@@ -81,6 +83,9 @@ public class AdminPanelController
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ZamowienieService zamowienieService;
 	
 	
 	/**
@@ -127,7 +132,16 @@ public class AdminPanelController
 	public String addAdminFromLogin(Model model, @RequestParam(value="login") String addLogin, HttpSession session)
 	{
 		
+	  
+		  
+		  if(addLogin.isEmpty())
+		  {
+		  return "redirect:/panel/dodajAdmina";
+		  }
+	 
+		  
 	  userService.setAdmin(addLogin);
+	  
 				
 		return "redirect:/panel/";
 	}
@@ -314,6 +328,16 @@ public class AdminPanelController
 		produktyService.usunProdukt(produktId);
 		
 		return "redirect:/panel/";
+	}
+	
+	@RequestMapping(value= "/panel/zamowienia")
+	public String getOrders(Model model)
+	{
+		List<Zamowienie> z = zamowienieService.getZamowienie();
+		System.out.println("list zamowienia size: " + z.size());
+		model.addAttribute("zamowienia", z);
+		
+		return "zamowienia";
 	}
 	
 	@InitBinder

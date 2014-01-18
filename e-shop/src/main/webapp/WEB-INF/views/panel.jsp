@@ -108,6 +108,7 @@
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
 				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
+				<a class="categorieLeft" href="<c:url value='/panel/zamowienia' />">Zamówienia</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>

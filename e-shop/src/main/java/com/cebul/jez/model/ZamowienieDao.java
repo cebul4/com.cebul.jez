@@ -186,4 +186,21 @@ public class ZamowienieDao extends Dao
 		
 		return true;
 	}
+	
+	public List<Zamowienie> getZamowienie()
+	{
+		Session session = sessionFactory.getCurrentSession();
+		String sql = ("SELECT z.id,data,koszt,nazwa,rodzajplatnosci,imie,nazwisko FROM zamowienie z "+
+		"join dokumentzamowienia dz on z.dokumentzamowienia = dz.id join platnosci p on z.platnosc = p.id "+
+				"join users u on z.nabywca = u.id");
+		System.out.println(sql);
+		Query query = session.createSQLQuery(sql);
+		
+		List<Zamowienie> result = new ArrayList<Zamowienie>();
+		result =  query.list();
+		
+		//System.out.println(result.get(0).getId());
+		
+		return result;
+	}
 }
