@@ -171,30 +171,5 @@ public class SzukajController
 		return jso;
 		// testuj enowego brancha
 	}
-	@RequestMapping(value = {"/kategoria/{kategoriaId}"}, method = RequestMethod.GET)
-	public String produktyZKat(@PathVariable Integer kategoriaId, Model model)
-	{
-		
-		List<Produkty> sprzedaneProdukty = (List<Produkty>)produktyService.getProdZKat(kategoriaId);
-		//System.out.println("size= "+sprzedaneProdukty.size());
-		//System.out.println("id Pierwszego = "+sprzedaneProdukty.get(0).getId());
-		
-		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
-		
-		for(Produkty p : sprzedaneProdukty)
-		{
-			if(p instanceof ProduktyKupTeraz)
-			{
-				czyKupTeraz.add(true);
-				//System.out.println("kup teraz");
-			}
-			else
-				czyKupTeraz.add(false);
-		}
-		
-		model.addAttribute("sprzedane", sprzedaneProdukty);
-		model.addAttribute("czyKupTeraz", czyKupTeraz);
-		
-		return "produktyZKat";
-	}
+	
 }

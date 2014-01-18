@@ -45,7 +45,15 @@ $( window ).load(function() {
 				<div>
 					<c:choose>
 						<c:when test="${!empty sessionScope.sessionUser}">
+						 <c:choose> 
+						        <c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
+						        <span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: blue; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+						        </c:when>
+						        <c:otherwise>
 							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+							  	</c:otherwise>
+							   </c:choose>
+							  
 							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
@@ -63,7 +71,7 @@ $( window ).load(function() {
 					<tr>
 						<form action="${pageContext.request.contextPath}/szukaj/szukajProd/" method="get">
 							<td>
-								<input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;"  value="Wpisz czego szuaksz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
+								<input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;"  value="Wpisz czego szukasz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
 							</td>
 							<td>
 								<select name='szukanaKat' id='szukanaKat' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
@@ -110,9 +118,10 @@ $( window ).load(function() {
 						</td>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/kontakt' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KONTAKT</a>
+								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
 							</div>
 						</td>
+						
 					</tr>
 				</table>
 			

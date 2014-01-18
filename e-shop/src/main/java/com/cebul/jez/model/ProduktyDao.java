@@ -481,11 +481,13 @@ public class ProduktyDao extends Dao
 		int index = 0;
 		for(Object o : result)
 		{
+			
 			ob = (Object[]) result.get(index);
+		
 			
 			for(int i=0;i<ob.length; i++)
 			{
-				//System.out.println(ob[i]);
+				//System.out.println(ob[i].toString());
 				if(ob[i] instanceof Zamowienie)
 				{
 					Zamowienie z = (Zamowienie) ob[i];
@@ -496,6 +498,7 @@ public class ProduktyDao extends Dao
 		}
 		//System.out.println(resultFinal.size());
 		//System.out.println(resultFinal.get(0).getNazwa());
+		//System.out.println(resultFinal.get(0).getKategorie().getId());
 		return resultFinal;
 	
 
@@ -614,35 +617,16 @@ public class ProduktyDao extends Dao
 		
 	}
 	
-	public List<Produkty> getProdZKat(Integer idKat)
+	public List<String> getAllProducts()
 	{
 		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT Id, Nazwa FROM Produkty");
+			
+		List<String> result = query.list();
+		if(result.size() == 0)
+			return null;
 		
-		Query query = session.createQuery("from Produkty p inner join p.kategorie as kat WHERE kat.id = :idKat ").setParameter("idKat", idKat );
-		
-		List<Object> result = new ArrayList<Object>();
-		result =  query.list();
-		
-		List<Produkty> resultFinal = new ArrayList<Produkty>();
-
-		Object[] ob;
-		int index = 0;
-		for(Object o : result)
-		{
-			ob = (Object[]) result.get(index);
-			for(int i=0;i<ob.length; i++)
-			{
-				if(ob[i] instanceof Produkty)
-				{
-					resultFinal.add((Produkty)ob[i]);
-				}
-			}
-			index++;
-		}
-				
-		return resultFinal;
-		//return result;
-		
+		return result;
 	}
 	
 }

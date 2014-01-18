@@ -51,7 +51,7 @@ public class UserDao extends Dao
 	public boolean isExist(User user)
 	{
 		Session session = getSessionFactory();
-		Query query = session.createSQLQuery("SELECT * FROM users WHERE login = :username ").
+		Query query = session.createSQLQuery("SELECT * FROM Users WHERE login = :username ").
 				addEntity(User.class).setParameter("username", user.getLogin());
 		List<User> result = query.list();
 		if(!result.isEmpty())
@@ -82,7 +82,7 @@ public class UserDao extends Dao
 	public User getUser(String login)
 	{
 		Session session = getSessionFactory();
-		Query query = session.createSQLQuery("SELECT * FROM users WHERE login = :username ").
+		Query query = session.createSQLQuery("SELECT * FROM Users WHERE login = :username ").
 				addEntity(User.class).setParameter("username", login);
 		List<User> result = query.list();
 		if(result.size() == 0)
@@ -110,7 +110,7 @@ public class UserDao extends Dao
 	public boolean isUserExsist(String login)
 	{
 		Session session = getSessionFactory();
-		Query query = session.createSQLQuery("SELECT * FROM users WHERE login = :username ").
+		Query query = session.createSQLQuery("SELECT * FROM Users WHERE login = :username ").
 				addEntity(User.class).setParameter("username", login);
 		List<User> result = query.list();
 		if(!result.isEmpty())
@@ -180,6 +180,43 @@ public class UserDao extends Dao
 		 if (u.getEnabled() == 1)
 		 {
 			 u.setEnabled(0);
+			 session.update(u);
+			 
+		 }
+		
+	}
+	public List<String> getUsers()
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT Login FROM users WHERE ranga LIKE 'user' ");
+		List<String> result = query.list();
+		
+		return result;
+	}
+	
+	public List<String> getAllUsers()
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT * FROM Users");
+			
+		List<String> result = query.list();
+		if(result.size() == 0)
+			return null;
+		
+		return result;
+	}
+	
+	public void unblockUser(Integer id)
+	{
+		Session session = getSessionFactory();
+		User u = getUser(id);
+		
+		//u.getEnabled();
+		
+		
+		 if (u.getEnabled() == 0)
+		 {
+			 u.setEnabled(1);
 			 session.update(u);
 			 
 		 }

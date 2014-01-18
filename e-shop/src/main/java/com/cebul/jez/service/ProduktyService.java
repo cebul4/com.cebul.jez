@@ -132,9 +132,9 @@ public class ProduktyService
 		 produktyDao.usunProdukt(produktId);
 	}
 	@Transactional
-	public List<Produkty> getProdZKat(Integer idKat)
+	public List<String> getAllProducts()
 	{
-		return produktyDao.getProdZKat(idKat);
+		return produktyDao.getAllProducts();
 	}
 	
 }
