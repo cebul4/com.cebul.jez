@@ -106,13 +106,54 @@
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
 				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
 			<div id='main-right'>
-				<!--<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" /> -->
+				<table class='casualTab'>
+			<tr>
+				<td> <label><b><i>Lista użytkowników</i></b></label> </td>
+				<td>
+					 
+				</td>	
+			</tr>
+			
+			<tr style="font-size: 12pt; color: #8AC74A; font-weight: bold;">
+				<td>Login</td>
+				<td>Imię</td>
+				<td>Nazwisko</td>
+				<td>Ranga</td>
+				<td>Aktywny</td>
+				<td>ID</td>
+		    </tr>
+			
+			    <c:forEach items="${blockUser}" var="element" varStatus="iter"> 
+										<tr style="font-weight: bold;">
+											<td style="color: #1E4DD9;">
+											${element[5]} 
+											</td>
+											<td>
+											${element[4]} 
+											</td>
+											<td>
+											${element[7]} 
+											</td>
+											<td>
+											${element[10]} 
+											</td>
+											<td>
+											${element[3]} 
+											</td>
+											<td>
+											${element[0]} 
+											</td>
+										</tr>
+										
+				</c:forEach>
+			
+			</table>
 			</div>
 		</div>
 		<div id='bottom'>

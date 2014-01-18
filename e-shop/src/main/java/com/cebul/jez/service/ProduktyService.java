@@ -131,5 +131,10 @@ public class ProduktyService
 	{
 		 produktyDao.usunProdukt(produktId);
 	}
+	@Transactional
+	public List<String> getAllProducts()
+	{
+		return produktyDao.getAllProducts();
+	}
 	
 }

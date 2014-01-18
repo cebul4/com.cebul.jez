@@ -114,27 +114,39 @@
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
 				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
 		<div id='main-right' align='center'>
-		<p style="font-size: 16pt; color: #8AC74A;" ><b>Podaj id użytkownika: </b></p>
+		<p style="font-size: 16pt; color: #8AC74A;" ><b>Blokowanie użytkownika: </b></p>
 		
 		<sf:form method="POST" action="/jez/panel/blockUser">
 			<fieldset style='border: none;'>
 			<table class='casualTab'>
 			<tr>
-				<td> <label><b><i>ID Użytkownika</i></b></label> </td>
+				<td> <label><b><i>Podaj Login Użytkownika</i></b></label> </td>
 				<td>
-					<input style='width: 90px;' type="text" name="id" />
+					<select name='id' id='id' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
+									<option value="0">Wybierz użytkownika
+									</option>
+									<option >------
+									</option>
+									<c:forEach items="${blockUser}" var="element" varStatus="iter"> 
+										<option value="${element[0]}">
+											${element[5]}
+										</option>
+										
+									</c:forEach>
+								</select>	
 				</td>	
 			</tr>
 			
 			<tr>
 				<td cols="2" align='center'>
-					<input class="sub" style='margin-left: 50px;' type="submit" value="Zablokuj" /> 
+					<input class="sub" style='margin-left: 50px;' type="submit" value="Zablokuj" name="block" /> 
+					<input class="sub" style='margin-left: 50px;' type="submit" value="Odblokuj" name="unblock"/> 
 				</td>
 			</tr>
 			</table>

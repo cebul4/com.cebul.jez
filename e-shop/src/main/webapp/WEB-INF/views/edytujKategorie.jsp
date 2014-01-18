@@ -95,68 +95,49 @@
                         
                 </div>
                 <div id='main'>
-                	<div id='main-left'>
-						<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
-						<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
-						<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-						<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
-						<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
-						<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
+                <div id='main-left'>
+					<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
+					<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
+					<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
+					<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
+					<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
+					<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
-					</div>
+			</div>
                                 
          <div id='main-right'>
          
          
                   <p style="font-size: 16pt; color: #8AC74A;" ><b>Edycja Kategorii </b></p>
-                  <sf:form method="POST" modelAttribute="kategoria" action="/jez/panel/edytujKategorie/zapisz/">
+                  <sf:form method="POST"  action="/jez/panel/edytujKategorieForm">
                         <fieldset style='border: none;'>
                         
                         <table class="casualTab">
                                 <tr>
-                                                        <td>
-                                                                <label for="id"><b><i>ID:</i></b></label>
-                                                        </td>
-                                                        <td>
-                                                                <sf:input id="id" path="id" />
-                                                                <sf:errors path="id" cssClass="error" />
-                                                        </td>
-                                                </tr>
-                                                <tr>
-                                                        <td>
-                                                                <label for="nazwa"><b><i> Nazwa:</i></b></label>
-                                                        </td>
-                                                        <td>
-                                                                <sf:input id="nazwa" path="nazwa" />
-                                                                <sf:errors path="nazwa" cssClass="error" />
-                                                        </td>
-                                                        
-                                                </tr>
-                                                <tr>
-                                                        <td>
-																<label for="parentKategory"><b><i> Kategoria nadrzędna:</i></b></label>
-														</td>
-														<td>
-															<select id="parentKategory" path="parentKategory" name="parentKategory" >
-							   										 <option value="0">
-							    											BRAK
-							    									</option>
-																<c:forEach items="${parent}" var="element"> 
-																	<option value="${element.id}">
-																			${element.nazwa}
-																	</option>
-																		log(element.id);
-																	</c:forEach>
-															</select>
-														</td>
-                                                        
-                                                </tr>
-                                                
-                                                <tr>
-                                                        <td colspan="2">
-                                                                <input align='center' type="submit" value="Dodaj" class="sub" id="sub" >        
-                                                        </td>
-                                                </tr>
+							<td>
+								<label for="parentKategory"><b><i> Wybierz kategorię:</i></b></label>
+							</td>
+							<td>
+							<select id="katId" path="katId" name="katId">
+							    <option value="0">BRAK
+								</option>
+								<option >------
+								</option> 
+								<c:forEach items="${katList}" var="element">
+										<option value="${element.id}">
+											${element.nazwa}
+										</option>
+										
+								</c:forEach>
+							</select>
+							</td>
+							
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input align='center' type="submit" value="Dalej" class="sub" id="sub" >	
+							</td>
+						</tr>
                         </table>
                         </fieldset>
                 </sf:form>

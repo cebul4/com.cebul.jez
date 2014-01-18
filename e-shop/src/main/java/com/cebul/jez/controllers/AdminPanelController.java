@@ -26,6 +26,7 @@ import org.aspectj.util.FileUtil;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,8 +88,12 @@ public class AdminPanelController
 	 * @return panel - logiczna nazwa widoku
 	 */
 	@RequestMapping(value = "/panel/")
-	public String getGlownyWidok()
+	public String getGlownyWidok(Model model)
 	{
+		List<String> user = userService.getAllUsers();
+		System.out.println("list user size: " + user.size());
+		model.addAttribute("blockUser", user);
+		
 		return "panel";
 	}
 	
@@ -101,8 +106,11 @@ public class AdminPanelController
 	 * @return zwraca logiczną nazwę widoku
 	 */
 	@RequestMapping(value = "/panel/dodajAdmina")
-	public String addAdmin(Model model)
+	public String addAdmin(Model model, HttpSession session)
 	{
+		List<String> str = userService.getUsers();
+		System.out.println("Rozmiar loginow: " + str.size());
+		model.addAttribute("loginy", str);
 		return "/dodajAdmina";
 	}
 	
@@ -195,18 +203,24 @@ public class AdminPanelController
 	 * @return - zwraca logiczną nazwę widoku
 	 */
 	@RequestMapping(value= "/panel/edytujKategorie")
-	public String edytujKategorieForm(Model model,HttpSession session)
+	public String edytujKategorie(Model model,HttpSession session)
 	{
-		int id = 2;
 		
+		model.addAttribute("katList", kategorieService.getAll());
 		
-		model.addAttribute(kategorieService.getKategory(id));
-		model.addAttribute("parent", kategorieService.getAll());
-		
-
 		
 		return "edytujKategorie";
 	}
+	@RequestMapping(value= "/panel/edytujKategorieForm")
+	public String edytujKategorieForm(@RequestParam(value="katId") Integer katId, Model model,HttpSession session)
+	{
+	
+		model.addAttribute("kategoria", kategorieService.getKategory(katId));
+		model.addAttribute("parent", kategorieService.getAll());
+		
+		return "edytujKategorieForm";
+	}
+	
 	
 	
 	/**
@@ -220,7 +234,7 @@ public class AdminPanelController
 	 * @param session - dostęp do obiektu sesji
 	 * @return w razie powodzenia edycji przekierowuje do panelu admina, w przeciwnym wypadku wraca do formularza edycji
 	 */
-	@RequestMapping(value = "/panel/edytujKategorie/zapisz/",  method=RequestMethod.POST)
+	@RequestMapping(value = "/panel/edytujKategorieForm/zapisz",  method=RequestMethod.POST)
 	public String updateKategoria(@Valid Kategoria kat, BindingResult bindingResult, Model model, HttpSession session)
 	{
 		if(bindingResult.hasErrors())
@@ -248,8 +262,13 @@ public class AdminPanelController
 	 * @return zwraca logiczną nazwę widoku
 	 */
 	@RequestMapping(value = "/panel/blockUser")
-	public String block(Model model)
+	public String block(Model model, HttpSession session)
 	{
+		List<String> user = userService.getAllUsers();
+		System.out.println("block user size: " + user.size());
+		model.addAttribute("blockUser", user);
+		//session.setAttribute("blockUser", user);
+		
 		return "/blockUser";
 	}
 	
@@ -265,17 +284,28 @@ public class AdminPanelController
 	 * @return przekierowuje do panelu admina
 	 */
 	@RequestMapping(value = "/panel/blockUser", method=RequestMethod.POST)
-	public String blockUser(Model model, @RequestParam(value="id") Integer id, HttpSession session)
+	public String blockUser(Model model, @RequestParam(value="id") Integer id, HttpSession session, HttpServletRequest request)
 	{
-		
+	  if (request.getParameter("block") != null)
+	  {
 	  userService.blockUser(id);
-				
-		return "redirect:/panel/";
+	  			
+		
+	  }
+	  else if (request.getParameter("unblock") != null)
+	  {
+		  userService.unblockUser(id);
+	  }
+	  return "redirect:/panel/";
 	}
 	
 	@RequestMapping(value = "/panel/usunProdukt")
 	public String usun(Model model)
 	{
+		List<String> prod = produktyService.getAllProducts();
+		System.out.println("usun produkt size: " + prod.size());
+		model.addAttribute("produkty", prod);
+		
 		return "/usunProdukt";
 	}
 	
@@ -292,6 +322,8 @@ public class AdminPanelController
         binder.registerCustomEditor(Date.class, editor);
     }
 	
+	
+	
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder)
 	{
@@ -306,5 +338,5 @@ public class AdminPanelController
 			
 		});
 	}
-}
 
+}

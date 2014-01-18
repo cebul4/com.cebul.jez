@@ -114,13 +114,13 @@
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
 				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
 		<div id='main-right' align='center'>
-		<p style="font-size: 16pt; color: #8AC74A;" ><b>Podaj login użytkownika: </b></p>
+		<p style="font-size: 16pt; color: #8AC74A;" ><b>Dodawanie administratora: </b></p>
 		
 		<sf:form method="POST" action="/jez/panel/dodajAdmina">
 			<fieldset style='border: none;'>
@@ -128,7 +128,18 @@
 			<tr>
 				<td> <label><b><i>Login</i></b></label> </td>
 				<td>
-					<input style='width: 90px;' type="text" name="login" />
+					<select name='login' id='login' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
+									<option value="0">Wybierz login
+									</option>
+									<option >------
+									</option>
+									<c:forEach items="${loginy}" var="element"> 
+										<option value="${element}">
+											${element}
+										</option>
+										
+									</c:forEach>
+								</select>	
 				</td>	
 			</tr>
 			
@@ -140,7 +151,7 @@
 			</table>
 			</fieldset>
 		</sf:form>
-	<!--  <a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >  >>>Zakończ dodawanie produktu <<< </a>-->
+	
 	</div>
 </div>
 </body>

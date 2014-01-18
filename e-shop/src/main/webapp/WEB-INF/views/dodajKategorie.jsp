@@ -116,7 +116,7 @@
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
 				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
@@ -151,7 +151,11 @@
 							</td>
 							<td>
 							<select id="parentKategory" path="parentKategory" name="parentKategory">
-								<c:forEach items="${kategoryList}" var="element"> 
+							    <option value="0">BRAK
+								</option>
+								<option >------
+								</option> 
+								<c:forEach items="${parent}" var="element">
 										<option value="${element.id}">
 											${element.nazwa}
 										</option>

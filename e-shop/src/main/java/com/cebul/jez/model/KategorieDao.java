@@ -67,6 +67,15 @@ public class KategorieDao extends Dao
 		Session session = getSessionFactory();
 		return (Kategoria)session.get(Kategoria.class, id);
 	}
+	public List<String> getKategoryString(Integer id)
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT * FROM Kategorie WHERE Id = :id").addEntity(Kategoria.class).setParameter("id", id);
+		List<String> result = query.list();
+		
+		return result;
+		
+	}
 	/**
 	 * dodaje kategorię do bazy
 	 * @param k kategoria która ma być utrwalona
@@ -92,7 +101,7 @@ public class KategorieDao extends Dao
 	public boolean isExist(Kategoria k)
 	{
 		Session session = getSessionFactory();
-		Query query = session.createSQLQuery("SELECT * FROM kategorie WHERE nazwa = :catname ").
+		Query query = session.createSQLQuery("SELECT * FROM Kategorie WHERE nazwa = :catname ").
 				addEntity(Kategoria.class).setParameter("catname", k.getNazwa());
 		List<Kategoria> result = query.list();
 		if(!result.isEmpty())

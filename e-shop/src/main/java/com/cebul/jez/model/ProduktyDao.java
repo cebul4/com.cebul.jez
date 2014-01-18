@@ -617,4 +617,16 @@ public class ProduktyDao extends Dao
 		
 	}
 	
+	public List<String> getAllProducts()
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT Id, Nazwa FROM Produkty");
+			
+		List<String> result = query.list();
+		if(result.size() == 0)
+			return null;
+		
+		return result;
+	}
+	
 }

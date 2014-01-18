@@ -45,7 +45,15 @@ $( window ).load(function() {
 				<div>
 					<c:choose>
 						<c:when test="${!empty sessionScope.sessionUser}">
+						 <c:choose> 
+						        <c:when test="${sessionScope.sessionUser.ranga == 'admin'}">
+						        <span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: blue; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+						        </c:when>
+						        <c:otherwise>
 							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+							  	</c:otherwise>
+							   </c:choose>
+							  
 							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
@@ -108,6 +116,11 @@ $( window ).load(function() {
 								
 							</div>
 						</td>
+						 <td>
+                                                        <div style="border-left: 1px solid black; padding-left: 10px; ">
+                                                                <a href="<c:url value='/kontakt' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KONTAKT</a>
+                                                        </div>
+                                                </td>
 						
 					</tr>
 				</table>

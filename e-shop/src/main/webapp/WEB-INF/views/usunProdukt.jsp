@@ -114,21 +114,32 @@
 				<a class="categorieLeft" href="<c:url value='/panel/dodajAdmina/' />">Dodaj Admina</a>
 				<a class="categorieLeft" href="<c:url value='/panel/dodajKategorie/' />">Dodaj Kategorię</a>
 				<a class="categorieLeft" href="<c:url value='/panel/edytujKategorie/' />">Edytuj Kategorię</a>
-				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj Użytkownika</a>
+				<a class="categorieLeft" href="<c:url value='/panel/blockUser' />">Zablokuj/Odblokuj Użytkownika</a>
 				<a class="categorieLeft" href="<c:url value='/panel/usunProdukt' />">Usuń Produkt</a>
 				<a class="categorieLeft" href="<c:url value='/panel/statystyki' />">Statystyki</a>
 								
 			</div>
 		<div id='main-right' align='center'>
-		<p style="font-size: 16pt; color: #8AC74A;" ><b>Podaj ID Produktu: </b></p>
+		<p style="font-size: 16pt; color: #8AC74A;" ><b>Usuń Produkt: </b></p>
 		
 		<sf:form method="POST" action="/jez/panel/usunProdukt">
 			<fieldset style='border: none;'>
 			<table class='casualTab'>
 			<tr>
-				<td> <label><b><i>ID Produktu</i></b></label> </td>
+				<td> <label><b><i>Nazwa Produktu</i></b></label> </td>
 				<td>
-					<input style='width: 90px;' type="text" name="id" />
+					<select name='id' id='id' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
+									<option value="0">Wybierz produkt
+									</option>
+									<option >------
+									</option>
+									<c:forEach items="${produkty}" var="element" varStatus="iter"> 
+										<option value="${element[0]}">
+											${element[1]}
+										</option>
+										
+									</c:forEach>
+								</select>	
 				</td>	
 			</tr>
 			
