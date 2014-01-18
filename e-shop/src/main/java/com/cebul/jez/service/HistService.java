@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.cebul.jez.entity.Hist_Wyszuk;
+import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.model.Hist_WyszDao;
 
 
@@ -23,5 +24,10 @@ public class HistService
 	public List<Hist_Wyszuk> getHistory()
 	{
 		return histDao.getHistory();
+	}
+	@Transactional
+	public List<Produkty> getProdukty()
+	{
+		return histDao.getProdukty();
 	}
 }
