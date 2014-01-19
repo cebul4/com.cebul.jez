@@ -16,6 +16,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/formValidation.js' />" type="text/javascript" ></script>
 <script>
 
 </script>
@@ -125,7 +126,7 @@
 				
 	   <div id='main-right'>
 	   <p style="font-size: 16pt; color: #8AC74A;" ><b>Edytowanie Kategorii </b></p>
-		<sf:form method="POST" modelAttribute="kategoria" action="edytujKategorieForm/zapisz">
+		<sf:form id="form" method="POST" modelAttribute="kategoria" action="edytujKategorieForm/zapisz">
 			<fieldset style='border: none;'>
 			
 			<table class="casualTab">
@@ -154,7 +155,7 @@
 							<select id="parentKategory" path="parentKategory" name="parentKategory">
 							    <option value="0">BRAK
 								</option>
-								<option >------
+								<option value="">------
 								</option> 
 								<c:forEach items="${parent}" var="element">
 										<option value="${element.id}">

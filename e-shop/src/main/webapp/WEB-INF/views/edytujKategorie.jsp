@@ -15,6 +15,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/formValidation.js' />" type="text/javascript" ></script>
 <script>
 
 </script>
@@ -110,7 +111,7 @@
          
          
                   <p style="font-size: 16pt; color: #8AC74A;" ><b>Edycja Kategorii </b></p>
-                  <sf:form method="POST"  action="/jez/panel/edytujKategorieForm">
+                  <sf:form id="form" method="POST"  action="/jez/panel/edytujKategorieForm">
                         <fieldset style='border: none;'>
                         
                         <table class="casualTab">
@@ -120,9 +121,9 @@
 							</td>
 							<td>
 							<select id="katId" path="katId" name="katId">
-							    <option value="0">BRAK
+							    <option value="">BRAK
 								</option>
-								<option >------
+								<option value="">------
 								</option> 
 								<c:forEach items="${katList}" var="element">
 										<option value="${element.id}">

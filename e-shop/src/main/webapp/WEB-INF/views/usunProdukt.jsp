@@ -14,6 +14,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/formValidation.js' />" type="text/javascript" ></script>
 <script>
 
 </script>
@@ -123,16 +124,16 @@
 		<div id='main-right' align='center'>
 		<p style="font-size: 16pt; color: #8AC74A;" ><b>Usuń Produkt: </b></p>
 		
-		<sf:form method="POST" action="/jez/panel/usunProdukt">
+		<sf:form id="form" method="POST" action="/jez/panel/usunProdukt">
 			<fieldset style='border: none;'>
 			<table class='casualTab'>
 			<tr>
 				<td> <label><b><i>Nazwa Produktu</i></b></label> </td>
 				<td>
 					<select name='id' id='id' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
-									<option value="0">Wybierz produkt
+									<option value="">Wybierz produkt
 									</option>
-									<option >------
+									<option value="">------
 									</option>
 									<c:forEach items="${produkty}" var="element" varStatus="iter"> 
 										<option value="${element[0]}">
